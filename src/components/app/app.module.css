@@ -1,0 +1,9 @@
+.app{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    background-color: var(--background-color);
+    
+    border: 1px solid red;
+}

@@ -1,0 +1,11 @@
+/* variables */
+
+:root{
+--background-color:#131316;
+--background-light-color: #1C1C21;
+--text-primary-color: #F2F2F3;
+
+
+background-color: var(--background-color);
+color: var(--text-primary-color);
+}

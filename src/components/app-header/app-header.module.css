@@ -1,0 +1,38 @@
+.header{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    background-color: var(--background-light-color);
+
+    border: 1px solid red;
+}
+
+.button{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    border-radius: 40px;
+    background-color: var(--background-light-color);
+    color: var(--text-primary-color);
+    padding: 16px 20px;
+    border: none;
+}
+
+.button:hover{
+    cursor: pointer;
+}
+
+.menu{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    left: 0;
+}
+
+.profile{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    right: 0;
+}
+
