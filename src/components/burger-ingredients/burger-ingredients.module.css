@@ -1,0 +1,10 @@
+.ingredients{
+    display: flex;
+    flex-direction: column;
+    padding: 40px 0;
+    margin-left: 20px;   
+    width: var(--width-column-main);
+    box-sizing: border-box;
+
+    border: 2px solid var(--color-blue);
+}

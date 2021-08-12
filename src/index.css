@@ -8,6 +8,8 @@
 --text-error-color: #E52B1A;
 --text-success-color: #00CCCC;
 
+--color-blue: #4C4CFF;
+
 --width-max: 1920px;
 --width-column-main: 600px;
 --border-radius: 40px;
@@ -15,4 +17,12 @@
 
 background-color: var(--background-color);
 color: var(--text-primary-color);
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+a{
+    text-decoration: none;
 }

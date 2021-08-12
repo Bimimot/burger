@@ -28,7 +28,7 @@ export const HeaderButton = (props) => {
             onClick={!!callback ? callback : null}
         >
             <ButtonIcon type={type} />
-            <p className="text text_type_main-default pl-1">{text}</p>
+            <p className="text text_type_main-small pl-1">{text}</p>
 
         </button>
     )
