@@ -8,42 +8,48 @@
 .content{
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin: auto;
     width: 100%;
     max-width: calc(var(--width-column-main) * 2 + 40px - var(--border-radius) * 2);
 }
 
-.button{
+.logo{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+}
+
+.button-primary{
     position: relative;
     display: flex;
     flex-direction: row;
     border-radius: var(--border-radius);
-    background-color: var(--background-light-color);
     color: var(--text-primary-color);
+    background-color: var(--background-light-color);
     padding: 16px 20px;
-    border: none;
+    border: 1px dashed transparent;
+    box-sizing: border-box;
+    max-height: 52px;
+    align-items: center;
+    transition: all .2s;
 }
 
-.buttonProfile{
-    composes: button;
-    position: absolute;
-    right: 0;
-}
-
-.button:hover{
+.button-secondary:hover{
     cursor: pointer;
+    border: 1px dashed;
+}
+
+.button-secondary{
+    composes: button-primary;
+    color: var(--text-secondary-color);
 }
 
 .menu{
-    position: absolute;
+    position: relative;
     display: flex;
     flex-direction: row;
     left: 0;
 }
-
-/* .profile{
-    position: absolute;
-    right: 0;
-} */
 

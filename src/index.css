@@ -4,6 +4,9 @@
 --background-color:#131316;
 --background-light-color: #1C1C21;
 --text-primary-color: #F2F2F3;
+--text-secondary-color: #8585AD;
+--text-error-color: #E52B1A;
+--text-success-color: #00CCCC;
 
 --width-max: 1920px;
 --width-column-main: 600px;

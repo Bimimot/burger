@@ -1,14 +1,35 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import headerStyles from './app-header.module.css';
+import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export const HeaderButton = (props) => {
-    const { callback, icon, profile, text } = props;
+    const { callback, icon, type, text } = props;
+
+    HeaderButton.propTypes = {
+        callback: PropTypes.func,
+        icon: PropTypes.oneOf(['burger', 'list', 'profile']).isRequired,
+        type: PropTypes.oneOf(['primary', 'secondary']).isRequired,
+        text: PropTypes.string.isRequired
+    };
+
+    const icons = {
+        burger: BurgerIcon,
+        list: ListIcon,
+        profile: ProfileIcon
+    };
+
+    const ButtonIcon = icons[icon];
+
 
     return (
-        <button className={!!profile ? headerStyles.buttonProfile : headerStyles.button}
-                onClick={!!callback ? callback : null}>
-            {!!icon && icon}
-            <p className="text text_type_main-default pl-1"> {!!text ? text : "Нажать"} </p>
+        <button
+            className={headerStyles["button-"+type]}
+            onClick={!!callback ? callback : null}
+        >
+            <ButtonIcon type={type} />
+            <p className="text text_type_main-default pl-1">{text}</p>
+
         </button>
     )
 }
