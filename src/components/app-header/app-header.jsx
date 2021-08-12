@@ -7,29 +7,31 @@ export default class AppHeader extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {}        
+        this.state = {}
     }
 
     render() {
-        return(
+        return (
             <header className={headerStyles.header + " pt-4 pb-4"}>
-                <nav className={headerStyles.menu}>
-                <HeaderButton
-                    icon={<BurgerIcon type="primary" />}
-                    text="Конструктор"
-                />
+                <div className={headerStyles.content}>
+                    <nav className={headerStyles.menu}>
+                        <HeaderButton
+                            icon={<BurgerIcon type="primary" />}
+                            text="Конструктор"
+                        />
 
-                <HeaderButton
-                    icon={<ListIcon type="primary" />}
-                    text="Лента заказов"
-                />
-                </nav>
-                <Logo />
-                <div className={headerStyles.profile}>
+                        <HeaderButton
+                            icon={<ListIcon type="primary" />}
+                            text="Лента заказов"
+                        />
+                    </nav>
+                    <Logo />
                     <HeaderButton
                         icon={<ProfileIcon type="primary" />}
                         text="Личный кабинет"
+                        profile
                     />
+
                 </div>
 
 
