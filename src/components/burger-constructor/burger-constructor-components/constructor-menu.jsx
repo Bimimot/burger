@@ -1,13 +1,20 @@
 import cStyles from '../burger-constructor.module.css';
-import { useState } from 'react';
+import { menuPropTypes } from '../burger-constructor-proptypes';
+import { useState, useEffect } from 'react';
 
-export const ConstructorMenu = (props) => {
-    const { sections, title } = props;
-    const [menu, setMenu] = useState(sections.map((s, i) => ({ ...s, active: !i })));
+export const ConstructorMenu = ({ sections, title }) => {
+    ConstructorMenu.propTypes = menuPropTypes;
+
+    const [menu, setMenu] = useState([]);
+    useEffect(() => {
+        setMenu(sections.map((s, i) =>
+            ({ ...s, active: !i }))
+        )
+    }, [sections]);
 
     return (
         <div className={cStyles.menu}>
-            <h1 className={"text text_type_main-large mb-5"}>{title}</h1>
+            {!!title && <h1 className={"text text_type_main-large mb-5"}>{title}</h1>}
             <nav className={cStyles.navigation}>
                 {menu.map(link => (
                     <a
@@ -23,5 +30,5 @@ export const ConstructorMenu = (props) => {
             </nav>
         </div>
     )
-
 }
+
