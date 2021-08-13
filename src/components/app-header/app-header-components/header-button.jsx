@@ -1,6 +1,5 @@
-import React from "react";
 import PropTypes from 'prop-types';
-import headerStyles from './app-header.module.css';
+import headerStyles from '../app-header.module.css';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export const HeaderButton = (props) => {

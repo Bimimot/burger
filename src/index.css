@@ -13,7 +13,8 @@
 --width-max: 1920px;
 --width-column-main: 600px;
 --border-radius: 40px;
-
+--height-header: 88px;
+--height-menu: 156px;
 
 background-color: var(--background-color);
 color: var(--text-primary-color);

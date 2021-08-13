@@ -1,7 +1,6 @@
 .constructor{
     display: flex;
     flex-direction: column;
-    padding: 40px 0;
     margin-right: 20px;   
     width: var(--width-column-main);
     box-sizing: border-box;
@@ -10,12 +9,24 @@
 }
 
 .menu{
+    position: sticky;
+    top: var(--height-header);
+    padding-top: 40px;
+    background-color: var(--background-color);
+    z-index: 5000;
+    height: var(--height-menu);
+    box-sizing: border-box;
+
+    border: 1px solid green;
+}
+
+.navigation{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.menuPoint{
+.navLink{
     display: flex;
     position: relative;
     width: calc(var(--width-column-main) / 3);
@@ -23,17 +34,33 @@
     justify-content: center;
     color: var(--text-secondary-color);
     transition: all .2s;
+    max-height: 56px;
+    box-sizing: border-box;
 }
 
-.menuPoint:hover{
+.navLink:hover{
     cursor: hover;
     color: var(--text-primary-color);
 }
 
-.menuPointActive{
-    composes: menuPoint;
+.navLinkActive{
+    composes: navLink;
     border-bottom: 2px solid var(--color-blue);
     color: var(--text-primary-color);
+}
+
+.anchor{
+    position: relative;
+    padding-top: calc(var(--height-header) + var(--height-menu));
+    margin-top: calc(0px - var(--height-header) - var(--height-menu));
+    -webkit-background-clip: content-box;
+    background-clip: content-box;
+}
+
+.sectionFood{
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .card{
