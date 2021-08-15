@@ -3,14 +3,13 @@ import cStyles from './burger-constructor.module.css';
 import { constructorPropTypes } from './burger-constructor-proptypes';
 import { ConstructorMenu } from './burger-constructor-components/constructor-menu';
 
+import ScrollBox from '../scrollbox/scrollbox';
+
 export default class BurgerConstructor extends React.Component {
     constructor(props) {
         BurgerConstructor.propTypes = constructorPropTypes;
-
         super(props);
-        this.state = {
-            sections: []  //{id:"", text:"", food: []}
-        }
+        this.state = { sections: [] } //{id:"", text:"", food: []}}
     }
 
     componentDidMount() {
@@ -33,10 +32,9 @@ export default class BurgerConstructor extends React.Component {
         return (
             <article className={cStyles.constructor}>
                 <ConstructorMenu sections={sections} title={"Соберите бургер"} />
-
+                <ScrollBox id={"burger-constructor"}>
                 {sections.map(section => (
-                    <section className={cStyles.sectionFood} key={section.id}>
-                        <span className={cStyles.anchor} id={section.id}></span>
+                    <section className={cStyles.sectionFood} key={section.id} id={section.id}>
                         <h2>{section.text}</h2>
                         {section.foods.map(f => (
                             <div key={f._id} style={{ flexDirection: "column", display: "flex", border: "1px solid", alignItems: "center" }}>
@@ -47,7 +45,8 @@ export default class BurgerConstructor extends React.Component {
                         ))}
                     </section>
                 )
-                )}
+                    )}
+                    </ScrollBox>
             </article>
         )
     }

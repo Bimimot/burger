@@ -20,9 +20,6 @@ background-color: var(--background-color);
 color: var(--text-primary-color);
 }
 
-html{
-    scroll-behavior: smooth;
-}
 
 a{
     text-decoration: none;
