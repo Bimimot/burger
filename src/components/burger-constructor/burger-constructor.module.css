@@ -1,0 +1,30 @@
+.constructor {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    width: var(--width-column-main);
+    box-sizing: border-box;
+    padding: 100px 16px 0px;
+    gap:10px
+}
+
+.confirm{
+    display: flex;
+    flex-direction: row;
+    margin: 40px 0;
+    justify-content: flex-end;
+}
+
+.orderPrice{
+    display: flex;
+    flex-direction: row;
+    margin: 0 40px;
+    align-items: center;
+}
+
+.recipe{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    flex-grow: 1;
+}

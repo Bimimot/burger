@@ -1,8 +1,8 @@
 import React from 'react';
 import iStyles from './burger-ingredients.module.css';
 import { ingredientsPropTypes } from './burger-ingredients-proptypes';
-import { IngredientsMenu } from './burger-ingredients-components/ingredients-menu';
-import { IngredientsSections } from './burger-ingredients-components/ingredients-sections';
+import { IngredientsMenu } from './components/ingredients-menu';
+import { IngredientsSections } from './components/ingredients-sections';
 
 import ScrollBox from '../scrollbox/scrollbox';
 

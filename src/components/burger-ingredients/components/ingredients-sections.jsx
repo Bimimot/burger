@@ -22,7 +22,7 @@ const FoodCard = ({ food }) => (
     <li className={iStyles.card} >
         <img src={food.image} alt={food.name} />
         <div className={iStyles.cardPrice}>
-            <p className="text text_type_main-medium m-2" style={{ lineHeight: "1" }}>{food.price}</p>
+            <span className="text text_type_main-medium m-2" style={{ lineHeight: "1" }}>{food.price}</span>
             <CurrencyIcon type="primary" />
         </div>
         <h3 className={iStyles.cardTitle + " text text_type_main-default"}>{food.name}</h3>

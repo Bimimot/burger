@@ -24,13 +24,14 @@ export default class ScrollBox extends React.Component {
         const content = container.querySelector("#content");
         const scrollContainer = container.querySelector("#scrollContainer");
         const scrollbar = container.querySelector("#scrollbar");
-        this.setState({ content: content, scrollContainer: scrollContainer, scrollbar: scrollbar});
 
         content.addEventListener('scroll', this.setScrollBar);
         scrollbar.addEventListener('mousedown', this.startScrollContent);
 
         scrollContainer.style.top = !!this.props.top ? this.props.top + "px" : 0;
         scrollContainer.style.bottom = !!this.props.bottom ? this.props.bottom + "px" : 0;
+
+        this.setState({ content: content, scrollContainer: scrollContainer, scrollbar: scrollbar });
     }
 
     componentDidUpdate() {
@@ -42,9 +43,14 @@ export default class ScrollBox extends React.Component {
     }
 
     setScrollBar() {
-        const { content, scrollContainer, scrollbar } = this.state;         
-        scrollbar.style.height = scrollContainer.clientHeight * content.clientHeight / content.scrollHeight + "px";
-        scrollbar.style.top = scrollContainer.clientHeight * content.scrollTop / content.scrollHeight + "px";        
+        const { content, scrollContainer, scrollbar } = this.state;
+        if (content.scrollHeight > content.clientHeight) {
+            scrollbar.style.height = scrollContainer.clientHeight * content.clientHeight / content.scrollHeight + "px";
+            scrollbar.style.top = scrollContainer.clientHeight * content.scrollTop / content.scrollHeight + "px";
+        } else {
+            scrollContainer.style.display = "none";
+            content.removeEventListener('scroll', this.setScrollBar);
+        }
     }
 
     startScrollContent(event) {
