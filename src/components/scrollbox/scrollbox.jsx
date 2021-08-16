@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import sboxStyles from './scrollbox.module.css';
+import { updateSourceFile } from 'typescript';
 
 export default class ScrollBox extends React.Component {
     constructor(props) {
         ScrollBox.propTypes = {
+            id: PropTypes.string.isRequired,
             children: PropTypes.element.isRequired
         };
         super(props);
-        this.state = { container: null, content: null, scroll: null };
+        this.state = { container: null, content: null, scrollbar: null };
 
         this.setScrollBar = this.setScrollBar.bind(this);
         this.startScrollContent = this.startScrollContent.bind(this);
@@ -19,15 +21,17 @@ export default class ScrollBox extends React.Component {
     componentDidMount() {
         const container = document.querySelector(`#${this.props.id}`);
         const content = container.querySelector("#content");
-        const scroll = container.querySelector("#scrollbar");
-        this.setState({ container: container, content: content, scroll: scroll });
+        const scrollbar = container.querySelector("#scrollbar");
+        this.setState({ container: container, content: content, scrollbar: scrollbar });
 
         content.addEventListener('scroll', this.setScrollBar);
-        scroll.addEventListener('mousedown', this.startScrollContent);
+        scrollbar.addEventListener('mousedown', this.startScrollContent);
     }
 
-    componentDidUpdate() {
-        this.setScrollBar();
+    componentDidUpdate(prevProps) {
+        if (this.props !== prevProps) {
+            this.setScrollBar()
+        }
     }
 
     componentWillUnmount() {
@@ -35,31 +39,36 @@ export default class ScrollBox extends React.Component {
     }
 
     setScrollBar() {
-        const { container, content, scroll } = this.state;
-        scroll.style.height = container.clientHeight * content.clientHeight / content.scrollHeight + "px";
-        scroll.style.top = container.clientHeight * content.scrollTop / content.scrollHeight + "px";
+        const { container, content, scrollbar } = this.state;
+        scrollbar.style.height = container.clientHeight * content.clientHeight / content.scrollHeight + "px";
+        scrollbar.style.top = container.clientHeight * content.scrollTop / content.scrollHeight + "px";
     }
 
     startScrollContent(event) {
         event.preventDefault();
+        console.log("moveStart");
 
-        this.y = this.state.scroll.offsetTop;
+        this.y = this.state.scrollbar.offsetTop;
         this.start = event.pageY;
+        this.state.content.style.scrollBehavior = "auto";
 
         document.addEventListener('mousemove', this.moveScroll);
         document.addEventListener('mouseup', this.removeListeners);
+        
     }
 
     moveScroll(event) {
-        const { scroll, container, content } = this.state;
+        const { scrollbar, container, content } = this.state;
 
         const end = event.pageY;
         const delta = end - this.start;
-        scroll.style.top = Math.min(container.clientHeight - scroll.clientHeight, Math.max(0, this.y + delta)) + 'px';
-        content.scrollTop = (content.scrollHeight * scroll.offsetTop / container.clientHeight);
+        
+        scrollbar.style.top = Math.min(container.clientHeight - scrollbar.clientHeight, Math.max(0, this.y + delta)) + 'px';
+        content.scrollTop = (content.scrollHeight * scrollbar.offsetTop / container.clientHeight);
     }
 
     removeListeners() {
+        this.state.content.style.scrollBehavior = "smooth";
         document.removeEventListener('mousemove', this.moveScroll);
         document.removeEventListener('mouseup', this.removeListeners);
     }
