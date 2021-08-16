@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import sboxStyles from './scrollbox.module.css';
-import { updateSourceFile } from 'typescript';
 
 export default class ScrollBox extends React.Component {
     constructor(props) {
         ScrollBox.propTypes = {
             id: PropTypes.string.isRequired,
-            children: PropTypes.element.isRequired
+            children: PropTypes.element.isRequired,
+            top: PropTypes.number,
+            bottom: PropTypes.number,
         };
         super(props);
-        this.state = { container: null, content: null, scrollbar: null };
+        this.state = { content: null, scrollContainer: null, scrollbar: null };
 
         this.setScrollBar = this.setScrollBar.bind(this);
         this.startScrollContent = this.startScrollContent.bind(this);
@@ -21,17 +22,19 @@ export default class ScrollBox extends React.Component {
     componentDidMount() {
         const container = document.querySelector(`#${this.props.id}`);
         const content = container.querySelector("#content");
+        const scrollContainer = container.querySelector("#scrollContainer");
         const scrollbar = container.querySelector("#scrollbar");
-        this.setState({ container: container, content: content, scrollbar: scrollbar });
+        this.setState({ content: content, scrollContainer: scrollContainer, scrollbar: scrollbar});
 
         content.addEventListener('scroll', this.setScrollBar);
         scrollbar.addEventListener('mousedown', this.startScrollContent);
+
+        scrollContainer.style.top = !!this.props.top ? this.props.top + "px" : 0;
+        scrollContainer.style.bottom = !!this.props.bottom ? this.props.bottom + "px" : 0;
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props !== prevProps) {
-            this.setScrollBar()
-        }
+    componentDidUpdate() {
+        this.setScrollBar()
     }
 
     componentWillUnmount() {
@@ -39,32 +42,26 @@ export default class ScrollBox extends React.Component {
     }
 
     setScrollBar() {
-        const { container, content, scrollbar } = this.state;
-        scrollbar.style.height = container.clientHeight * content.clientHeight / content.scrollHeight + "px";
-        scrollbar.style.top = container.clientHeight * content.scrollTop / content.scrollHeight + "px";
+        const { content, scrollContainer, scrollbar } = this.state;         
+        scrollbar.style.height = scrollContainer.clientHeight * content.clientHeight / content.scrollHeight + "px";
+        scrollbar.style.top = scrollContainer.clientHeight * content.scrollTop / content.scrollHeight + "px";        
     }
 
     startScrollContent(event) {
         event.preventDefault();
-        console.log("moveStart");
-
         this.y = this.state.scrollbar.offsetTop;
         this.start = event.pageY;
         this.state.content.style.scrollBehavior = "auto";
-
         document.addEventListener('mousemove', this.moveScroll);
         document.addEventListener('mouseup', this.removeListeners);
-        
     }
 
     moveScroll(event) {
-        const { scrollbar, container, content } = this.state;
-
+        const { scrollbar, scrollContainer, content } = this.state;
         const end = event.pageY;
-        const delta = end - this.start;
-        
-        scrollbar.style.top = Math.min(container.clientHeight - scrollbar.clientHeight, Math.max(0, this.y + delta)) + 'px';
-        content.scrollTop = (content.scrollHeight * scrollbar.offsetTop / container.clientHeight);
+        const diff = end - this.start;
+        scrollbar.style.top = Math.min(scrollContainer.clientHeight - scrollbar.clientHeight, Math.max(0, this.y + diff)) + 'px';
+        content.scrollTop = (content.scrollHeight * scrollbar.offsetTop / scrollContainer.clientHeight);
     }
 
     removeListeners() {
@@ -76,7 +73,7 @@ export default class ScrollBox extends React.Component {
     render() {
         return (
             <section className={sboxStyles.container} id={this.props.id}>
-                <div className={sboxStyles.scrollBarContainer} >
+                <div className={sboxStyles.scrollBarContainer} id="scrollContainer">
                     <div className={sboxStyles.scrollbar} id="scrollbar"></div>
                 </div>
                 <div className={sboxStyles.content} id="content">

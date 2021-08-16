@@ -1,9 +1,9 @@
-import cStyles from '../burger-constructor.module.css';
-import { menuPropTypes } from '../burger-constructor-proptypes';
+import iStyles from '../burger-ingredients.module.css';
+import { menuPropTypes } from '../burger-ingredients-proptypes';
 import { useState, useEffect } from 'react';
 
-export const ConstructorMenu = ({ sections, title }) => {
-    ConstructorMenu.propTypes = menuPropTypes;
+export const IngredientsMenu = ({ sections, title }) => {
+    IngredientsMenu.propTypes = menuPropTypes;
 
     const [menu, setMenu] = useState([]);
     useEffect(() => {
@@ -13,14 +13,14 @@ export const ConstructorMenu = ({ sections, title }) => {
     }, [sections]);
 
     return (
-        <div className={cStyles.menu}>
+        <div className={iStyles.menu}>
             {!!title && <h1 className={"text text_type_main-large mb-5"}>{title}</h1>}
-            <nav className={cStyles.navigation}>
+            <nav className={iStyles.navigation}>
                 {menu.map(link => (
                     <a
                         key={link.id}
                         href={`#${link.id}`}
-                        className={(link.active ? cStyles.navLinkActive : cStyles.navLink)
+                        className={(link.active ? iStyles.navLinkActive : iStyles.navLink)
                             + " pt-4 pb-4 text text_type_main-default"}
                         onClick={() => setMenu(menu.map(point => ({ ...point, active: point === link })))}
                     >

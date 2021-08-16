@@ -26,7 +26,7 @@ export const menuPropTypes = {
     title: PropTypes.string,
     sections: foodSections
 };
-export const constructorPropTypes = foodsPropTypes;
+export const ingredientsPropTypes = foodsPropTypes;
 export const sectionsPropTypes = foodSections;
 
 

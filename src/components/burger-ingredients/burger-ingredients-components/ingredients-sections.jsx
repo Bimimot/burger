@@ -1,36 +1,36 @@
-import cStyles from '../burger-constructor.module.css';
-import { sectionsPropTypes } from '../burger-constructor-proptypes';
+import iStyles from '../burger-ingredients.module.css';
+import { sectionsPropTypes } from '../burger-ingredients-proptypes';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export const ConstructorSections = ({ sections }) => {
-    ConstructorSections.propTypes = sectionsPropTypes;
+export const IngredientsSections = ({ sections }) => {
+    IngredientsSections.propTypes = sectionsPropTypes;
 
-    return (<>
+    return (<ul>
         {sections.map(section => (
-            <div className={cStyles.sectionFood} key={section.id} id={section.id}>
+            <li className={iStyles.sectionFood} key={section.id} id={section.id}>
                 <h2 className="text text_type_main-medium">{section.text}</h2>
-                <div className={cStyles.cards}>
+                <ul className={iStyles.cards}>
                     {section.foods.map(f => <FoodCard food={f} key={f._id} />)}
-                </div>
-            </div>
+                </ul>
+            </li>
         )
         )}
-    </>)
+    </ul>)
 }
 
 const FoodCard = ({ food }) => (
-    <div className={cStyles.card} >
+    <li className={iStyles.card} >
         <img src={food.image} alt={food.name} />
-        <div className={cStyles.cardPrice}>
+        <div className={iStyles.cardPrice}>
             <p className="text text_type_main-medium m-2" style={{ lineHeight: "1" }}>{food.price}</p>
             <CurrencyIcon type="primary" />
         </div>
-        <h3 className={cStyles.cardTitle + " text text_type_main-default"}>{food.name}</h3>
-        <div className={cStyles.count}>
+        <h3 className={iStyles.cardTitle + " text text_type_main-default"}>{food.name}</h3>
+        <div className={iStyles.count}>
             {Math.random() > .7 &&
                 <Counter count={1} size="default" />
             }
         </div>
-    </div>
+    </li>
 );
 

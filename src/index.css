@@ -24,3 +24,8 @@ color: var(--text-primary-color);
 a{
     text-decoration: none;
 }
+
+ul{
+    padding: 0;
+    margin: 0;
+}
