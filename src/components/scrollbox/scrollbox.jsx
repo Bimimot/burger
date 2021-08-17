@@ -48,8 +48,7 @@ export default class ScrollBox extends React.Component {
             scrollbar.style.height = scrollContainer.clientHeight * content.clientHeight / content.scrollHeight + "px";
             scrollbar.style.top = scrollContainer.clientHeight * content.scrollTop / content.scrollHeight + "px";
         } else {
-            scrollContainer.style.display = "none";
-            content.removeEventListener('scroll', this.setScrollBar);
+            scrollContainer.style.visibility = "none";
         }
     }
 

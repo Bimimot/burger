@@ -4,18 +4,18 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 
 export const IngredientsSections = ({ sections }) => {
     IngredientsSections.propTypes = sectionsPropTypes;
-
-    return (<ul>
-        {sections.map(section => (
-            <li className={iStyles.sectionFood} key={section.id} id={section.id}>
-                <h2 className="text text_type_main-medium">{section.text}</h2>
-                <ul className={iStyles.cards}>
-                    {section.foods.map(f => <FoodCard food={f} key={f._id} />)}
-                </ul>
-            </li>
-        )
-        )}
-    </ul>)
+    return (
+        <ul>
+            {sections.map(section => (
+                <li className={iStyles.sectionFood} key={section.id} id={section.id}>
+                    <h2 className="text text_type_main-medium">{section.text}</h2>
+                    <ul className={iStyles.cards}>
+                        {section.foods.map(f => <FoodCard food={f} key={f._id} />)}
+                    </ul>
+                </li>
+            ))}
+        </ul>
+    )
 }
 
 const FoodCard = ({ food }) => (

@@ -1,21 +1,21 @@
 import PropTypes from 'prop-types';
 
 const foodTypeProptypes = PropTypes.oneOf(['bun', 'sauce', 'main']);
-const foodPropTypes = PropTypes.shape({
+export const foodPropTypes = PropTypes.shape({
     "_id": PropTypes.string.isRequired,
     "name": PropTypes.string.isRequired,
-    "type": foodTypeProptypes,
-    "proteins": PropTypes.number.isRequired,
-    "fat": PropTypes.number.isRequired,
-    "carbohydrates": PropTypes.number.isRequired,
-    "calories": PropTypes.number.isRequired,
+    "type": foodTypeProptypes.isRequired,
+    "proteins": PropTypes.number,
+    "fat": PropTypes.number,
+    "carbohydrates": PropTypes.number,
+    "calories": PropTypes.number,
     "price": PropTypes.number.isRequired,
     "image": PropTypes.string.isRequired,
-    "image_mobile": PropTypes.string.isRequired,
-    "image_large": PropTypes.string.isRequired,
+    "image_mobile": PropTypes.string,
+    "image_large": PropTypes.string,
     "__v": PropTypes.number
 });
-const foodsPropTypes = PropTypes.arrayOf(foodPropTypes.isRequired).isRequired;
+export const foodsPropTypes = PropTypes.arrayOf(foodPropTypes.isRequired).isRequired;
 const foodSections = PropTypes.arrayOf(PropTypes.shape({
     id: foodTypeProptypes.isRequired,
     text: PropTypes.string.isRequired,
@@ -26,6 +26,7 @@ export const menuPropTypes = {
     title: PropTypes.string,
     sections: foodSections
 };
+
 export const ingredientsPropTypes = foodsPropTypes;
 export const sectionsPropTypes = foodSections;
 
