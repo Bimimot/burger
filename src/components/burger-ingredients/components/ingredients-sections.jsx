@@ -1,11 +1,11 @@
 import iStyles from '../burger-ingredients.module.css';
-import { sectionsPropTypes } from '../burger-ingredients-proptypes';
+import { sectionsPropTypes } from '../../../utils/proptypes';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export const IngredientsSections = ({ sections }) => {
     IngredientsSections.propTypes = sectionsPropTypes;
     return (
-        <ul>
+        <ul className={iStyles.sections}>
             {sections.map(section => (
                 <li className={iStyles.sectionFood} key={section.id} id={section.id}>
                     <h2 className="text text_type_main-medium">{section.text}</h2>

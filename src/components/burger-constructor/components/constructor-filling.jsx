@@ -1,7 +1,7 @@
 import cStyles from '../burger-constructor.module.css';
-import { fillingProptypes } from '../burger-constructor-proptypes';
+import { fillingProptypes } from '../../../utils/proptypes';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import ScrollBox from '../../scrollbox/scrollbox';
+import { ScrollBox } from '../../scrollbox/scrollbox';
 
 export const Filling = ({ filling }) => (
     <div style={{ flexGrow: filling.length, overflow: "hidden" }}>

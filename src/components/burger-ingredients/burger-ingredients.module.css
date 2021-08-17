@@ -45,6 +45,11 @@
     color: var(--text-primary-color);
 }
 
+.sections{
+    display: flex;
+    flex-direction: column;
+}
+
 .sectionFood {
     position: relative;
     display: flex;

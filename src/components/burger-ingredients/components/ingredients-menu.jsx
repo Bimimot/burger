@@ -1,5 +1,5 @@
 import iStyles from '../burger-ingredients.module.css';
-import { menuPropTypes } from '../burger-ingredients-proptypes';
+import { menuPropTypes } from '../../../utils/proptypes';
 import { useState, useEffect } from 'react';
 
 export const IngredientsMenu = ({ sections, title }) => {

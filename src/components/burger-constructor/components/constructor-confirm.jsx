@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import cStyles from '../burger-constructor.module.css';
-import { confirmOrderProptypes } from '../burger-constructor-proptypes';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { confirmOrderPropTypes } from '../../../utils/proptypes';
 
 export const ConfirmOrder = ({ total }) => {
-    ConfirmOrder.propTypes = confirmOrderProptypes;
+    ConfirmOrder.propTypes = confirmOrderPropTypes;
+
     useEffect(() => {
         resizeCurrencyIcon()
     }, []);
@@ -19,7 +20,7 @@ export const ConfirmOrder = ({ total }) => {
 
     return (<div className={cStyles.confirm}>
         <div className={cStyles.orderPrice + " text text_type_main-large"} id="orderPrice">
-            <span className="m-3" style={{ lineHeight: "1" }}>{!!total ? total : 0}</span>
+            <span className="m-3" style={{ lineHeight: "1" }}>{total}</span>
             <CurrencyIcon type="primary" />
         </div>
         <Button type="primary" size="large">Оформить заказ</Button>

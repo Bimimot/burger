@@ -1,16 +1,10 @@
-import PropTypes from 'prop-types';
 import headerStyles from '../app-header.module.css';
+import { headerButtonProptypes } from '../../../utils/proptypes';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export const HeaderButton = (props) => {
     const { callback, icon, type, text } = props;
-
-    HeaderButton.propTypes = {
-        callback: PropTypes.func,
-        icon: PropTypes.oneOf(['burger', 'list', 'profile']).isRequired,
-        type: PropTypes.oneOf(['primary', 'secondary']).isRequired,
-        text: PropTypes.string.isRequired
-    };
+    HeaderButton.propTypes = headerButtonProptypes;
 
     const icons = {
         burger: BurgerIcon,

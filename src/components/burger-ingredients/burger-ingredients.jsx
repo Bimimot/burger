@@ -1,45 +1,30 @@
-import React from 'react';
 import iStyles from './burger-ingredients.module.css';
-import { ingredientsPropTypes } from './burger-ingredients-proptypes';
+import { ingredientsPropTypes } from '../../utils/proptypes';
+import { translations } from '../../utils/data';
 import { IngredientsMenu } from './components/ingredients-menu';
 import { IngredientsSections } from './components/ingredients-sections';
+import { ScrollBox } from '../scrollbox/scrollbox';
 
-import ScrollBox from '../scrollbox/scrollbox';
+export const BurgerIngredients = ({ ingredients }) => {
+    BurgerIngredients.propTypes = ingredientsPropTypes;
 
-export default class BurgerIngredients extends React.Component {
-    constructor(props) {
-        BurgerIngredients.propTypes = ingredientsPropTypes;
-        super(props);
-        this.state = { sections: [] } //{id:"", text:"", food: []}}
-    }
+    const sections = [];
+    ingredients.forEach(food => {
+        const foodIndex = sections.findIndex(s => s.id === food.type);
+        foodIndex > -1 ? sections[foodIndex].foods.push(food)
+            : sections.push({ id: food.type, text: translations[food.type], foods: [food] })
+    });
 
-    componentDidMount() {
-        const translations = { bun: "Булки", main: "Начинка", sauce: "Соусы" };
-        const sections = [];
-
-        this.props.foods.forEach(food => {
-            const foodIndex = sections.findIndex(s => s.id === food.type);
-            foodIndex > -1 ? sections[foodIndex].foods.push(food)
-                : sections.push({ id: food.type, text: translations[food.type], foods: [food] })
-        });
-
-        this.setState({ sections: [...sections] });
-    }
-
-    render() {
-        const { sections } = this.state;
-
-        return (
-            <article className={iStyles.ingredients}>
-                {sections.length &&
-                    <>
-                        <IngredientsMenu sections={sections} title={"Соберите бургер"} />
-                        <ScrollBox id={"burger-ingredients"} top={40} bottom={52}>
-                            <IngredientsSections sections={sections} />
-                        </ScrollBox>
-                    </>
-                }
-            </article>
-        )
-    }
+    return (
+        <article className={iStyles.ingredients}>
+            {sections.length &&
+                <>
+                    <IngredientsMenu sections={sections} title={"Соберите бургер"} />
+                    <ScrollBox id={"burger-ingredients"} top={40} bottom={52}>
+                        <IngredientsSections sections={sections} />
+                    </ScrollBox>
+                </>
+            }
+        </article>
+    )
 }

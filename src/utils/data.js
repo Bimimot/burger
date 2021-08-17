@@ -341,7 +341,13 @@ export const recipe =
             "image_large": "https://code.s3.yandex.net/react/code/cheese-large.png",
             "__v": 0
         }
-    ]
+    ];
+
+export const translations = {
+    bun: "Булки",
+    main: "Начинка",
+    sauce: "Соусы"
+};
 
 
 
