@@ -5,7 +5,7 @@ import { ScrollBox } from '../../scrollbox/scrollbox';
 
 export const Filling = ({ filling }) => (
     <div style={{ flexGrow: filling.length, overflow: "hidden" }}>
-        <ScrollBox id={"burger-filling"}>
+        <ScrollBox>
             <div className={cStyles.recipe}>
                 {filling.map((item, i) =>
                     <ConstructorElement

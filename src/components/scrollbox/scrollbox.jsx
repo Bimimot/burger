@@ -1,15 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import sboxStyles from './scrollbox.module.css';
 import { scrollboxPropTypes } from '../../utils/proptypes';
 
 export const ScrollBox = (props) => {
     ScrollBox.propTypes = scrollboxPropTypes;
+    const contentRef = useRef(null);
+    const scrollContainerRef = useRef(null);
+    const scrollbarRef = useRef(null);
 
     useEffect(() => {
-        const container = document.querySelector(`#${props.id}`);
-        const content = container.querySelector("#content");
-        const scrollContainer = container.querySelector("#scrollContainer");
-        const scrollbar = container.querySelector("#scrollbar");
+        const content = contentRef.current;
+        const scrollContainer = scrollContainerRef.current;
+        const scrollbar = scrollbarRef.current;
         scrollContainer.style.top = !!props.top ? props.top + "px" : 0;
         scrollContainer.style.bottom = !!props.bottom ? props.bottom + "px" : 0;
 
@@ -48,11 +50,11 @@ export const ScrollBox = (props) => {
 
 
     return (
-        <section className={sboxStyles.container} id={props.id}>
-            <div className={sboxStyles.scrollBarContainer} id="scrollContainer">
-                <div className={sboxStyles.scrollbar} id="scrollbar"></div>
+        <section className={sboxStyles.container} id={props.id} >
+            <div className={sboxStyles.scrollBarContainer} ref={scrollContainerRef}>
+                <div className={sboxStyles.scrollbar} ref={scrollbarRef}></div>
             </div>
-            <div className={sboxStyles.content} id="content">
+            <div className={sboxStyles.content}  ref={contentRef}>
                 {props.children}
             </div>
         </section>

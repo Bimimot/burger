@@ -48,7 +48,6 @@ export const confirmOrderPropTypes = { total: PropTypes.number };
 
 //---------scrollbox-------
 export const scrollboxPropTypes = {
-    id: PropTypes.string,
     children: PropTypes.element.isRequired,
     top: PropTypes.number,
     bottom: PropTypes.number,

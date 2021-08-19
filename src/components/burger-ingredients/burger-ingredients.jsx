@@ -20,7 +20,7 @@ export const BurgerIngredients = ({ ingredients }) => {
             {sections.length &&
                 <>
                     <IngredientsMenu sections={sections} title={"Соберите бургер"} />
-                    <ScrollBox id={"burger-ingredients"} top={40} bottom={52}>
+                    <ScrollBox top={40} bottom={52}>
                         <IngredientsSections sections={sections} />
                     </ScrollBox>
                 </>
