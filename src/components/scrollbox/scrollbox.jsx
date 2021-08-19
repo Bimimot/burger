@@ -50,7 +50,7 @@ export const ScrollBox = (props) => {
 
 
     return (
-        <section className={sboxStyles.container} id={props.id} >
+        <section className={sboxStyles.container} id={"scrollbox"} >
             <div className={sboxStyles.scrollBarContainer} ref={scrollContainerRef}>
                 <div className={sboxStyles.scrollbar} ref={scrollbarRef}></div>
             </div>
