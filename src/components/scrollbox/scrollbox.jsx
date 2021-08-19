@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
 import sboxStyles from './scrollbox.module.css';
+import { scrollboxPropTypes } from '../../utils/proptypes';
 
 export const ScrollBox = (props) => {
+    ScrollBox.propTypes = scrollboxPropTypes;
+
     useEffect(() => {
         const container = document.querySelector(`#${props.id}`);
         const content = container.querySelector("#content");
@@ -28,12 +31,15 @@ export const ScrollBox = (props) => {
                 scrollbar.style.top = Math.min(scrollContainer.clientHeight - scrollbar.clientHeight, Math.max(0, y + diff)) + 'px';
                 content.scrollTop = (content.scrollHeight * scrollbar.offsetTop / scrollContainer.clientHeight);
             };
+            const removeListeners = () => {
+                document.removeEventListener('mousemove', moveScroll);
+                document.removeEventListener('mouseup', removeListeners);
+                content.style.scrollBehavior = "smooth";
+            };
 
             document.addEventListener('mousemove', moveScroll);
-            document.addEventListener('mouseup', function () {
-                document.removeEventListener('mousemove', moveScroll);
-            });
-        }
+            document.addEventListener('mouseup', removeListeners);
+        };
 
         setScroll();
         content.addEventListener('scroll', setScroll);
@@ -51,4 +57,5 @@ export const ScrollBox = (props) => {
             </div>
         </section>
     )
-}
+};
+

@@ -5,16 +5,16 @@ import { ScrollBox } from '../../scrollbox/scrollbox';
 
 export const Filling = ({ filling }) => (
     <div style={{ flexGrow: filling.length, overflow: "hidden" }}>
-        <ScrollBox id={"burgerConstructor"}>
+        <ScrollBox id={"burger-filling"}>
             <div className={cStyles.recipe}>
-                {filling.map((item, i) => (
-                    item.type !== "bun" && <ConstructorElement
+                {filling.map((item, i) =>
+                    <ConstructorElement
                         key={item._id + i}
                         text={item.name}
                         price={item.price}
                         thumbnail={item.image}
                     />
-                ))}
+                )}
             </div>
         </ScrollBox>
     </div>

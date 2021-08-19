@@ -54,7 +54,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    margin: 40px 0 0;
+    padding: 40px 0 0;
 }
 
 .cards {
