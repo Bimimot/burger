@@ -28,6 +28,7 @@ export const BurgerIngredients = ({ ingredients }) => {
                     <ScrollBox top={40} bottom={52}>
                         <IngredientsSections sections={sections} />
                     </ScrollBox>
+
                 </>
             }
         </article>

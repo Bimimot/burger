@@ -59,3 +59,11 @@ export const loaderProptypes = {
     text: PropTypes.string
 }
 //-------------------------
+
+//---------modal-----------
+export const modalProptypes = {
+    title: PropTypes.string,
+    onClose: PropTypes.func.isRequired,
+    children: PropTypes.element.isRequired
+}
+//-------------------------

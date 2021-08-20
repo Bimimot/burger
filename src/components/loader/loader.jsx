@@ -3,7 +3,7 @@ import { loaderProptypes } from '../../utils/proptypes';
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export const Loader = ({ text = "Загружаем..." }) => {
-    Loader.loaderProptypes = loaderProptypes;
+    Loader.propTypes = loaderProptypes;
     const icons = [1, 2, 3, 4, 5];
     return (
         <div className={lStyles.container}>
