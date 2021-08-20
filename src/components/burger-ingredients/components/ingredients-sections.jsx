@@ -6,15 +6,11 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 export const IngredientsSections = ({ sections }) => {
     IngredientsSections.propTypes = sectionsPropTypes;
     const lastSectionRef = useRef(null);
-    useEffect(() => {
-        
-        const topSection = parseInt(getComputedStyle(lastSectionRef.current).paddingTop);
+    useEffect(() => {        
         const sectionHeight = lastSectionRef.current.offsetHeight;
-
         const boxHeight = lastSectionRef.current.closest('#scrollbox').clientHeight;
-
         if (boxHeight > sectionHeight) {
-            lastSectionRef.current.style.paddingBottom = boxHeight - sectionHeight - topSection+ "px";
+            lastSectionRef.current.style.paddingBottom = boxHeight - sectionHeight + "px";
         }
     }, [sections]);
 

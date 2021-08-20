@@ -11,8 +11,6 @@ export const BurgerIngredients = ({ ingredients }) => {
     const [sections, setSections] = useState([]);
 
     useEffect(() => {
-        console.log("ingredients", ingredients);
-
         const newSections = [];
         ingredients.forEach(food => {
             const foodIndex = newSections.findIndex(s => s.id === food.type);
@@ -21,18 +19,6 @@ export const BurgerIngredients = ({ ingredients }) => {
         });
         setSections(newSections);
     }, [ingredients]);
-
-
-    console.log("Ingredients sections", sections);
-
-
-
-    // const sections = [];
-    // ingredients.forEach(food => {
-    //     const foodIndex = sections.findIndex(s => s.id === food.type);
-    //     foodIndex > -1 ? sections[foodIndex].foods.push(food)
-    //         : sections.push({ id: food.type, text: translations[food.type], foods: [food] })
-    // });
 
     return (
         <article className={iStyles.ingredients}>

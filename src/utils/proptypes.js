@@ -53,3 +53,9 @@ export const scrollboxPropTypes = {
     bottom: PropTypes.number,
 };
 //-------------------------
+
+//----------loader---------
+export const loaderProptypes = {
+    text: PropTypes.string
+}
+//-------------------------

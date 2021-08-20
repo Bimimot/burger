@@ -1,12 +1,14 @@
-import React from 'react';
+import { useState } from 'react';
 import cStyles from './burger-constructor.module.css';
 import { constructorPropTypes } from '../../utils/proptypes';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Filling } from './components/constructor-filling';
 import { ConfirmOrder } from './components/constructor-confirm';
+import { Modal } from '../modal/modal';
 
 export const BurgerConstructor = ({ recipe }) => {
     BurgerConstructor.propTypes = constructorPropTypes;
+    const [openOrder, setOpenOrder] = useState(false);
     
     const bun = recipe.find(food => food.type === "bun");
     const filling = recipe.filter(food => food.type !== "bun");
@@ -35,7 +37,17 @@ export const BurgerConstructor = ({ recipe }) => {
                         thumbnail={bun.image}
                     />
                 }
-                {!!total && <ConfirmOrder total={total} />}
+                {!!total && <ConfirmOrder
+                    total={total}
+                    confirm={() => setOpenOrder(true)}
+                />}
+
+                <div style={{ overflow: 'hidden' }}>
+                    {openOrder && <Modal
+                        title={"O R D E R"}
+                        onClose={() => setOpenOrder(false)}
+                    />}
+                </div>
             </article>
         )
 }

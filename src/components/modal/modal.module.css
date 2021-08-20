@@ -1,0 +1,58 @@
+.modalBox {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    border-radius: 40px;
+    margin: auto;
+    width: 720px;
+    min-height: 720px;
+    background-color: var(--background-light-color);
+    z-index: 2000;
+}
+
+
+.header {
+}
+
+.close{
+    position: relative;
+    display: block;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    outline: none;
+    background-color: transparent;
+    z-index: 2000;
+    border: 1px solid red;
+    color: var(--text-primary-color);
+    transition: .2s;
+}
+
+.close:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+    color: var(--color-blue);
+}
+
+
+
+.close::after,
+.close::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 11px;
+    height: 24px;
+    width: 1px;
+    border-left: 2px solid;
+    box-sizing: border-box;
+}
+
+.close::after {
+    transform: rotate(-45deg);
+}
+
+.close::before {
+    transform: rotate(45deg);
+}
+
