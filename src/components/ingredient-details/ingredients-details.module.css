@@ -1,12 +1,10 @@
-
-.container{
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
-
 }
 
-.composition{
+.composition {
     display: flex;
     flex-direction: row;
     gap: 20px;
@@ -14,10 +12,10 @@
     width: 520px;
 }
 
-.composeItem{
+.composeItem {
     display: flex;
     flex-direction: column;
     min-width: max-content;
     width: 100%;
-    text-align: center; 
+    text-align: center;
 }

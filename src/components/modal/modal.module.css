@@ -11,24 +11,23 @@
     box-sizing: border-box;
 }
 
-
-.closePosition{
+.closePosition {
     position: absolute;
     top: 60px;
     right: 40px;
     border: none;
     outline: none;
     background-color: transparent;
-    transition: transform .2s ease;
+    transition: transform 0.2s ease;
     z-index: 2500;
 }
 
-.closePosition:hover{
+.closePosition:hover {
     cursor: pointer;
     transform: scale(1.2);
 }
 
-.content{
+.content {
     display: flex;
     position: relative;
     flex-direction: column;

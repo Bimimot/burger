@@ -1,9 +1,11 @@
+import React from 'react';
 import cStyles from '../burger-constructor.module.css';
 import { fillingProptypes } from '../../../utils/proptypes';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ScrollBox } from '../../scrollbox/scrollbox';
 
-export const Filling = ({ filling }) => (
+export const Filling = React.memo(
+    ({ filling }) => (
     <div style={{ flexGrow: filling.length, overflow: "hidden" }}>
         <ScrollBox>
             <div className={cStyles.recipe}>
@@ -18,5 +20,6 @@ export const Filling = ({ filling }) => (
             </div>
         </ScrollBox>
     </div>
+    )
 )
 Filling.propTypes = fillingProptypes;

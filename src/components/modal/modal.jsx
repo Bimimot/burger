@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { useEffect } from 'react';
 import mStyles from './modal.module.css';
@@ -7,7 +8,8 @@ import { ModalOverlay } from "../modal-overlay/modal-overlay";
 
 const modalRoot = document.getElementById('modal');
 
-export const Modal = (props) => {
+export const Modal = React.memo(
+    (props) => {
     Modal.propTypes = modalProptypes;
     useEffect(() => {
         document.addEventListener('keydown', closeByKey);
@@ -30,7 +32,8 @@ export const Modal = (props) => {
                 </div>
             </div>
         </ModalOverlay>), modalRoot)
-};
+    }
+);
 
 const ModalClose = ({ onClick }) =>
     <button className={mStyles.closePosition}>

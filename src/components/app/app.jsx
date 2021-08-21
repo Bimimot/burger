@@ -11,7 +11,8 @@ export const App = () => {
   const [state, setState] = useState({
     foods: [],
     isLoading: false,
-    isError: false
+    isError: false,
+    recipe: recipe
   });
   
   useEffect(() => {
@@ -25,7 +26,6 @@ export const App = () => {
     getFoods();
   }, []);
 
-  console.log("APP state", state);
   return (
     <>
       <AppHeader />
@@ -33,7 +33,7 @@ export const App = () => {
         {(!state.isLoading && !state.isError)
           && <div className={styles.content}>
             <BurgerIngredients ingredients={state.foods} />
-            <BurgerConstructor recipe={recipe} />
+            <BurgerConstructor recipe={state.recipe} />
           </div>
         }
         {state.isLoading && <Loader text={"Обновляем меню" }/>}
