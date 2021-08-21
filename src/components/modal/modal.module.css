@@ -2,13 +2,13 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    padding: 40px;
+    padding: 40px 40px 60px;
     border-radius: 40px;
     margin: auto;
     width: 720px;
-    min-height: 720px;
     background-color: var(--background-light-color);
     z-index: 2000;
+    box-sizing: border-box;
 }
 
 
@@ -32,7 +32,6 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    border:1px solid red;
     height: 100%;
     width: 100%;
     align-items: center;

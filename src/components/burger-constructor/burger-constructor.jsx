@@ -5,15 +5,26 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { Filling } from './components/constructor-filling';
 import { ConfirmOrder } from './components/constructor-confirm';
 import { Modal } from '../modal/modal';
-import { OrderIngredients } from '../order-ingredients/OrderIngredients';
+import { OrderIngredients } from '../order-ingredients/order-ingredients';
+import { randomInteger } from '../../helpers/helpers';
 
 export const BurgerConstructor = ({ recipe }) => {
     BurgerConstructor.propTypes = constructorPropTypes;
     const [openOrder, setOpenOrder] = useState(false);
+    const [orderNumber, setOrderNumber] = useState("");
 
     const bun = recipe.find(food => food.type === "bun");
     const filling = recipe.filter(food => food.type !== "bun");
     const total = recipe.reduce((total, current) => total + current.price, 0);
+
+    const confirmOrder = () => {
+        setOpenOrder(true);
+        let order = "";
+        for (let i = 0; i < 6; i++) {
+            order = order + randomInteger(0, 9);
+        };
+        setOrderNumber(order);
+    }
 
     return (
         <article className={cStyles.constructor}>
@@ -34,19 +45,19 @@ export const BurgerConstructor = ({ recipe }) => {
                     type="bottom"
                     isLocked={true}
                     text={bun.name + " (низ)"}
-                    price={bun.price}
+                    price={bun.price} 
                     thumbnail={bun.image}
                 />
             }
             {!!total && <ConfirmOrder
                 total={total}
-                confirm={() => setOpenOrder(true)}
+                confirm={confirmOrder}
             />}
 
             <div style={{ overflow: 'hidden' }}>
                 {openOrder &&
                     <Modal onClose={() => setOpenOrder(false)}>
-                        <OrderIngredients order={"123456"} />
+                        <OrderIngredients order={orderNumber} />
                     </Modal>
                 }
             </div>

@@ -67,3 +67,15 @@ export const modalProptypes = {
     children: PropTypes.element.isRequired
 }
 //-------------------------
+
+//---------order-----------
+export const orderProptypes = {
+    order: PropTypes.string.isRequired
+}
+//-------------------------
+
+//---------details---------
+export const detailsProptypes = {
+    ingredient: foodPropTypes.isRequired
+}
+//-------------------------
