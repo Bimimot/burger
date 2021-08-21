@@ -1,5 +1,5 @@
 import iStyles from '../burger-ingredients.module.css';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { sectionsPropTypes } from '../../../utils/proptypes';
 import { IngredientCard } from './ingredient-card';
 

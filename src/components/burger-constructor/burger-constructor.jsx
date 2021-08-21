@@ -5,6 +5,7 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { Filling } from './components/constructor-filling';
 import { ConfirmOrder } from './components/constructor-confirm';
 import { Modal } from '../modal/modal';
+import { OrderIngredients } from '../order-ingredients/OrderIngredients';
 
 export const BurgerConstructor = ({ recipe }) => {
     BurgerConstructor.propTypes = constructorPropTypes;
@@ -43,7 +44,11 @@ export const BurgerConstructor = ({ recipe }) => {
             />}
 
             <div style={{ overflow: 'hidden' }}>
-                {openOrder && <Modal title={"O R D E R"} onClose={() => setOpenOrder(false)} />}
+                {openOrder &&
+                    <Modal onClose={() => setOpenOrder(false)}>
+                        <OrderIngredients order={"123456"} />
+                    </Modal>
+                }
             </div>
         </article>
     )
