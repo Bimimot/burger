@@ -6,6 +6,7 @@ import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 export const Loader = React.memo(
     ({ text = "Загружаем..." }) => {
         Loader.propTypes = loaderProptypes;
+
         const icons = [1, 2, 3, 4, 5];
         return (
             <div className={lStyles.container}>

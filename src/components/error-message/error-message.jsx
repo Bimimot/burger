@@ -3,7 +3,7 @@ import eStyles from './error-message.module.css';
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export const ErrorMessage = React.memo(
-    () => (
+    () =>
         <div className={eStyles.container}>
             <div className={eStyles.icons}>
                 <BurgerIcon type="error" />
@@ -17,5 +17,4 @@ export const ErrorMessage = React.memo(
                 Попробуйте обновить страницу.
             </p>
         </div>
-    )
 )

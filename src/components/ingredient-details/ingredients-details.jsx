@@ -29,7 +29,6 @@ export const IngredientsDetails = React.memo(
                         <span className="text text_type_digits-default text_color_inactive mb-2">{ingredient.carbohydrates}</span>
                     </div>
                 </div>
-
             </div>
         )
     }

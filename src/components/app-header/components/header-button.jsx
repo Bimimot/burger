@@ -5,8 +5,8 @@ import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer
 
 export const HeaderButton = React.memo(
     (props) => {
-        const { callback, icon, type, text } = props;
         HeaderButton.propTypes = headerButtonProptypes;
+        const { callback, icon, type, text } = props;        
 
         const icons = {
             burger: BurgerIcon,

@@ -12,6 +12,7 @@ import { randomInteger } from '../../utils/helpers';
 export const BurgerConstructor = React.memo(
     ({ recipe }) => {
         BurgerConstructor.propTypes = constructorPropTypes;
+
         const [openOrder, setOpenOrder] = useState(false);
         const [orderNumber, setOrderNumber] = useState("");
 

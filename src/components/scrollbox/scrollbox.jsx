@@ -6,6 +6,7 @@ import { scrollboxPropTypes } from '../../utils/proptypes';
 export const ScrollBox = React.memo(
     (props) => {
         ScrollBox.propTypes = scrollboxPropTypes;
+
         const contentRef = useRef(null);
         const scrollContainerRef = useRef(null);
         const scrollbarRef = useRef(null);

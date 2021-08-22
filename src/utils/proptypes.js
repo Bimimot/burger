@@ -16,7 +16,7 @@ const foodPropTypes = PropTypes.shape({
     __v: PropTypes.number.isRequired
 });
 const foodsPropTypes = PropTypes.arrayOf(foodPropTypes.isRequired).isRequired;
-const foodIngredients = PropTypes.arrayOf(PropTypes.shape({
+const foodSections = PropTypes.arrayOf(PropTypes.shape({
     id: foodTypeProptypes.isRequired,
     text: PropTypes.string.isRequired,
     foods: foodsPropTypes.isRequired
@@ -35,9 +35,15 @@ export const headerButtonProptypes = {
 export const ingredientsPropTypes = foodsPropTypes;
 export const menuPropTypes = {
     title: PropTypes.string,
-    sections: foodIngredients
+    sections: foodSections
 };
-export const sectionsPropTypes = foodIngredients;
+export const sectionsPropTypes = {    
+    sections: foodSections,
+    showDetails: PropTypes.func.isRequired
+};
+export const inrgredientCardPropTypes = {
+    food: foodPropTypes.isRequired
+}
 //-------------------------
 
 //---burger-constructor----
@@ -61,10 +67,21 @@ export const loaderProptypes = {
 //-------------------------
 
 //---------modal-----------
+export const modalOverlay = {
+    onClose: PropTypes.func.isRequired,
+    children: PropTypes.element.isRequired
+}
+
 export const modalProptypes = {
     title: PropTypes.string,
     onClose: PropTypes.func.isRequired,
     children: PropTypes.element.isRequired
+}
+export const modalTitleProptypes = {
+    title: PropTypes.string
+}
+export const modalCloseProptypes = {
+    onClose: PropTypes.func.isRequired,
 }
 //-------------------------
 

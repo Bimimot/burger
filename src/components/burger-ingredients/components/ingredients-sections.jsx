@@ -5,8 +5,9 @@ import { sectionsPropTypes } from '../../../utils/proptypes';
 import { IngredientCard } from './ingredient-card';
 
 export const IngredientsSections = React.memo(
-    ({ sections }) => {
+    ({ sections, showDetails }) => {
         IngredientsSections.propTypes = sectionsPropTypes;
+
         const lastSectionRef = useRef(null);
         useEffect(() => {
             const sectionHeight = lastSectionRef.current.offsetHeight;
@@ -27,7 +28,11 @@ export const IngredientsSections = React.memo(
                         <h2 className="text text_type_main-medium">{section.text}</h2>
                         <ul className={iStyles.cards}>
                             {section.foods.map(f =>
-                                <IngredientCard food={f} key={f._id} />)}
+                                <IngredientCard
+                                    key={f._id}
+                                    food={f}
+                                    showDetails={() => showDetails(f)}
+                                />)}
                         </ul>
                     </li>
                 ))}

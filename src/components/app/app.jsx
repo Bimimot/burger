@@ -19,7 +19,12 @@ export const App = () => {
     const getFoods = async () => {
       setState({ ...state, isLoading: true });
       fetch(urlApi)
-        .then(res => res.json())
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(`Ошибка ${res.status}`);
+        })
         .then(result => setState({ ...state, isLoading: false, foods: result.data }))
         .catch(e => setState({ ...state, isError: true, isLoading: false }));
     };

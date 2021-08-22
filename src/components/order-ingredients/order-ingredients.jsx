@@ -1,9 +1,11 @@
 import React from 'react';
 import oStyles from "./order-ingredients.module.css";
+import { orderProptypes } from '../../utils/proptypes';
 import iconDonePath from "../../images/icon-done.png"
 
 export const OrderIngredients = React.memo(
     ({ order }) => {
+        OrderIngredients.orderProptypes = orderProptypes;
 
         return (
             <div className={oStyles.container}>
