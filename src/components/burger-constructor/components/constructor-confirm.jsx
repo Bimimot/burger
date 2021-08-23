@@ -1,9 +1,11 @@
+import React from 'react';
 import { useEffect } from 'react';
 import cStyles from '../burger-constructor.module.css';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { confirmOrderPropTypes } from '../../../utils/proptypes';
 
-export const ConfirmOrder = ({ total }) => {
+export const ConfirmOrder = React.memo(
+    ({ confirm, total }) => {
     ConfirmOrder.propTypes = confirmOrderPropTypes;
 
     useEffect(() => {
@@ -23,6 +25,7 @@ export const ConfirmOrder = ({ total }) => {
             <span className="m-3" style={{ lineHeight: "1" }}>{total}</span>
             <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="large">Оформить заказ</Button>
+        <Button type="primary" size="large" onClick={confirm}>Оформить заказ</Button>
     </div>)
-}
+    }
+)
