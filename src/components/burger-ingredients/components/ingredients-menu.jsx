@@ -16,7 +16,7 @@ export const IngredientsMenu = React.memo(
                             href={`#${link.id}`}
                             className={(link.active ? iStyles.navLinkActive : iStyles.navLink)
                                 + " pt-4 pb-4 text text_type_main-default"}
-                            onClick={() => clickMenuPoint(link.id)}
+                            onClick={!!clickMenuPoint ? () => clickMenuPoint(link.id) : null}
                         >
                             {link.text}
                         </a>

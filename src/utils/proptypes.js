@@ -35,7 +35,8 @@ export const headerButtonProptypes = {
 export const ingredientsPropTypes = foodsPropTypes;
 export const menuPropTypes = {
     title: PropTypes.string,
-    sections: foodSections
+    sections: foodSections,
+    clickMenuPoint: PropTypes.func
 };
 export const sectionsPropTypes = {    
     sections: foodSections,
@@ -57,6 +58,8 @@ export const scrollboxPropTypes = {
     children: PropTypes.element.isRequired,
     top: PropTypes.number,
     bottom: PropTypes.number,
+    arrBlocksId: PropTypes.arrayOf(PropTypes.string),
+    callbackScroll: PropTypes.func
 };
 //-------------------------
 

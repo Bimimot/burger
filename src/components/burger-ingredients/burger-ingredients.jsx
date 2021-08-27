@@ -6,6 +6,7 @@ import { IngredientsMenu } from './components/ingredients-menu';
 import { IngredientsSections } from './components/ingredients-sections';
 import { Modal } from '../modal/modal';
 import { IngredientsDetails } from '../ingredient-details/ingredients-details';
+import { ScrollBox } from '../scrollbox/scrollbox';
 
 export const BurgerIngredients =
     ({ ingredients }) => {
@@ -54,13 +55,19 @@ export const BurgerIngredients =
                             title={"Соберите бургер"}
                             clickMenuPoint={updateMenu}
                         />
-
-                        <IngredientsSections
-                            sections={sections}
-                            showDetails={showDetails}
-                            updateMenu={updateMenu}
-                        />
-
+                        <ScrollBox
+                            top={40}
+                            bottom={52}
+                            id={"ingredients"}
+                            arrBlocksId={sections.map(m => m.id)}
+                            callbackScroll={updateMenu}
+                        >
+                            <IngredientsSections
+                                sections={sections}
+                                showDetails={showDetails}
+                                updateMenu={updateMenu}
+                            />
+                        </ScrollBox>
                     </>
                 }
                 <div style={{ position: "fixed", overflow: "hidden" }}>
