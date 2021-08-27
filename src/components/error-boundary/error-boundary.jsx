@@ -1,5 +1,4 @@
 import React from "react";
-import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ErrorMessage } from '../error-message/error-message';
 
 export default class ErrorBoundary extends React.Component {

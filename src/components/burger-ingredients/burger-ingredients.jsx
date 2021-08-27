@@ -1,22 +1,22 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
 import iStyles from './burger-ingredients.module.css';
 import { ingredientsPropTypes } from '../../utils/proptypes';
 import { translations } from '../../utils/data';
 import { IngredientsMenu } from './components/ingredients-menu';
 import { IngredientsSections } from './components/ingredients-sections';
-import { ScrollBox } from '../scrollbox/scrollbox';
 import { Modal } from '../modal/modal';
 import { IngredientsDetails } from '../ingredient-details/ingredients-details';
 
-export const BurgerIngredients = React.memo(
+export const BurgerIngredients =
     ({ ingredients }) => {
         BurgerIngredients.propTypes = ingredientsPropTypes;
+
         const [sections, setSections] = useState([]);
+        const [menu, setMenu] = useState([]);
         const [details, setDetails] = useState({
             show: false,
             ingredient: null
-        })
+        });
 
         useEffect(() => {
             const newSections = [];
@@ -26,6 +26,7 @@ export const BurgerIngredients = React.memo(
                     : newSections.push({ id: food.type, text: translations[food.type], foods: [food] })
             });
             setSections(newSections);
+            setMenu(newSections.map(s => ({ id: s.id, text: s.text, test: "INITIAL" })));
         }, [ingredients]);
 
         const showDetails = (ingredient) => {
@@ -35,16 +36,31 @@ export const BurgerIngredients = React.memo(
             })
         }
 
+        const updateMenu = (id) => {
+            const prevActive = menu.find(m => m.active);
+            if (!prevActive || prevActive.id !== id) {
+                setMenu(menu.map(m => (
+                    { ...m, active: m.id === id, test: "noTest" }))
+                )
+            }
+        }
+
         return (
             <article className={iStyles.ingredients}>
                 {sections.length &&
                     <>
-                        <IngredientsMenu sections={sections} title={"Соберите бургер"} />
-                        <ScrollBox top={40} bottom={52}>
-                            <IngredientsSections
-                                sections={sections}
-                                showDetails={showDetails} />
-                        </ScrollBox>
+                        <IngredientsMenu
+                            menu={menu}
+                            title={"Соберите бургер"}
+                            clickMenuPoint={updateMenu}
+                        />
+
+                        <IngredientsSections
+                            sections={sections}
+                            showDetails={showDetails}
+                            updateMenu={updateMenu}
+                        />
+
                     </>
                 }
                 <div style={{ position: "fixed", overflow: "hidden" }}>
@@ -56,4 +72,3 @@ export const BurgerIngredients = React.memo(
             </article>
         )
     }
-)
