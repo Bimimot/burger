@@ -5,7 +5,7 @@ import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-co
 import { confirmOrderPropTypes } from '../../../utils/proptypes';
 
 export const ConfirmOrder = React.memo(
-    ({ confirm, total }) => {
+    ({ confirm, totalPrice }) => {
     ConfirmOrder.propTypes = confirmOrderPropTypes;
 
     useEffect(() => {
@@ -22,7 +22,7 @@ export const ConfirmOrder = React.memo(
 
     return (<div className={cStyles.confirm}>
         <div className={cStyles.orderPrice + " text text_type_main-large"} id="orderPrice">
-            <span className="m-3" style={{ lineHeight: "1" }}>{total}</span>
+            <span className="m-3" style={{ lineHeight: "1" }}>{totalPrice}</span>
             <CurrencyIcon type="primary" />
         </div>
         <Button type="primary" size="large" onClick={confirm}>Оформить заказ</Button>

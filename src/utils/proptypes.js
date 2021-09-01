@@ -50,7 +50,9 @@ export const inrgredientCardPropTypes = {
 //---burger-constructor----
 export const constructorPropTypes = foodsPropTypes;
 export const fillingProptypes = foodsPropTypes;
-export const confirmOrderPropTypes = { total: PropTypes.number };
+export const confirmOrderPropTypes = {
+    totalPrice: PropTypes.number
+};
 //-------------------------
 
 //---------scrollbox-------

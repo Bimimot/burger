@@ -6,28 +6,55 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { Filling } from './components/constructor-filling';
 import { ConfirmOrder } from './components/constructor-confirm';
 import { Modal } from '../modal/modal';
-import { OrderIngredients } from '../order-ingredients/order-ingredients';
-import { randomInteger } from '../../utils/helpers';
+import { OrderDetails } from '../order-details/order-details';
+//import { randomInteger } from '../../utils/helpers';
+import { loadOrderNumber } from '../../utils/api';
 
 export const BurgerConstructor = React.memo(
     ({ recipe }) => {
         BurgerConstructor.propTypes = constructorPropTypes;
 
-        const [openOrder, setOpenOrder] = useState(false);
-        const [orderNumber, setOrderNumber] = useState("");
+        // const [openOrder, setOpenOrder] = useState(false);
+        // const [orderNumber, setOrderNumber] = useState("");
+        const initialOrder = {
+            open: false,
+            number: null,
+            isLoading: false,
+            isError: false
+        };
+
+        const [order, setOrder] = useState(initialOrder);
 
         const bun = recipe.find(food => food.type === "bun");
         const filling = recipe.filter(food => food.type !== "bun");
-        const total = recipe.reduce((total, current) => total + current.price, 0);
+        const totalPrice = filling.reduce((total, current) => total + current.price, 0)
+            + (bun.price * 2);
+
+
 
         const confirmOrder = () => {
-            setOpenOrder(true);
-            let order = "";
-            for (let i = 0; i < 6; i++) {
-                order = order + randomInteger(0, 9);
-            };
-            setOrderNumber(order);
+            setOrder({ ...order, open: true, isLoading: true });
+            const arrIngredients = recipe.map(food => food._id);
+
+            loadOrderNumber(arrIngredients)
+                .then(result => setOrder({
+                    ...order,
+                    open: true,
+                    isLoading: false,
+                    number: result.order.number
+                }))
+                .catch(e => {
+                    console.log("Error:", e);
+                    setOrder({
+                        ...order,
+                        open: true,
+                        isLoading: false,
+                        isError: true
+                    });
+                })
         }
+
+        console.log("-====orderState======-:", order);
 
         return (
             <article className={cStyles.constructor}>
@@ -52,15 +79,16 @@ export const BurgerConstructor = React.memo(
                         thumbnail={bun.image}
                     />
                 }
-                {!!total && <ConfirmOrder
-                    total={total}
+                {!!totalPrice
+                    && <ConfirmOrder
+                    totalPrice={totalPrice}
                     confirm={confirmOrder}
                 />}
 
                 <div style={{ overflow: 'hidden' }}>
-                    {openOrder &&
-                        <Modal onClose={() => setOpenOrder(false)}>
-                            <OrderIngredients order={orderNumber} />
+                    {order.open &&
+                        <Modal onClose={() => setOrder({...initialOrder})}>
+                        <OrderDetails order={order}/>
                         </Modal>
                     }
                 </div>

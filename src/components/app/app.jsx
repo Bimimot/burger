@@ -6,6 +6,7 @@ import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 import { ErrorMessage } from '../error-message/error-message';
 import { Loader } from '../loader/loader';
 import { recipe, urlApi } from '../../utils/data';
+import { loadFoods } from '../../utils/api';
 
 export const App = () => {
   const [state, setState] = useState({
@@ -16,19 +17,13 @@ export const App = () => {
   });
   
   useEffect(() => {
-    const getFoods = async () => {
       setState({ ...state, isLoading: true });
-      fetch(urlApi)
-        .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-          return Promise.reject(`Ошибка ${res.status}`);
-        })
+      loadFoods()
         .then(result => setState({ ...state, isLoading: false, foods: result.data }))
-        .catch(e => setState({ ...state, isError: true, isLoading: false }));
-    };
-    getFoods();
+        .catch(e => {
+          console.log("Error:", e);
+          setState({ ...state, isError: true, isLoading: false })
+        })        
   }, []);
 
   return (
