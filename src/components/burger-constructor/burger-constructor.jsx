@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import cStyles from './burger-constructor.module.css';
 import { constructorPropTypes } from '../../utils/proptypes';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,92 +7,62 @@ import { Filling } from './components/constructor-filling';
 import { ConfirmOrder } from './components/constructor-confirm';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
-//import { randomInteger } from '../../utils/helpers';
-import { loadOrderNumber } from '../../utils/api';
+import { BurgerContext } from '../../utils/context';
 
-export const BurgerConstructor = React.memo(
-    ({ recipe }) => {
-        BurgerConstructor.propTypes = constructorPropTypes;
+export const BurgerConstructor = () => {
+    BurgerConstructor.propTypes = constructorPropTypes;
 
-        // const [openOrder, setOpenOrder] = useState(false);
-        // const [orderNumber, setOrderNumber] = useState("");
-        const initialOrder = {
-            open: false,
-            number: null,
-            isLoading: false,
-            isError: false
-        };
+    const initialOrder = {
+        open: false,
+        number: null,
+        isLoading: false,
+        isError: false,
+    };
+    const orderState = useState(initialOrder);
+    const [order, setOrder] = orderState;
 
-        const [order, setOrder] = useState(initialOrder);
+    const [burger, dispatchBurger] = useContext(BurgerContext);
 
-        const bun = recipe.find(food => food.type === "bun");
-        const filling = recipe.filter(food => food.type !== "bun");
-        const totalPrice = filling.reduce((total, current) => total + current.price, 0)
-            + (bun.price * 2);
-
-
-
-        const confirmOrder = () => {
-            setOrder({ ...order, open: true, isLoading: true });
-            const arrIngredients = recipe.map(food => food._id);
-
-            loadOrderNumber(arrIngredients)
-                .then(result => setOrder({
-                    ...order,
-                    open: true,
-                    isLoading: false,
-                    number: result.order.number
-                }))
-                .catch(e => {
-                    console.log("Error:", e);
-                    setOrder({
-                        ...order,
-                        open: true,
-                        isLoading: false,
-                        isError: true
-                    });
-                })
-        }
-
-        console.log("-====orderState======-:", order);
-
-        return (
-            <article className={cStyles.constructor}>
-                {!!bun.price &&
-                    <ConstructorElement
-                        type="top"
-                        isLocked={true}
-                        text={bun.name + " (верх)"}
-                        price={bun.price}
-                        thumbnail={bun.image}
-                    />
-                }
-                {filling.length &&
-                    <Filling filling={filling} />
-                }
-                {!!bun.price &&
-                    <ConstructorElement
-                        type="bottom"
-                        isLocked={true}
-                        text={bun.name + " (низ)"}
-                        price={bun.price}
-                        thumbnail={bun.image}
-                    />
-                }
-                {!!totalPrice
-                    && <ConfirmOrder
-                    totalPrice={totalPrice}
-                    confirm={confirmOrder}
-                />}
-
-                <div style={{ overflow: 'hidden' }}>
-                    {order.open &&
-                        <Modal onClose={() => setOrder({...initialOrder})}>
-                        <OrderDetails order={order}/>
-                        </Modal>
-                    }
-                </div>
-            </article>
-        )
+    const onCloseDetails = () => {
+        setOrder(initialOrder);
+        dispatchBurger({ type: "random" });
     }
-)
+
+    return (
+        <article className={cStyles.constructor}>
+            {!!burger.bun &&
+                <ConstructorElement
+                    type="top"
+                    isLocked={true}
+                    text={burger.bun.name + " (верх)"}
+                    price={burger.bun.price}
+                    thumbnail={burger.bun.image}
+                />
+            }
+            {!!burger.filling.length &&
+                <Filling filling={burger.filling} />
+            }
+            {!!burger.bun &&
+                <ConstructorElement
+                    type="bottom"
+                    isLocked={true}
+                    text={burger.bun.name + " (низ)"}
+                    price={burger.bun.price}
+                    thumbnail={burger.bun.image}
+                />
+            }
+
+            {burger.isReal &&
+                <ConfirmOrder orderState={orderState} />
+            }
+
+            <div style={{ overflow: 'hidden' }}>
+                {order.open &&
+                    <Modal onClose={onCloseDetails} >
+                        <OrderDetails order={order} />
+                    </Modal>
+                }
+            </div>
+        </article >
+    )
+}

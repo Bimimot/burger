@@ -48,7 +48,7 @@ export const BurgerIngredients =
 
         return (
             <article className={iStyles.ingredients}>
-                {sections.length &&
+                {!!sections.length &&
                     <>
                         <IngredientsMenu
                             menu={menu}
@@ -72,7 +72,10 @@ export const BurgerIngredients =
                 }
                 <div style={{ position: "fixed", overflow: "hidden" }}>
                     {details.show &&
-                        <Modal title="Детали ингредиента" onClose={() => setDetails({ show: false, details: null })}>
+                        <Modal title="Детали ингредиента"
+                        onClose={
+                            () => setDetails({ show: false, details: null })
+                        }>
                             <IngredientsDetails ingredient={details.ingredient} />
                         </Modal>}
                 </div>
