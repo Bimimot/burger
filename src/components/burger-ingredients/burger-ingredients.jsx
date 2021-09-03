@@ -31,10 +31,11 @@ export const BurgerIngredients =
         }, [ingredients]);
 
         const showDetails = (ingredient) => {
-            setDetails({
-                show: true,
-                ingredient: ingredient
-            })
+            setDetails({ show: true, ingredient: ingredient })
+        }
+
+        const closeDetails = () => {
+            setDetails({ show: false, details: null })
         }
 
         const updateMenu = (id) => {
@@ -72,11 +73,11 @@ export const BurgerIngredients =
                 }
                 <div style={{ position: "fixed", overflow: "hidden" }}>
                     {details.show &&
-                        <Modal title="Детали ингредиента"
-                        onClose={
-                            () => setDetails({ show: false, details: null })
-                        }>
-                            <IngredientsDetails ingredient={details.ingredient} />
+                        <Modal title="Детали ингредиента" onClose={closeDetails}>
+                        <IngredientsDetails
+                            ingredient={details.ingredient}
+                            closeDetails={closeDetails}
+                        />
                         </Modal>}
                 </div>
             </article>

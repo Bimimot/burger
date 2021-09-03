@@ -22,12 +22,14 @@ export const ScrollBox = React.memo(
 
             const setScroll = () => {
                 if (content.scrollHeight > content.clientHeight) {
+                    scrollContainer.style.visibility = "visible";
                     scrollbar.style.top = scrollContainer.clientHeight * content.scrollTop / content.scrollHeight + "px";
                     if (!!props.arrBlocksId) {
                         setCurBlockId(getActiveSectionId())
                     }
                 } else {
-                    scrollContainer.style.visibility = "none";
+                    console.log("stop visible");
+                    scrollContainer.style.visibility = "hidden";
                 }
             };
 

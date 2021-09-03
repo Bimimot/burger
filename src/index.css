@@ -29,3 +29,7 @@ ul{
     padding: 0;
     margin: 0;
 }
+
+.constructor-element{
+    max-height: 20vh;
+}

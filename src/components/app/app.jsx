@@ -13,7 +13,6 @@ export const App = () => {
   const initialBurger = {
     recipe: [],
     totalPrice: null,
-    isReal: false,
     bun: null,
     filling: []
   };
@@ -23,9 +22,8 @@ export const App = () => {
     const filling = recipe.filter(food => food.type !== "bun");
     const totalPrice = filling.reduce((total, current) => total + current.price, 0)
       + (!!bun ? bun.price * 2 : 0);
-    const isReal = !!bun && !!filling.length;
     recipe = filling.concat(!!bun ? bun : []);
-    return { recipe, isReal, bun, filling, totalPrice }
+    return { recipe, bun, filling, totalPrice }
   }
 
   function reducerBurger(burger, action) {
@@ -35,22 +33,28 @@ export const App = () => {
 
       case "random":
         return getBurgerByRecipe(
-          randomRecipe(state.foods, 12)
+          randomRecipe(state.foods, 9)
         );
 
-      case "del":
-        return !!action.food
-          ? getBurgerByRecipe(burger.recipe.filter(f =>
-            f._id !== action.food._id)
-          )
-          : burger.recipe;
+      case "delete":
+        let delFilling = [...burger.filling];
+        if (!!burger.filling[action.fillingIndex]) {
+          burger.filling.splice(action.fillingIndex, 1);
+          console.log("delFilling", delFilling);
+        }
+        return getBurgerByRecipe(delFilling.concat(burger.bun));
 
       case "add":
         let addRecipe = [...burger.recipe];
         if (!!action.food) {
-          addRecipe = (action.food._id === "bun" && !!burger.bun)
-            ? addRecipe.splice(addRecipe.findIndex(f => f._id === "bun"), action.food)
-            : addRecipe.push(action.food)
+          if (action.food.type === "bun" && !!burger.bun) {
+            addRecipe.splice(
+              addRecipe.findIndex(f => f.type === "bun"),
+              1,
+              action.food)
+          } else {
+            addRecipe.push(action.food)
+          }
         }
         return getBurgerByRecipe(addRecipe)
 
@@ -81,12 +85,6 @@ export const App = () => {
         setState({ ...state, isError: true, isLoading: false })
       })
   }, []);
-
-  useEffect(() => {
-    if (!!state.foods.length) {
-      dispatchBurger({ type: "random" })
-    }
-  }, [state.foods])
 
   return (
     <AllOrdersContext.Provider value={allOrdersState}>

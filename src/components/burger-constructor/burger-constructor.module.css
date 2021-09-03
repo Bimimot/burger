@@ -4,8 +4,16 @@
     margin-left: 20px;
     width: var(--width-column-main);
     box-sizing: border-box;
-    padding: 100px 16px 0px;
+    padding: 20px 16px 0px;
     gap: 10px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    padding: 20px 40px 20px 10px;
+    gap: 50px;
+    justify-content: space-around;
 }
 
 .confirm {

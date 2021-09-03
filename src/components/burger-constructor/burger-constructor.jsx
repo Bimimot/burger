@@ -4,6 +4,7 @@ import cStyles from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Filling } from './components/constructor-filling';
 import { ConfirmOrder } from './components/constructor-confirm';
+import { ConstructorMenu } from './components/constructor-menu';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { BurgerContext } from '../../utils/context';
@@ -18,15 +19,11 @@ export const BurgerConstructor = () => {
     const orderState = useState(initialOrder);
     const [order, setOrder] = orderState;
 
-    const [burger, dispatchBurger] = useContext(BurgerContext);
-
-    const onCloseDetails = () => {
-        setOrder(initialOrder);
-        dispatchBurger({ type: "random" });
-    }
+    const [burger] = useContext(BurgerContext);
 
     return (
         <article className={cStyles.constructor}>
+            <ConstructorMenu />
             {!!burger.bun &&
                 <ConstructorElement
                     type="top"
@@ -49,13 +46,13 @@ export const BurgerConstructor = () => {
                 />
             }
 
-            {burger.isReal &&
+            {(!!burger.bun && !!burger.filling.length) &&
                 <ConfirmOrder orderState={orderState} />
             }
 
             <div style={{ overflow: 'hidden' }}>
                 {order.open &&
-                    <Modal onClose={onCloseDetails} isLoading={order.isLoading}>
+                    <Modal onClose={() => setOrder(initialOrder)} isLoading={order.isLoading}>
                         <OrderDetails order={order} />
                     </Modal>
                 }

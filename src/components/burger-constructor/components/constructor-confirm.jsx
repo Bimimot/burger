@@ -9,12 +9,16 @@ import { loadOrderNumber } from '../../../utils/api';
 export const ConfirmOrder = ({ orderState }) => {
     ConfirmOrder.propTypes = confirmOrderPropTypes;
     const [order, setOrder] = orderState;
-    const [recipe] = useContext(BurgerContext);
+    const [burger, dispatchBurger] = useContext(BurgerContext);
     const [allOrders, setAllOrders] = useContext(AllOrdersContext);
 
     useEffect(() => {
         resizeCurrencyIcon()
     }, []);
+
+    useEffect(() => {
+        console.log(">> AllOrders from Context >> ", allOrders);
+    }, [allOrders])
 
     const resizeCurrencyIcon = () => {
         const price = document.querySelector('#orderPrice');
@@ -27,7 +31,7 @@ export const ConfirmOrder = ({ orderState }) => {
     const confirmOrder = () => {
         setOrder({ ...order, open: true, isLoading: true });
 
-        loadOrderNumber(recipe.recipe.map(ing => ing._id))
+        loadOrderNumber(burger.recipe.map(ing => ing._id))
             .then(result => {
                 setOrder({
                     ...order,
@@ -39,9 +43,11 @@ export const ConfirmOrder = ({ orderState }) => {
                     [...allOrders,
                     {
                         number: result.order.number,
-                        ingredients: recipe,
-                        totalPrice: recipe.totalPrice
-                    }])
+                        ingredients: burger.ingredients,
+                        totalPrice: burger.totalPrice
+                        }
+                    ]);
+                dispatchBurger({ type: "clear" });
             })
             .catch(e => {
                 console.log("Error with loadOrderNumber: ", e);
@@ -54,13 +60,13 @@ export const ConfirmOrder = ({ orderState }) => {
                     }
                 )
             })
-            .finally(() => console.log("AllOrders from context:", allOrders))
+
     }
 
     return (
         <div className={cStyles.confirm}>
             <div className={cStyles.orderPrice + " text text_type_main-large"} id="orderPrice">
-                <span className="m-3" style={{ lineHeight: "1" }}>{recipe.totalPrice}</span>
+                <span className="m-3" style={{ lineHeight: "1" }}>{burger.totalPrice}</span>
                 <CurrencyIcon type="primary" />
             </div>
             <Button type="primary" size="large" onClick={confirmOrder}>Оформить заказ</Button>
