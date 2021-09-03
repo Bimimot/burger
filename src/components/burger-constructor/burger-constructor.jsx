@@ -58,7 +58,7 @@ export const BurgerConstructor = () => {
 
             <div style={{ overflow: 'hidden' }}>
                 {order.open &&
-                    <Modal onClose={onCloseDetails} >
+                    <Modal onClose={onCloseDetails} isLoading={order.isLoading}>
                         <OrderDetails order={order} />
                     </Modal>
                 }

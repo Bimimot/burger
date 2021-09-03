@@ -1,7 +1,7 @@
 .container{
     display: flex;
     flex-direction: column;
-    margin-top: 20%;
+    margin: 40px;
     align-items: center;
 }
 
@@ -9,8 +9,8 @@
     display: flex;
     position: relative;
     margin: 20px;
-    height: 100px;
-    width: 100px;
+    height: 120px;
+    width: 120px;
     animation: rotateIcons 1.5s linear infinite;
 }
 

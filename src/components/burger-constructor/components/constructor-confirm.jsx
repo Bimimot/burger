@@ -55,9 +55,8 @@ export const ConfirmOrder = ({orderState}) => {
                     }
                 )
             })
+            .finally(() => console.log("AllOrders from context:", allOrders))
     }
-
-    console.log(allOrders);
 
     return (
         <div className={cStyles.confirm}>
