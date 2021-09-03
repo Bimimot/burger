@@ -44,7 +44,7 @@ export const App = () => {
             f._id !== action.food._id)
           )
           : burger.recipe;
-      
+
       case "add":
         let addRecipe = [...burger.recipe];
         if (!!action.food) {
@@ -69,7 +69,6 @@ export const App = () => {
 
   const burgerState = useReducer(reducerBurger, initialBurger);
   const [burger, dispatchBurger] = burgerState;
-
 
   useEffect(() => {
     setState({ ...state, isLoading: true });

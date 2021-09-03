@@ -1,7 +1,6 @@
 import React from 'react';
 import { useContext, useState } from 'react';
 import cStyles from './burger-constructor.module.css';
-import { constructorPropTypes } from '../../utils/proptypes';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Filling } from './components/constructor-filling';
 import { ConfirmOrder } from './components/constructor-confirm';
@@ -10,8 +9,6 @@ import { OrderDetails } from '../order-details/order-details';
 import { BurgerContext } from '../../utils/context';
 
 export const BurgerConstructor = () => {
-    BurgerConstructor.propTypes = constructorPropTypes;
-
     const initialOrder = {
         open: false,
         number: null,

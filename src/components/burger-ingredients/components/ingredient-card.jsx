@@ -16,7 +16,7 @@ export const IngredientCard = React.memo(
             setCount(burger.recipe.reduce(function (amount, f) {
                 return f._id === food._id ? amount + 1 : amount
             }, 0))
-        }, [burger]);
+        }, [burger, food]);
 
         return (
             <li className={iStyles.card}

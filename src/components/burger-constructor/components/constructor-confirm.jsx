@@ -6,7 +6,7 @@ import { confirmOrderPropTypes } from '../../../utils/proptypes';
 import { AllOrdersContext, BurgerContext } from '../../../utils/context';
 import { loadOrderNumber } from '../../../utils/api';
 
-export const ConfirmOrder = ({orderState}) => {
+export const ConfirmOrder = ({ orderState }) => {
     ConfirmOrder.propTypes = confirmOrderPropTypes;
     const [order, setOrder] = orderState;
     const [recipe] = useContext(BurgerContext);
@@ -28,8 +28,7 @@ export const ConfirmOrder = ({orderState}) => {
         setOrder({ ...order, open: true, isLoading: true });
 
         loadOrderNumber(recipe.recipe.map(ing => ing._id))
-            .then(result => 
-             {
+            .then(result => {
                 setOrder({
                     ...order,
                     open: true,

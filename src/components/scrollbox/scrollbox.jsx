@@ -63,7 +63,7 @@ export const ScrollBox = React.memo(
             if (!!curBlockId) {
                 props.callbackScroll(curBlockId)
             }
-        }, [curBlockId]);
+        }, [curBlockId, props]);
 
         const getActiveSectionId = () => {
             const container = containerRef.current;

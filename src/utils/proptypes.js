@@ -47,11 +47,21 @@ export const inrgredientCardPropTypes = {
 }
 //-------------------------
 
+//-------order-------------
+export const orderProptypes = PropTypes.shape({
+    open: PropTypes.bool.isRequired,
+    number: PropTypes.number,
+    isLoading: PropTypes.bool.isRequired,
+    isError: PropTypes.bool.isRequired,
+});
+//-------------------------
+
 //---burger-constructor----
-export const constructorPropTypes = foodsPropTypes;
 export const fillingProptypes = foodsPropTypes;
+
+
 export const confirmOrderPropTypes = {
-    totalPrice: PropTypes.number
+    orderState: PropTypes.array.isRequired
 };
 //-------------------------
 
@@ -73,8 +83,9 @@ export const loaderProptypes = {
 
 //---------modal-----------
 export const modalOverlay = {
-    onClose: PropTypes.func.isRequired,
-    children: PropTypes.element.isRequired
+    onClose: PropTypes.func,
+    children: PropTypes.element.isRequired,
+    isLoading: PropTypes.bool
 }
 
 export const modalProptypes = {
@@ -90,14 +101,14 @@ export const modalCloseProptypes = {
 }
 //-------------------------
 
-//---------order-----------
-export const orderProptypes = {
-    order: PropTypes.string.isRequired
-}
-//-------------------------
 
 //---------details---------
 export const detailsProptypes = {
     ingredient: foodPropTypes.isRequired
 }
 //-------------------------
+
+//-------error-------------
+export const errMessageProptypes = {
+    textArr: PropTypes.arrayOf(PropTypes.string)
+}

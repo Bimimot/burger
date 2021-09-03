@@ -8,10 +8,9 @@ export const LoaderNumber = () => {
     const [number, setNumber] = useState(randomNumber)
 
     useEffect(() => {        
-        let timerNumber = setInterval(function () {
-            console.log(randomNumber);
+        let timerNumber = setInterval(() =>
             setNumber(randomNumber)
-        }, 50);
+        , 50);
         return () => { clearInterval(timerNumber) };
     }, [])
 
