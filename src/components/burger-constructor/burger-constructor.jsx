@@ -1,70 +1,62 @@
 import React from 'react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import cStyles from './burger-constructor.module.css';
-import { constructorPropTypes } from '../../utils/proptypes';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Filling } from './components/constructor-filling';
 import { ConfirmOrder } from './components/constructor-confirm';
+import { ConstructorMenu } from './components/constructor-menu';
 import { Modal } from '../modal/modal';
-import { OrderIngredients } from '../order-ingredients/order-ingredients';
-import { randomInteger } from '../../utils/helpers';
+import { OrderDetails } from '../order-details/order-details';
+import { BurgerContext } from '../../utils/context';
 
-export const BurgerConstructor = React.memo(
-    ({ recipe }) => {
-        BurgerConstructor.propTypes = constructorPropTypes;
+export const BurgerConstructor = ({foods}) => {
+    const initialOrder = {
+        open: false,
+        number: null,
+        isLoading: false,
+        isError: false,
+    };
+    const orderState = useState(initialOrder);
+    const [order, setOrder] = orderState;
 
-        const [openOrder, setOpenOrder] = useState(false);
-        const [orderNumber, setOrderNumber] = useState("");
+    const [burger] = useContext(BurgerContext);
 
-        const bun = recipe.find(food => food.type === "bun");
-        const filling = recipe.filter(food => food.type !== "bun");
-        const total = recipe.reduce((total, current) => total + current.price, 0);
+    return (
+        <article className={cStyles.constructor}>
+            <ConstructorMenu foods={foods}/>
+            {!!burger.bun &&
+                <ConstructorElement
+                    type="top"
+                    isLocked={true}
+                    text={burger.bun.name + " (верх)"}
+                    price={burger.bun.price}
+                    thumbnail={burger.bun.image}
+                />
+            }
+            {!!burger.filling.length &&
+                <Filling filling={burger.filling} />
+            }
+            {!!burger.bun &&
+                <ConstructorElement
+                    type="bottom"
+                    isLocked={true}
+                    text={burger.bun.name + " (низ)"}
+                    price={burger.bun.price}
+                    thumbnail={burger.bun.image}
+                />
+            }
 
-        const confirmOrder = () => {
-            setOpenOrder(true);
-            let order = "";
-            for (let i = 0; i < 6; i++) {
-                order = order + randomInteger(0, 9);
-            };
-            setOrderNumber(order);
-        }
+            {(!!burger.bun && !!burger.filling.length) &&
+                <ConfirmOrder orderState={orderState} />
+            }
 
-        return (
-            <article className={cStyles.constructor}>
-                {!!bun.price &&
-                    <ConstructorElement
-                        type="top"
-                        isLocked={true}
-                        text={bun.name + " (верх)"}
-                        price={bun.price}
-                        thumbnail={bun.image}
-                    />
+            <div style={{ overflow: 'hidden' }}>
+                {order.open &&
+                    <Modal onClose={() => setOrder(initialOrder)} isLoading={order.isLoading}>
+                        <OrderDetails order={order} />
+                    </Modal>
                 }
-                {filling.length &&
-                    <Filling filling={filling} />
-                }
-                {!!bun.price &&
-                    <ConstructorElement
-                        type="bottom"
-                        isLocked={true}
-                        text={bun.name + " (низ)"}
-                        price={bun.price}
-                        thumbnail={bun.image}
-                    />
-                }
-                {!!total && <ConfirmOrder
-                    total={total}
-                    confirm={confirmOrder}
-                />}
-
-                <div style={{ overflow: 'hidden' }}>
-                    {openOrder &&
-                        <Modal onClose={() => setOpenOrder(false)}>
-                            <OrderIngredients order={orderNumber} />
-                        </Modal>
-                    }
-                </div>
-            </article>
-        )
-    }
-)
+            </div>
+        </article >
+    )
+}

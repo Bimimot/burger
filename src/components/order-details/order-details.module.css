@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     padding-bottom: 60px;
+    min-height: 560px;
 }
 
 .icon {
@@ -15,4 +16,8 @@
     margin: 80px 0 32px;
     text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25),
         0px 4px 32px rgba(51, 51, 255, 0.5);
+}
+
+.titleLoader{
+    margin: 80px 0 32px;
 }

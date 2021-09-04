@@ -9,27 +9,29 @@ import { ModalOverlay } from "../modal-overlay/modal-overlay";
 const modalRoot = document.getElementById('modal');
 
 export const Modal = React.memo(
-    (props) => {
+    ({children, isLoading, onClose, title}) => {
         Modal.propTypes = modalProptypes;
 
         useEffect(() => {
             document.addEventListener('keydown', closeByKey);
             return () => { document.removeEventListener('keydown', closeByKey) };
-        }, []);
+        }, [isLoading]);
 
         const closeByKey = (e) => {
-            if (e.key === "Escape") {
-                props.onClose()
+            if (e.key === "Escape" && !isLoading) {
+                onClose()
             }
         }
 
         return ReactDOM.createPortal(
-            (<ModalOverlay onClose={props.onClose}>
+            (<ModalOverlay onClose={isLoading ? null : onClose}>
                 <div className={mStyles.modalBox} onClick={(e) => e.stopPropagation()}>
-                    <ModalClose onClose={props.onClose} />
-                    {props.title && <ModalTitle title={props.title} />}
+                    {!isLoading && <ModalClose onClose={onClose} />}
+                    
+                    {title && <ModalTitle title={title} />}
+
                     <div className={mStyles.content}>
-                        {props.children}
+                        {children}
                     </div>
                 </div>
             </ModalOverlay>), modalRoot)

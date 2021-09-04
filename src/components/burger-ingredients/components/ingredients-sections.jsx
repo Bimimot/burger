@@ -11,7 +11,7 @@ export const IngredientsSections = React.memo(
         const lastSectionRef = useRef(null);
         useEffect(() => {
             const sectionHeight = lastSectionRef.current.offsetHeight;
-            const boxHeight = lastSectionRef.current.closest('#scrollbox').clientHeight;
+            const boxHeight = lastSectionRef.current.closest('#ingredients').clientHeight;
             if (boxHeight > sectionHeight) {
                 lastSectionRef.current.style.paddingBottom = boxHeight - sectionHeight + "px";
             }

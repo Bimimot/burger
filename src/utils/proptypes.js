@@ -35,7 +35,8 @@ export const headerButtonProptypes = {
 export const ingredientsPropTypes = foodsPropTypes;
 export const menuPropTypes = {
     title: PropTypes.string,
-    sections: foodSections
+    sections: foodSections,
+    clickMenuPoint: PropTypes.func
 };
 export const sectionsPropTypes = {    
     sections: foodSections,
@@ -46,10 +47,22 @@ export const inrgredientCardPropTypes = {
 }
 //-------------------------
 
+//-------order-------------
+export const orderProptypes = PropTypes.shape({
+    open: PropTypes.bool.isRequired,
+    number: PropTypes.number,
+    isLoading: PropTypes.bool.isRequired,
+    isError: PropTypes.bool.isRequired,
+});
+//-------------------------
+
 //---burger-constructor----
-export const constructorPropTypes = foodsPropTypes;
 export const fillingProptypes = foodsPropTypes;
-export const confirmOrderPropTypes = { total: PropTypes.number };
+
+
+export const confirmOrderPropTypes = {
+    orderState: PropTypes.array.isRequired
+};
 //-------------------------
 
 //---------scrollbox-------
@@ -57,6 +70,8 @@ export const scrollboxPropTypes = {
     children: PropTypes.element.isRequired,
     top: PropTypes.number,
     bottom: PropTypes.number,
+    arrBlocksId: PropTypes.arrayOf(PropTypes.string),
+    callbackScroll: PropTypes.func
 };
 //-------------------------
 
@@ -68,8 +83,9 @@ export const loaderProptypes = {
 
 //---------modal-----------
 export const modalOverlay = {
-    onClose: PropTypes.func.isRequired,
-    children: PropTypes.element.isRequired
+    onClose: PropTypes.func,
+    children: PropTypes.element.isRequired,
+    isLoading: PropTypes.bool
 }
 
 export const modalProptypes = {
@@ -85,14 +101,14 @@ export const modalCloseProptypes = {
 }
 //-------------------------
 
-//---------order-----------
-export const orderProptypes = {
-    order: PropTypes.string.isRequired
-}
-//-------------------------
 
 //---------details---------
 export const detailsProptypes = {
     ingredient: foodPropTypes.isRequired
 }
 //-------------------------
+
+//-------error-------------
+export const errMessageProptypes = {
+    textArr: PropTypes.arrayOf(PropTypes.string)
+}

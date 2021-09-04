@@ -1,16 +1,24 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import cStyles from '../burger-constructor.module.css';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { confirmOrderPropTypes } from '../../../utils/proptypes';
+import { AllOrdersContext, BurgerContext } from '../../../utils/context';
+import { loadOrderNumber } from '../../../utils/api';
 
-export const ConfirmOrder = React.memo(
-    ({ confirm, total }) => {
+export const ConfirmOrder = ({ orderState }) => {
     ConfirmOrder.propTypes = confirmOrderPropTypes;
+    const [order, setOrder] = orderState;
+    const [burger, dispatchBurger] = useContext(BurgerContext);
+    const [allOrders, setAllOrders] = useContext(AllOrdersContext);
 
     useEffect(() => {
         resizeCurrencyIcon()
     }, []);
+
+    useEffect(() => {
+        console.log(">> AllOrders from Context >> ", allOrders);
+    }, [allOrders])
 
     const resizeCurrencyIcon = () => {
         const price = document.querySelector('#orderPrice');
@@ -20,12 +28,49 @@ export const ConfirmOrder = React.memo(
         svgIcon.setAttribute('height', priceSize);
     }
 
-    return (<div className={cStyles.confirm}>
-        <div className={cStyles.orderPrice + " text text_type_main-large"} id="orderPrice">
-            <span className="m-3" style={{ lineHeight: "1" }}>{total}</span>
-            <CurrencyIcon type="primary" />
-        </div>
-        <Button type="primary" size="large" onClick={confirm}>Оформить заказ</Button>
-    </div>)
+    const confirmOrder = () => {
+        setOrder({ ...order, open: true, isLoading: true });
+
+        loadOrderNumber(burger.recipe.map(ing => ing._id))
+            .then(result => {
+                setOrder({
+                    ...order,
+                    open: true,
+                    isLoading: false,
+                    number: result.order.number
+                });
+                setAllOrders(
+                    [...allOrders,
+                    {
+                        number: result.order.number,
+                        ingredients: burger.ingredients,
+                        totalPrice: burger.totalPrice
+                    }
+                    ]);
+                dispatchBurger({ type: "clear" });
+            })
+            .catch(e => {
+                console.log("Error with loadOrderNumber: ", e);
+                setOrder(
+                    {
+                        ...order,
+                        open: true,
+                        isLoading: false,
+                        isError: true
+                    }
+                )
+            })
+
     }
-)
+
+    return (
+        <div className={cStyles.confirm}>
+            <div className={cStyles.orderPrice + " text text_type_main-large"} id="orderPrice">
+                <span className="m-3" style={{ lineHeight: "1" }}>{burger.totalPrice}</span>
+                <CurrencyIcon type="primary" />
+            </div>
+            <Button type="primary" size="large" onClick={confirmOrder}>Оформить заказ</Button>
+        </div>
+    )
+}
+
