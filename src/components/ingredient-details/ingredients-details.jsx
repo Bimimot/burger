@@ -17,7 +17,7 @@ export const IngredientsDetails = React.memo(
 
         return (
             <div className={dStyles.container}>
-                <img src={ingredient.image_large} alt={ingredient.name} />
+                <img className={dStyles.image} src={ingredient.image_large} alt={ingredient.name} />
                 <h3 className="text text_type_main-medium mb-4 mt-4">{ingredient.name}</h3>
                 <div className={dStyles.composition + " mt-4 mb-8"}>
                     <div className={dStyles.composeItem}>

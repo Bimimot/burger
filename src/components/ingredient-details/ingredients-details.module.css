@@ -19,3 +19,7 @@
     width: 100%;
     text-align: center;
 }
+
+.image {
+    min-height: 240px;
+}

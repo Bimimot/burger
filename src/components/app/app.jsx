@@ -17,6 +17,8 @@ const initialBurger = {
 };
 
 function getBurgerByRecipe(recipe) {
+  console.log("Recipe from getBurger", recipe);
+
   const bun = recipe.find(food => food.type === "bun");
   const filling = recipe.filter(food => food.type !== "bun");
   const totalPrice = filling.reduce((total, current) => total + current.price, 0)
@@ -37,8 +39,10 @@ function reducerBurger(burger, action) {
 
     case "delete":
       let delFilling = [...burger.filling];
+      console.log("Action del", action);
+      console.log("Burger", burger);
       if (!!burger.filling[action.fillingIndex]) {
-        burger.filling.splice(action.fillingIndex, 1);
+        delFilling.splice(action.fillingIndex, 1);
       }
       return getBurgerByRecipe(delFilling.concat(burger.bun));
 
