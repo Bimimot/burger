@@ -11,7 +11,7 @@ export const Filling = React.memo(
         const [burger, dispatchBurger] = useContext(BurgerContext);
 
         return (
-            <div style={{ flexGrow: burger.filling.length, overflow: "hidden" }}>
+            <div style={{ overflow: "hidden" }}>
                 <ScrollBox>
                     <div className={cStyles.recipe}>
                         {burger.filling.map((item, i) =>

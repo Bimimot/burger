@@ -45,7 +45,7 @@ export const ConfirmOrder = ({ orderState }) => {
                         number: result.order.number,
                         ingredients: burger.ingredients,
                         totalPrice: burger.totalPrice
-                        }
+                    }
                     ]);
                 dispatchBurger({ type: "clear" });
             })

@@ -9,60 +9,57 @@ import { loadFoods } from '../../utils/api';
 import { AllOrdersContext, BurgerContext } from '../../utils/context';
 import { randomRecipe } from '../../utils/helpers';
 
+const initialBurger = {
+  recipe: [],
+  totalPrice: null,
+  bun: null,
+  filling: []
+};
+
+function getBurgerByRecipe(recipe) {
+  const bun = recipe.find(food => food.type === "bun");
+  const filling = recipe.filter(food => food.type !== "bun");
+  const totalPrice = filling.reduce((total, current) => total + current.price, 0)
+    + (!!bun ? bun.price * 2 : 0);
+  recipe = filling.concat(!!bun ? bun : []);
+  return { recipe, bun, filling, totalPrice }
+}
+
+function reducerBurger(burger, action) {
+  switch (action.type) {
+    case "clear":
+      return { ...initialBurger }
+
+    case "random":
+      return !!action.foods
+        ? getBurgerByRecipe(randomRecipe(action.foods, 9))
+        : burger
+
+    case "delete":
+      let delFilling = [...burger.filling];
+      if (!!burger.filling[action.fillingIndex]) {
+        burger.filling.splice(action.fillingIndex, 1);
+      }
+      return getBurgerByRecipe(delFilling.concat(burger.bun));
+
+    case "add":
+      let addRecipe = [...burger.recipe];
+      if (!!action.food) {
+        if (action.food.type === "bun" && !!burger.bun) {
+          addRecipe.splice(
+            addRecipe.findIndex(f => f.type === "bun"), 1, action.food)
+        } else {
+          addRecipe.push(action.food)
+        }
+      }
+      return getBurgerByRecipe(addRecipe)
+
+    default:
+      return burger
+  }
+}
+
 export const App = () => {
-  const initialBurger = {
-    recipe: [],
-    totalPrice: null,
-    bun: null,
-    filling: []
-  };
-
-  function getBurgerByRecipe(recipe) {
-    const bun = recipe.find(food => food.type === "bun");
-    const filling = recipe.filter(food => food.type !== "bun");
-    const totalPrice = filling.reduce((total, current) => total + current.price, 0)
-      + (!!bun ? bun.price * 2 : 0);
-    recipe = filling.concat(!!bun ? bun : []);
-    return { recipe, bun, filling, totalPrice }
-  }
-
-  function reducerBurger(burger, action) {
-    switch (action.type) {
-      case "clear":
-        return { ...initialBurger }
-
-      case "random":
-        return getBurgerByRecipe(
-          randomRecipe(state.foods, 9)
-        );
-
-      case "delete":
-        let delFilling = [...burger.filling];
-        if (!!burger.filling[action.fillingIndex]) {
-          burger.filling.splice(action.fillingIndex, 1);
-          console.log("delFilling", delFilling);
-        }
-        return getBurgerByRecipe(delFilling.concat(burger.bun));
-
-      case "add":
-        let addRecipe = [...burger.recipe];
-        if (!!action.food) {
-          if (action.food.type === "bun" && !!burger.bun) {
-            addRecipe.splice(
-              addRecipe.findIndex(f => f.type === "bun"),
-              1,
-              action.food)
-          } else {
-            addRecipe.push(action.food)
-          }
-        }
-        return getBurgerByRecipe(addRecipe)
-
-      default:
-        throw new Error(`Wrong type of action: ${action.type}`);
-    }
-  }
-
   const [state, setState] = useState({
     foods: [],
     isLoading: false,
@@ -70,9 +67,7 @@ export const App = () => {
   });
 
   const allOrdersState = useState([]);
-
   const burgerState = useReducer(reducerBurger, initialBurger);
-  const [burger, dispatchBurger] = burgerState;
 
   useEffect(() => {
     setState({ ...state, isLoading: true });
@@ -94,7 +89,7 @@ export const App = () => {
           && <div className={styles.content}>
             <BurgerContext.Provider value={burgerState}>
               <BurgerIngredients ingredients={state.foods} />
-              <BurgerConstructor />
+              <BurgerConstructor foods={state.foods} />
             </BurgerContext.Provider>
           </div>
         }

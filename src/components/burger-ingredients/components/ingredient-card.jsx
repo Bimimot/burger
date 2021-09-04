@@ -9,7 +9,7 @@ export const IngredientCard = React.memo(
     ({ food, showDetails }) => {
         IngredientCard.propTypes = inrgredientCardPropTypes;
         const [burger, dispatchBurger] = useContext(BurgerContext);
-        const [currencyType, setCurrencyType] = useState("primary");
+        // const [currencyType, setCurrencyType] = useState("primary");
         const [count, setCount] = useState(null);
 
         useEffect(() => {
@@ -20,14 +20,14 @@ export const IngredientCard = React.memo(
 
         return (
             <li className={iStyles.card}
-                onMouseEnter={() => setCurrencyType("success")}
-                onMouseLeave={() => setCurrencyType("primary")}
+                // onMouseEnter={() => setCurrencyType("success")}
+                // onMouseLeave={() => setCurrencyType("primary")}
                 onClick={() => showDetails(food)}
             >
-                <img src={food.image} alt={food.name} />
+                <img className={iStyles.cardImage} src={food.image} alt={food.name} />
                 <div className={iStyles.cardPrice}>
                     <span className="text text_type_main-medium m-2" style={{ lineHeight: "1" }}>{food.price}</span>
-                    <CurrencyIcon type={currencyType} />
+                    <CurrencyIcon type={"primary"} />
                 </div>
                 <h3 className={iStyles.cardTitle + " text text_type_main-default"}>{food.name}</h3>
                 <div className={iStyles.count}>
