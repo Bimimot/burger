@@ -1,4 +1,5 @@
 import { useEffect, useState, useReducer } from 'react';
+import { useSelector } from 'react-redux';
 import { AppHeader } from '../app-header/app-header';
 import styles from './app.module.css';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
@@ -17,7 +18,6 @@ const initialBurger = {
 };
 
 function getBurgerByRecipe(recipe) {
-  console.log("Recipe from getBurger", recipe);
 
   const bun = recipe.find(food => food.type === "bun");
   const filling = recipe.filter(food => food.type !== "bun");
@@ -72,6 +72,9 @@ export const App = () => {
 
   const allOrdersState = useState([]);
   const burgerState = useReducer(reducerBurger, initialBurger);
+
+  const testStore = useSelector(store => store);
+  console.log(testStore);
 
   useEffect(() => {
     setState({ ...state, isLoading: true });
