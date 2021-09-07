@@ -1,15 +1,16 @@
 import React from 'react';
 import iStyles from '../burger-ingredients.module.css';
-import { useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { inrgredientCardPropTypes } from '../../../utils/proptypes';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { BurgerContext } from '../../../utils/context';
+
 
 export const IngredientCard = React.memo(
     ({ food, showDetails }) => {
         IngredientCard.propTypes = inrgredientCardPropTypes;
-        const [burger, dispatchBurger] = useContext(BurgerContext);
-        // const [currencyType, setCurrencyType] = useState("primary");
+        const burger = useSelector(store => store.burger);
+        
         const [count, setCount] = useState(null);
 
         useEffect(() => {
@@ -20,8 +21,6 @@ export const IngredientCard = React.memo(
 
         return (
             <li className={iStyles.card}
-                // onMouseEnter={() => setCurrencyType("success")}
-                // onMouseLeave={() => setCurrencyType("primary")}
                 onClick={() => showDetails(food)}
             >
                 <img className={iStyles.cardImage} src={food.image} alt={food.name} />

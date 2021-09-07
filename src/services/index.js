@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
 import { foodsReducer } from './slicers/foods';
+import { burgerReducer } from "./slicers/burger";
 
 export const rootReducer = combineReducers({
-    foods: foodsReducer
+    foods: foodsReducer,
+    burger: burgerReducer
 });

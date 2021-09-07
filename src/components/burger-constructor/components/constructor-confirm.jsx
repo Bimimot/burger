@@ -1,15 +1,18 @@
 import React from 'react';
 import { useEffect, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import cStyles from '../burger-constructor.module.css';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { confirmOrderPropTypes } from '../../../utils/proptypes';
-import { AllOrdersContext, BurgerContext } from '../../../utils/context';
+import { AllOrdersContext } from '../../../utils/context';
 import { loadOrderNumber } from '../../../utils/api';
 
 export const ConfirmOrder = ({ orderState }) => {
     ConfirmOrder.propTypes = confirmOrderPropTypes;
     const [order, setOrder] = orderState;
-    const [burger, dispatchBurger] = useContext(BurgerContext);
+    const dispatch = useDispatch();
+    const burger = useSelector(store => store.burger);
+
     const [allOrders, setAllOrders] = useContext(AllOrdersContext);
 
     useEffect(() => {
@@ -47,7 +50,7 @@ export const ConfirmOrder = ({ orderState }) => {
                         totalPrice: burger.totalPrice
                     }
                     ]);
-                dispatchBurger({ type: "clear" });
+                dispatch({ type: "burger/clear" });
             })
             .catch(e => {
                 console.log("Error with loadOrderNumber: ", e);

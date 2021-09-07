@@ -50,9 +50,7 @@ export const BurgerIngredients =
             }
         }
 
-        console.log("sections", sections);
-        console.log("ingredients", ingredients);
-        
+   
         return (
             <article className={iStyles.ingredients}>
                 {!!sections.length &&

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useContext, useState } from 'react';
+import { useSelector } from 'react-redux';
 import cStyles from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Filling } from './components/constructor-filling';
@@ -7,7 +8,7 @@ import { ConfirmOrder } from './components/constructor-confirm';
 import { ConstructorMenu } from './components/constructor-menu';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
-import { BurgerContext } from '../../utils/context';
+
 
 export const BurgerConstructor = () => {    
     const initialOrder = {
@@ -19,7 +20,10 @@ export const BurgerConstructor = () => {
     const orderState = useState(initialOrder);
     const [order, setOrder] = orderState;
 
-    const [burger] = useContext(BurgerContext);
+    //--------------REDUX--------------------
+    const burger = useSelector(store => store.burger);
+  //----------------------------------------
+    
 
     return (
         <article className={cStyles.constructor}>
