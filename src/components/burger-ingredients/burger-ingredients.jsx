@@ -7,11 +7,14 @@ import { IngredientsSections } from './components/ingredients-sections';
 import { Modal } from '../modal/modal';
 import { IngredientsDetails } from '../ingredient-details/ingredients-details';
 import { ScrollBox } from '../scrollbox/scrollbox';
+import { useSelector } from 'react-redux';
 
 export const BurgerIngredients =
-    ({ ingredients }) => {
-        BurgerIngredients.propTypes = ingredientsPropTypes;
+    () => {
+        //BurgerIngredients.propTypes = ingredientsPropTypes;
 
+        const ingredients = useSelector(store => store.foods.items);
+        
         const [sections, setSections] = useState([]);
         const [menu, setMenu] = useState([]);
         const [details, setDetails] = useState({
@@ -47,6 +50,9 @@ export const BurgerIngredients =
             }
         }
 
+        console.log("sections", sections);
+        console.log("ingredients", ingredients);
+        
         return (
             <article className={iStyles.ingredients}>
                 {!!sections.length &&

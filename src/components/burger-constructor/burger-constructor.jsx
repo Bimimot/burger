@@ -9,7 +9,7 @@ import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { BurgerContext } from '../../utils/context';
 
-export const BurgerConstructor = ({foods}) => {
+export const BurgerConstructor = () => {    
     const initialOrder = {
         open: false,
         number: null,
@@ -23,7 +23,7 @@ export const BurgerConstructor = ({foods}) => {
 
     return (
         <article className={cStyles.constructor}>
-            <ConstructorMenu foods={foods}/>
+            <ConstructorMenu/>
             {!!burger.bun &&
                 <ConstructorElement
                     type="top"
