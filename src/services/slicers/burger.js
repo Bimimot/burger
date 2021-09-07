@@ -12,9 +12,7 @@ const burgerSlice = createSlice({
     name: 'burger',
     initialState: initialBurger,
     reducers: {
-        clear: (state) => {
-            state = initialBurger;
-        },
+        clear: (state) => initialBurger,
         random: (state, action) => {
             console.log("RANDOM action", action);
             return getBurgerByRecipe(randomRecipe(action.items))
@@ -62,7 +60,7 @@ function getBurgerByRecipe(recipe) {
 }
 
 const { actions, reducer } = burgerSlice;
-const { clear, random, del, add } = actions;
+//const { clear, random, del, add } = actions;
 
 
 

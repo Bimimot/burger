@@ -5,66 +5,72 @@ import cStyles from '../burger-constructor.module.css';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { confirmOrderPropTypes } from '../../../utils/proptypes';
 import { AllOrdersContext } from '../../../utils/context';
-import { loadOrderNumber } from '../../../utils/api';
+//import { loadOrderNumber } from '../../../utils/api';
+import { getOrderNumber } from '../../../services/slicers/orders';
+
+const resizeCurrencyIcon = () => {
+    const price = document.querySelector('#orderPrice');
+    const svgIcon = price.querySelector('svg');
+    const priceSize = getComputedStyle(price).fontSize;
+    svgIcon.setAttribute('width', priceSize);
+    svgIcon.setAttribute('height', priceSize);
+}
 
 export const ConfirmOrder = ({ orderState }) => {
-    ConfirmOrder.propTypes = confirmOrderPropTypes;
-    const [order, setOrder] = orderState;
+    // ConfirmOrder.propTypes = confirmOrderPropTypes;
+    
+    // const [order, setOrder] = orderState;
     const dispatch = useDispatch();
     const burger = useSelector(store => store.burger);
 
-    const [allOrders, setAllOrders] = useContext(AllOrdersContext);
+    // const [allOrders, setAllOrders] = useContext(AllOrdersContext);
 
     useEffect(() => {
         resizeCurrencyIcon()
     }, []);
 
-    useEffect(() => {
-        console.log(">> AllOrders from Context >> ", allOrders);
-    }, [allOrders])
-
-    const resizeCurrencyIcon = () => {
-        const price = document.querySelector('#orderPrice');
-        const svgIcon = price.querySelector('svg');
-        const priceSize = getComputedStyle(price).fontSize;
-        svgIcon.setAttribute('width', priceSize);
-        svgIcon.setAttribute('height', priceSize);
-    }
-
+    const orders = useSelector(store => store.orders);
+    console.log(">> AllOrders from Store >> ", orders);
+    
     const confirmOrder = () => {
-        setOrder({ ...order, open: true, isLoading: true });
-
-        loadOrderNumber(burger.recipe.map(ing => ing._id))
-            .then(result => {
-                setOrder({
-                    ...order,
-                    open: true,
-                    isLoading: false,
-                    number: result.order.number
-                });
-                setAllOrders(
-                    [...allOrders,
-                    {
-                        number: result.order.number,
-                        ingredients: burger.ingredients,
-                        totalPrice: burger.totalPrice
-                    }
-                    ]);
-                dispatch({ type: "burger/clear" });
-            })
-            .catch(e => {
-                console.log("Error with loadOrderNumber: ", e);
-                setOrder(
-                    {
-                        ...order,
-                        open: true,
-                        isLoading: false,
-                        isError: true
-                    }
-                )
-            })
-
+        dispatch(getOrderNumber(burger.recipe.map(ing => ing._id)));        
     }
+
+
+    // const confirmOrder = () => {
+    //     setOrder({ ...order, open: true, isLoading: true });
+
+    //     loadOrderNumber(burger.recipe.map(ing => ing._id))
+    //         .then(result => {
+    //             setOrder({
+    //                 ...order,
+    //                 open: true,
+    //                 isLoading: false,
+    //                 number: result.order.number
+    //             });
+    //             setAllOrders(
+    //                 [...allOrders,
+    //                 {
+    //                     number: result.order.number,
+    //                     ingredients: burger.ingredients,
+    //                     totalPrice: burger.totalPrice
+    //                 }
+    //                 ]);
+    //             dispatch({ type: "burger/clear" });
+    //         })
+    //         .catch(e => {
+    //             console.log("Error with loadOrderNumber: ", e);
+    //             setOrder(
+    //                 {
+    //                     ...order,
+    //                     open: true,
+    //                     isLoading: false,
+    //                     isError: true
+    //                 }
+    //             )
+    //         })
+
+    // }
 
     return (
         <div className={cStyles.confirm}>

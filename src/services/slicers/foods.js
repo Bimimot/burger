@@ -16,7 +16,7 @@ const foodsSlice = createSlice({
             state.isError = false
         },
         foodsError: (state) => {
-            state.isLoading = true;
+            state.isLoading = false;
             state.isError = true
         },
         foodsSuccess: (state, action) => {
@@ -32,12 +32,12 @@ const { foodsLoading, foodsError, foodsSuccess } = actions;
 
 function getFoods() {
     return function (dispatch) {
-        dispatch(foodsLoading);
+        dispatch(foodsLoading());
         loadFoods()
             .then(result => dispatch(foodsSuccess({ items: result.data })))
             .catch(e => {
-                console.log("Error:", e);
-                dispatch(foodsError)
+                console.log("Error with ingredients:", e);
+                dispatch(foodsError())
             })
     }
 };

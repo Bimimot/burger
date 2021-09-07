@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContext, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import cStyles from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Filling } from './components/constructor-filling';
@@ -11,17 +11,19 @@ import { OrderDetails } from '../order-details/order-details';
 
 
 export const BurgerConstructor = () => {    
-    const initialOrder = {
-        open: false,
-        number: null,
-        isLoading: false,
-        isError: false,
-    };
-    const orderState = useState(initialOrder);
-    const [order, setOrder] = orderState;
+    // const initialOrder = {
+    //     open: false,
+    //     number: null,
+    //     isLoading: false,
+    //     isError: false,
+    // };
+    // const orderState = useState(initialOrder);
+    // const [order, setOrder] = orderState;
 
     //--------------REDUX--------------------
     const burger = useSelector(store => store.burger);
+    const orders = useSelector(store => store.orders);
+    const dispatch = useDispatch();
   //----------------------------------------
     
 
@@ -51,13 +53,13 @@ export const BurgerConstructor = () => {
             }
 
             {(!!burger.bun && !!burger.filling.length) &&
-                <ConfirmOrder orderState={orderState} />
+                <ConfirmOrder />
             }
 
             <div style={{ overflow: 'hidden' }}>
-                {order.open &&
-                    <Modal onClose={() => setOrder(initialOrder)} isLoading={order.isLoading}>
-                        <OrderDetails order={order} />
+                {orders.openDetails &&
+                    <Modal onClose={() => dispatch({type: 'orders/closeDetails'})} isLoading={orders.isLoading}>
+                        <OrderDetails orders={orders} />
                     </Modal>
                 }
             </div>
