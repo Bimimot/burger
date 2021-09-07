@@ -6,11 +6,11 @@ import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 import { ErrorMessage } from '../error-message/error-message';
 import { Loader } from '../loader/loader';
- import { loadFoods } from '../../utils/api';
+
 import { AllOrdersContext, BurgerContext } from '../../utils/context';
 import { randomRecipe } from '../../utils/helpers';
 
-import { getFoods } from '../../services/actions/foods';
+import { getFoods } from '../../services/slicers/foods';
 
 const initialBurger = {
   recipe: [],
@@ -66,11 +66,7 @@ function reducerBurger(burger, action) {
 }
 
 export const App = () => {
-  // const [state, setState] = useState({
-  //   foods: [],
-  //   isLoading: false,
-  //   isError: false
-  // });
+ 
 
   //--------------REDUX--------------------
   const store = useSelector(store => store);
@@ -87,17 +83,6 @@ export const App = () => {
   const allOrdersState = useState([]);
   const burgerState = useReducer(reducerBurger, initialBurger);
 
-  // useEffect(() => {
-  //   setState({ ...state, isLoading: true });
-  //   loadFoods()
-  //     .then(result => {
-  //       setState({ ...state, isLoading: false, foods: result.data });
-  //     })
-  //     .catch(e => {
-  //       console.log("Error:", e);
-  //       setState({ ...state, isError: true, isLoading: false })
-  //     })
-  // }, []);
 
   return (
     <AllOrdersContext.Provider value={allOrdersState}>
