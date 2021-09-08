@@ -1,5 +1,4 @@
 import React from 'react';
-import { useContext, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import cStyles from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -11,21 +10,9 @@ import { OrderDetails } from '../order-details/order-details';
 
 
 export const BurgerConstructor = () => {    
-    // const initialOrder = {
-    //     open: false,
-    //     number: null,
-    //     isLoading: false,
-    //     isError: false,
-    // };
-    // const orderState = useState(initialOrder);
-    // const [order, setOrder] = orderState;
-
-    //--------------REDUX--------------------
     const burger = useSelector(store => store.burger);
     const orders = useSelector(store => store.orders);
     const dispatch = useDispatch();
-  //----------------------------------------
-    
 
     return (
         <article className={cStyles.constructor}>

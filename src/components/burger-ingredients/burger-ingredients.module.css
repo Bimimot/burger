@@ -86,21 +86,25 @@
     top: 0;
     right: 0;
 }
-
-/* ------Hover effect------- */
-.card:hover {
-    cursor: pointer;
+.cardText{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.card:hover .cardImage{
+/* ------Hover effect------- */
+.cardImage:hover{
+    cursor: pointer;
     filter: drop-shadow(0px 4px 32px rgba(51, 51, 255, 0.5));
 }
 
-.card:hover .cardPrice, .card:hover .cardTitle{
+.cardText:hover{
+    cursor: pointer;
     filter: invert(50%) sepia(35%) saturate(1844%) hue-rotate(141deg) brightness(106%) contrast(103%);
 }
 
-.cardImage, .cardTitle, .cardPrice {
+.cardImage, .cardText {
     transition: filter .2s ease;
 }
 

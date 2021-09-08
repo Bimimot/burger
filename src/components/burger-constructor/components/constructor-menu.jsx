@@ -1,16 +1,12 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import cStyles from '../burger-constructor.module.css';
 
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 
 export const ConstructorMenu = () => {
-    
     const foods = useSelector(store => store.foods);
-    const burger = useSelector(store => store.burger);
     const dispatch = useDispatch();
-    console.log(burger);
-
 
     return (
         <div className={cStyles.menu}>

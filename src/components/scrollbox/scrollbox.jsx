@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import sboxStyles from './scrollbox.module.css';
 import { scrollboxPropTypes } from '../../utils/proptypes';
 
@@ -67,7 +67,7 @@ export const ScrollBox = React.memo(
             }
         }, [curBlockId, props]);
 
-        const getActiveSectionId = () => {
+        const getActiveSectionId = useCallback(() => {
             const container = containerRef.current;
             const containerTop = container.getBoundingClientRect().top;
             const containerBottom = container.clientHeight + containerTop;
@@ -88,7 +88,7 @@ export const ScrollBox = React.memo(
                 };
             });
             return curId
-        }
+        }, [props])
 
         return (
             <section className={sboxStyles.container} id={!!props.id ? props.id : "scrollbox"} ref={containerRef}>

@@ -21,15 +21,15 @@ export const IngredientCard = React.memo(
         }, [burger, food]);
 
         return (
-            <li className={iStyles.card}
-                onClick={() => dispatch({ type: "ingredient/openIngredient", payload: food })}
-            >
+            <li className={iStyles.card}>
                 <img className={iStyles.cardImage} src={food.image} alt={food.name} />
-                <div className={iStyles.cardPrice}>
-                    <span className="text text_type_main-medium m-2" style={{ lineHeight: "1" }}>{food.price}</span>
-                    <CurrencyIcon type={"primary"} />
+                <div className={iStyles.cardText} onClick={() => dispatch({ type: "ingredient/openIngredient", payload: food })}>
+                    <div className={iStyles.cardPrice}>
+                        <span className="text text_type_main-medium m-2" style={{ lineHeight: "1" }}>{food.price}</span>
+                        <CurrencyIcon type={"primary"} />
+                    </div>
+                    <h3 className={iStyles.cardTitle + " text text_type_main-default"}>{food.name}</h3>
                 </div>
-                <h3 className={iStyles.cardTitle + " text text_type_main-default"}>{food.name}</h3>
                 <div className={iStyles.count}>
                     {!!count && <Counter count={count} size="default" />}
                 </div>

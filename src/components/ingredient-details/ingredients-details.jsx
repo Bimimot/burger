@@ -1,10 +1,9 @@
 
-import React, { useContext } from 'react';
+import React from 'react';
 import dStyles from './ingredients-details.module.css';
 import { detailsProptypes } from '../../utils/proptypes';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
-
 
 export const IngredientsDetails = React.memo(
     ({ ingredient }) => {
