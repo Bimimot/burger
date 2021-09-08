@@ -1,13 +1,10 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import iStyles from '../burger-ingredients.module.css';
-// import { menuPropTypes } from '../../../utils/proptypes';
 import { setActiveSection } from '../../../services/slicers/foods';
 
 export const IngredientsMenu = React.memo(
-    () => {
-        //IngredientsMenu.propTypes = menuPropTypes;
-        const sections = useSelector(store => store.foods.sections);
+    ({ sections}) => {
         const dispatch = useDispatch();
 
         return (

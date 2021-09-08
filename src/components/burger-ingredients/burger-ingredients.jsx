@@ -1,30 +1,19 @@
 import iStyles from './burger-ingredients.module.css';
 import { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { IngredientsMenu } from './components/ingredients-menu';
 import { IngredientsSections } from './components/ingredients-sections';
-import { Modal } from '../modal/modal';
 import { IngredientsDetails } from '../ingredient-details/ingredients-details';
+import { Modal } from '../modal/modal';
 import { ScrollBox } from '../scrollbox/scrollbox';
-import { useSelector, useDispatch } from 'react-redux';
 import { setActiveSection } from '../../services/slicers/foods';
 
 export const BurgerIngredients = () => {
-
     const sections = useSelector(store => store.foods.sections);
     const ingredient = useSelector(store => store.ingredient);
     const dispatch = useDispatch();
 
-    const showDetails = useCallback(
-        (ingredient) => { dispatch({ type: "ingredient/openIngredient", payload: ingredient })
-        }, [dispatch]
-    );
-
-    const closeDetails = useCallback(
-        () => { dispatch({ type: "ingredient/closeIngredient" })
-        }, [dispatch]);
-
-    const updateMenu = useCallback(
-        (id) => {
+    const updateMenu = useCallback((id) => {
         const prevActive = sections.find(s => s.active);
         if (!prevActive || prevActive.id !== id) {
             dispatch(setActiveSection(id))
@@ -35,7 +24,7 @@ export const BurgerIngredients = () => {
         <article className={iStyles.ingredients}>
             {!!sections.length &&
                 <>
-                    <IngredientsMenu />
+                <IngredientsMenu sections={sections} />
                     <ScrollBox
                         top={40}
                         bottom={52}
@@ -43,21 +32,17 @@ export const BurgerIngredients = () => {
                         arrBlocksId={sections.map(m => m.id)}
                         callbackScroll={updateMenu}
                     >
-                        <IngredientsSections
-                            sections={sections}
-                            showDetails={showDetails}
-                        />
+                        <IngredientsSections sections={sections} />
                     </ScrollBox>
                 </>
             }
             <div style={{ position: "fixed", overflow: "hidden" }}>
                 {ingredient.show &&
-                    <Modal title="Детали ингредиента" onClose={closeDetails}>
-                        <IngredientsDetails
-                            ingredient={ingredient.item}
-                            closeDetails={closeDetails}
-                        />
-                    </Modal>}
+                    <Modal
+                        title="Детали ингредиента"
+                        onClose={() => dispatch({ type: "ingredient/closeIngredient" })}
+                        children={<IngredientsDetails ingredient={ingredient.item} />}
+                    />}
             </div>
         </article>
     )

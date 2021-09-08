@@ -6,7 +6,7 @@ import { IngredientCard } from './ingredient-card';
 
 
 export const IngredientsSections = React.memo(
-    ({ sections, showDetails }) => {
+    ({ sections }) => {
         IngredientsSections.propTypes = sectionsPropTypes;
 
         const lastSectionRef = useRef(null);
@@ -32,7 +32,6 @@ export const IngredientsSections = React.memo(
                                 <IngredientCard
                                     key={f._id}
                                     food={f}
-                                    showDetails={() => showDetails(f)}
                                 />)}
                         </ul>
                     </li>

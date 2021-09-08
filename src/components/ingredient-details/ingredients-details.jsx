@@ -7,14 +7,14 @@ import { useSelector, useDispatch } from 'react-redux';
 
 
 export const IngredientsDetails = React.memo(
-    ({ closeDetails, ingredient }) => {
+    ({ ingredient }) => {
         IngredientsDetails.propTypes = detailsProptypes;
         const bun = useSelector(store => store.burger.bun);
         const dispatch = useDispatch();
 
-        const addIngredient = () => {
-            closeDetails();
+        const addIngredient = () => {     
             dispatch({ type: 'burger/add', food: ingredient });
+            dispatch({ type: 'ingredient/closeIngredient' });
         }
 
         return (
