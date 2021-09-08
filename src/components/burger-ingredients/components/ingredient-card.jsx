@@ -5,12 +5,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { inrgredientCardPropTypes } from '../../../utils/proptypes';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { useDrag } from "react-dnd";
 
 export const IngredientCard = React.memo(
     ({ food }) => {
         IngredientCard.propTypes = inrgredientCardPropTypes;
         const burger = useSelector(store => store.burger);
         const dispatch = useDispatch();
+        const [{ isDrag }, dragRef] = useDrag({
+            type: "food",
+            item: food
+        });
 
         const [count, setCount] = useState(null);
 
@@ -21,7 +26,7 @@ export const IngredientCard = React.memo(
         }, [burger, food]);
 
         return (
-            <li className={iStyles.card}>
+            <li className={iStyles.card} ref={dragRef}>
                 <img className={iStyles.cardImage} src={food.image} alt={food.name} />
                 <div className={iStyles.cardText} onClick={() => dispatch({ type: "ingredient/openIngredient", payload: food })}>
                     <div className={iStyles.cardPrice}>
