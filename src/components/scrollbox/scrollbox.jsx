@@ -62,7 +62,7 @@ export const ScrollBox = React.memo(
         }, [props]);
 
         useEffect(() => {
-            if (!!curBlockId) {
+            if (!!curBlockId && !!props.callbackScroll) {
                 props.callbackScroll(curBlockId)
             }
         }, [curBlockId, props]);

@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { sectionsPropTypes } from '../../../utils/proptypes';
 import { IngredientCard } from './ingredient-card';
 
+
 export const IngredientsSections = React.memo(
     ({ sections, showDetails }) => {
         IngredientsSections.propTypes = sectionsPropTypes;

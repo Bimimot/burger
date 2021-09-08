@@ -37,18 +37,6 @@ const ordersSlice = createSlice({
 });
 
 
-    //                 ...order,
-    //                 open: true,
-    //                 isLoading: false,
-    //                 number: result.order.number
-    //             });
-    //             setAllOrders(
-    //                 [...allOrders,
-    //                 {
-    //                     number: result.order.number,
-    //                     ingredients: burger.ingredients,
-    //                     totalPrice: burger.totalPrice
-
 const { actions, reducer } = ordersSlice;
 const { orderLoading, orderError, orderSuccess } = actions;
 

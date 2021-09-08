@@ -14,7 +14,6 @@ const burgerSlice = createSlice({
     reducers: {
         clear: (state) => initialBurger,
         random: (state, action) => {
-            console.log("RANDOM action", action);
             return getBurgerByRecipe(randomRecipe(action.items))
         },
         del: (state, action) => {
