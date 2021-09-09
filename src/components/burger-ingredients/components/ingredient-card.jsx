@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { inrgredientCardPropTypes } from '../../../utils/proptypes';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-
 import { useDrag } from "react-dnd";
 
 export const IngredientCard = React.memo(
@@ -26,8 +25,8 @@ export const IngredientCard = React.memo(
         }, [burger, food]);
 
         return (
-            <li className={iStyles.card} ref={dragRef}>
-                <img className={iStyles.cardImage} src={food.image} alt={food.name} />
+            <li className={iStyles.card} >
+                <img className={iStyles.cardImage} src={food.image} alt={food.name} ref={dragRef}/>
                 <div className={iStyles.cardText} onClick={() => dispatch({ type: "ingredient/openIngredient", payload: food })}>
                     <div className={iStyles.cardPrice}>
                         <span className="text text_type_main-medium m-2" style={{ lineHeight: "1" }}>{food.price}</span>

@@ -34,6 +34,7 @@ ul{
 .constructor-element{
     flex-grow: 0 !important;
     transition: filter .2s ease;
+    width: 100%;
 }
 
 .constructor-element__action:hover{

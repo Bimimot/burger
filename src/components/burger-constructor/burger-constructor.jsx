@@ -10,7 +10,6 @@ import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 
 import { useDrop } from "react-dnd";
-import { IngredientCard } from '../burger-ingredients/components/ingredient-card';
 
 export const BurgerConstructor = () => {    
     const burger = useSelector(store => store.burger);
@@ -18,30 +17,21 @@ export const BurgerConstructor = () => {
     const dispatch = useDispatch();
 
     const onDropHandler = (item) => {
-        setDraggedElements([...draggedElements, item]);
+        dispatch({
+            type: 'burger/add',
+            food: item
+        })
     };
-
-    const [draggedElements, setDraggedElements] = React.useState([]);
-
+    
     const [{ isHover }, dropTarget] = useDrop({
         accept: "food",
         drop(item) {
             onDropHandler(item);
-        },
-        // collect: monitor => ({
-        //     isHover: monitor.isOver(),
-        // })
+        }
     });
 
     return (
-        <article className={cStyles.constructor}>
-            <div style={{ height: "900px", border: "1px solid red" }} ref={dropTarget}>
-                {draggedElements.map(f =>
-                    <IngredientCard
-                        key={f._id}
-                        food={f}
-                    />)}
-                </div>
+        <article className={cStyles.constructor} ref={dropTarget}>
             <ConstructorMenu/>
             {!!burger.bun &&
                 <ConstructorElement

@@ -32,6 +32,9 @@ const burgerSlice = createSlice({
                 addRecipe.push(action.food)
             }
             return getBurgerByRecipe(addRecipe)
+        },
+        sort: (state, action) => {
+            state.filling = action.filling
         }
     },
 });
@@ -51,7 +54,7 @@ const randomRecipe = (foodsArr) => {
 
 function getBurgerByRecipe(recipe) {
     const bun = recipe.find(food => food.type === "bun");
-    const filling = recipe.filter(food => food.type !== "bun");
+    const filling = recipe.filter(food => food.type !== "bun").map((f,i) => ({...f, unicId: i + f._id}));
     const totalPrice = filling.reduce((total, current) => total + current.price, 0)
         + (!!bun ? bun.price * 2 : 0);
     recipe = filling.concat(!!bun ? bun : []);
