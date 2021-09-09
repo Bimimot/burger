@@ -1,6 +1,6 @@
 import React from 'react';
 import oStyles from "./order-details.module.css";
-import { orderProptypes } from '../../utils/proptypes';
+import { orderDetailsProptypes } from '../../utils/proptypes';
 import iconDonePath from "../../images/icon-done.png"
 import { LoaderNumber } from './order-loader-number';
 import { Loader } from '../loader/loader';
@@ -8,7 +8,7 @@ import { ErrorMessage } from '../error-message/error-message';
 
 export const OrderDetails = React.memo(
     ({ orders }) => {
-        OrderDetails.orderProptypes = orderProptypes;
+        OrderDetails.orderProptypes = orderDetailsProptypes;
 
         return (
             <div className={oStyles.container}>

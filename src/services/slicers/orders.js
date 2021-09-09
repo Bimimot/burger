@@ -18,7 +18,6 @@ const ordersSlice = createSlice({
             state.currentNumber = null
         },
         orderLoading: (state) => {
-            console.log("Order loading");
             state.openDetails = true;
             state.isLoading = true;
             state.isError = false
@@ -28,8 +27,8 @@ const ordersSlice = createSlice({
             state.isError = true
         },
         orderSuccess: (state, action) => {
-            state.items = [...state.items, action.payload.order.number];
-            state.currentNumber = action.payload.order.number;
+            state.items = [...state.items, action.payload];
+            state.currentNumber = action.payload.number;
             state.isLoading = false;
             state.isError = false
         }
@@ -42,10 +41,18 @@ const { orderLoading, orderError, orderSuccess } = actions;
 
 
 function getOrderNumber(arrId) {
-    return function (dispatch) {
+    return function (dispatch, getState) {
         dispatch(orderLoading());
+        const { totalPrice, recipe } = getState().burger;
         loadOrderNumber(arrId)
-            .then(result => dispatch(orderSuccess(result)))
+            .then(result => dispatch(
+                orderSuccess({
+                    ...result,
+                    number: result.order.number,
+                    totalPrice,
+                    recipe
+                }))
+            )
             .catch(e => {
                 console.log("Error with order:", e);
                 dispatch(orderError())
