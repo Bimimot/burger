@@ -9,25 +9,16 @@ import { useDrag } from "react-dnd";
 export const IngredientCard = React.memo(
     ({ food }) => {
         IngredientCard.propTypes = inrgredientCardPropTypes;
-        const burger = useSelector(store => store.burger);
         const dispatch = useDispatch();
         const [{ isDrag }, dragRef] = useDrag({
             type: "food",
             item: food
         });
 
-        const [count, setCount] = useState(null);
-
-        useEffect(() => {
-            setCount(burger.recipe.reduce(function (amount, f) {
-                return f._id === food._id ? amount + 1 : amount
-            }, 0))
-        }, [burger, food]);
-
         return (
-            <li className={iStyles.card} >
+            <li className={iStyles.card} onClick={() => dispatch({ type: "ingredient/openIngredient", payload: food })}>
                 <img className={iStyles.cardImage} src={food.image} alt={food.name} ref={dragRef}/>
-                <div className={iStyles.cardText} onClick={() => dispatch({ type: "ingredient/openIngredient", payload: food })}>
+                <div className={iStyles.cardText}>
                     <div className={iStyles.cardPrice}>
                         <span className="text text_type_main-medium m-2" style={{ lineHeight: "1" }}>{food.price}</span>
                         <CurrencyIcon type={"primary"} />
@@ -35,7 +26,7 @@ export const IngredientCard = React.memo(
                     <h3 className={iStyles.cardTitle + " text text_type_main-default"}>{food.name}</h3>
                 </div>
                 <div className={iStyles.count}>
-                    {!!count && <Counter count={count} size="default" />}
+                    {!!food.count && <Counter count={food.count} size="default" />}
                 </div>
             </li>
         )

@@ -99,7 +99,7 @@
     filter: drop-shadow(0px 4px 32px rgba(51, 51, 255, 0.5));
 }
 
-.cardText:hover{
+.card:hover .cardText{
     cursor: pointer;
     filter: invert(50%) sepia(35%) saturate(1844%) hue-rotate(141deg) brightness(106%) contrast(103%);
 }

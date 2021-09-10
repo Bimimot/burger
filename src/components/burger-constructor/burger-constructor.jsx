@@ -8,21 +8,20 @@ import { ConfirmOrder } from './components/constructor-confirm';
 import { ConstructorMenu } from './components/constructor-menu';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
+import { addInRecipe, clearRecipe } from '../../services/slicers/burger';
+
 
 import { useDrop } from "react-dnd";
 
-export const BurgerConstructor = () => {    
+export const BurgerConstructor = () => {
     const burger = useSelector(store => store.burger);
     const orders = useSelector(store => store.orders);
     const dispatch = useDispatch();
 
     const onDropHandler = (item) => {
-        dispatch({
-            type: 'burger/add',
-            food: item
-        })
+        dispatch(addInRecipe(item));
     };
-    
+
     const [{ isHover }, dropTarget] = useDrop({
         accept: "food",
         drop(item) {
@@ -30,9 +29,14 @@ export const BurgerConstructor = () => {
         }
     });
 
+    const onCloseOrder = () => {
+        dispatch({ type: 'orders/closeDetails' });
+        dispatch(clearRecipe());
+    }
+
     return (
         <article className={cStyles.constructor} ref={dropTarget}>
-            <ConstructorMenu/>
+            <ConstructorMenu />
             {!!burger.bun &&
                 <ConstructorElement
                     type="top"
@@ -61,7 +65,7 @@ export const BurgerConstructor = () => {
 
             <div style={{ overflow: 'hidden' }}>
                 {orders.openDetails &&
-                    <Modal onClose={() => dispatch({type: 'orders/closeDetails'})} isLoading={orders.isLoading}>
+                    <Modal onClose={onCloseOrder} isLoading={orders.isLoading}>
                         <OrderDetails orders={orders} />
                     </Modal>
                 }

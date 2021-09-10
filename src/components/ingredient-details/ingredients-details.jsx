@@ -4,6 +4,7 @@ import dStyles from './ingredients-details.module.css';
 import { detailsProptypes } from '../../utils/proptypes';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
+import { addInRecipe } from '../../services/slicers/burger';
 
 export const IngredientsDetails = React.memo(
     ({ ingredient }) => {
@@ -12,7 +13,7 @@ export const IngredientsDetails = React.memo(
         const dispatch = useDispatch();
 
         const addIngredient = () => {     
-            dispatch({ type: 'burger/add', food: ingredient });
+            dispatch(addInRecipe(ingredient));
             dispatch({ type: 'ingredient/closeIngredient' });
         }
 

@@ -13,7 +13,8 @@ const foodPropTypes = PropTypes.shape({
     image: PropTypes.string.isRequired,
     image_mobile: PropTypes.string.isRequired,
     image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired
+    __v: PropTypes.number.isRequired,
+    count: PropTypes.number
 });
 const foodsPropTypes = PropTypes.arrayOf(foodPropTypes.isRequired).isRequired;
 const foodSections = PropTypes.arrayOf(PropTypes.shape({

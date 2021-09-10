@@ -5,6 +5,7 @@ import { MovedElement } from '../../moved-element/moved-element';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ScrollBox } from '../../scrollbox/scrollbox';
 import update from 'immutability-helper';
+import { delFromRecipe } from '../../../services/slicers/burger';
 
 
 export const Filling = React.memo(() => {
@@ -30,11 +31,11 @@ export const Filling = React.memo(() => {
                     <div className={cStyles.recipe}>
                         {filling.map((item, i) =>
                         <MovedElement key={item.unicId} index={i} id={item.unicId}  moveElement={moveElement}>
-                            <ConstructorElement
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image}
-                                handleClose={() => dispatch({ type: "burger/del", fillingIndex: i })}
+                                <ConstructorElement
+                                    text={item.name}
+                                    price={item.price}
+                                    thumbnail={item.image}
+                                    handleClose={() => dispatch(delFromRecipe(item))}
                             />
                         </MovedElement>
                         )}

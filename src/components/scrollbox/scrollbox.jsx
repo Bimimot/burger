@@ -28,7 +28,6 @@ export const ScrollBox = React.memo(
                         setCurBlockId(getActiveSectionId())
                     }
                 } else {
-                    console.log("stop visible");
                     scrollContainer.style.visibility = "hidden";
                 }
             };
