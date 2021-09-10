@@ -4,8 +4,6 @@
     margin-left: 20px;
     width: var(--width-column-main);
     box-sizing: border-box;
-    padding: 20px 16px 0px;
-    gap: 10px;
 }
 
 .menu {
@@ -15,11 +13,37 @@
     gap: 50px;
     justify-content: space-around;
 }
+.dropContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px 10px 10px 24px;
+    gap: 10px;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s linear;
+}
+.dropContainer[drop="true"] {
+    box-shadow: 0px 0px 100px 6px rgba(0, 204, 204, 0.2) inset;
+    -webkit-box-shadow: 0px 0px 100px 6px rgba(0, 204, 204, 0.2) inset;
+    -webkit-box-shadow: 0px 0px 100px 6px rgba(0, 204, 204, 0.2) inset;
+}
+
+.dropContainer[drag="true"] {
+    box-shadow: inset 0px 0px 100px 6px rgba(76, 76, 255, 0.15);
+    -webkit-box-shadow: inset 0px 0px 100px 6px rgba(76, 76, 255, 0.15);
+    -webkit-box-shadow: inset 0px 0px 100px 6px rgba(76, 76, 255, 0.15);
+}
+
+.filling {
+    overflow: hidden;
+    margin-left: -24px;
+}
 
 .confirm {
     display: flex;
     flex-direction: row;
-    margin: 40px 0;
+    margin: 30px 16px;
     justify-content: flex-end;
 }
 

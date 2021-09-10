@@ -22,11 +22,13 @@ export const BurgerConstructor = () => {
         dispatch(addInRecipe(item));
     };
 
-    const [{ isHover }, dropTarget] = useDrop({
+    const [{ canDrop, isOver }, dropTarget] = useDrop({
         accept: "food",
-        drop(item) {
-            onDropHandler(item);
-        }
+        drop: (item) => onDropHandler(item),
+        collect: (monitor) => ({
+            isOver: monitor.isOver(),
+            canDrop: monitor.canDrop()
+        }),
     });
 
     const onCloseOrder = () => {
@@ -35,29 +37,38 @@ export const BurgerConstructor = () => {
     }
 
     return (
-        <article className={cStyles.constructor} ref={dropTarget}>
+        <article className={cStyles.constructor} >
             <ConstructorMenu />
-            {!!burger.bun &&
-                <ConstructorElement
-                    type="top"
-                    isLocked={true}
-                    text={burger.bun.name + " (верх)"}
-                    price={burger.bun.price}
-                    thumbnail={burger.bun.image}
-                />
-            }
-            {!!burger.filling.length &&
-                <Filling filling={burger.filling} />
-            }
-            {!!burger.bun &&
-                <ConstructorElement
-                    type="bottom"
-                    isLocked={true}
-                    text={burger.bun.name + " (низ)"}
-                    price={burger.bun.price}
-                    thumbnail={burger.bun.image}
-                />
-            }
+            <div className={cStyles.dropContainer}
+                ref={dropTarget}
+                drop={String(isOver && canDrop)}
+                drag={String(!isOver && canDrop )}
+            >
+                {!!burger.bun &&
+                    <ConstructorElement
+                        type="top"
+                        isLocked={true}
+                        text={burger.bun.name + " (верх)"}
+                        price={burger.bun.price}
+                        thumbnail={burger.bun.image}
+                    />
+                }
+                {!!burger.filling.length &&
+                    <Filling filling={burger.filling}
+                        isDrag={isOver && canDrop}
+                        canDrop={canDrop}
+                    />
+                }
+                {!!burger.bun &&
+                    <ConstructorElement
+                        type="bottom"
+                        isLocked={true}
+                        text={burger.bun.name + " (низ)"}
+                        price={burger.bun.price}
+                        thumbnail={burger.bun.image}
+                    />
+                }
+            </div>
 
             {(!!burger.bun && !!burger.filling.length) &&
                 <ConfirmOrder />
