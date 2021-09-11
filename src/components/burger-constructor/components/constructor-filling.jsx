@@ -1,31 +1,48 @@
-import React, {useContext} from 'react';
+import React, { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import cStyles from '../burger-constructor.module.css';
-import { fillingProptypes } from '../../../utils/proptypes';
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { MovedElement } from '../../moved-element/moved-element';
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ScrollBox } from '../../scrollbox/scrollbox';
-import { BurgerContext } from '../../../utils/context';
+import update from 'immutability-helper';
+import { delFromRecipe } from '../../../services/slicers/burger';
 
-export const Filling = React.memo(
-    () => {
-        Filling.propTypes = fillingProptypes;
-        const [burger, dispatchBurger] = useContext(BurgerContext);
+
+export const Filling = React.memo(() => {
+        const filling = useSelector(store => store.burger.filling);
+    const dispatch = useDispatch();
+    
+        const moveElement = useCallback((dragIndex, hoverIndex) => {
+            const dragCard = filling[dragIndex];
+            dispatch({
+                type: 'burger/sort',
+                filling: update(filling, {
+                    $splice: [
+                        [dragIndex, 1],
+                        [hoverIndex, 0, dragCard],
+                    ],
+                })
+            })
+        }, [filling, dispatch]);
 
         return (
-            <div style={{ overflow: "hidden" }}>
+            <div className={cStyles.filling} id="filling">
                 <ScrollBox>
                     <div className={cStyles.recipe}>
-                        {burger.filling.map((item, i) =>
-                            <ConstructorElement
-                                key={item._id + i}
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image}
-                                handleClose={() => dispatchBurger({type: "delete", fillingIndex: i})}
+                        {filling.map((item, i) =>
+                            <MovedElement key={item.unicId} index={i} id={item.unicId} moveElement={moveElement}>
+                                <DragIcon type="primary" />
+                                <ConstructorElement
+                                    text={item.name}
+                                    price={item.price}
+                                    thumbnail={item.image}
+                                    handleClose={() => dispatch(delFromRecipe(item))}
                             />
+                        </MovedElement>
                         )}
                     </div>
                 </ScrollBox>
             </div>
         )
     }
-)
+);

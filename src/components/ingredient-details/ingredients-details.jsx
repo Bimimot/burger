@@ -1,18 +1,20 @@
 
-import React, { useContext } from 'react';
+import React from 'react';
 import dStyles from './ingredients-details.module.css';
 import { detailsProptypes } from '../../utils/proptypes';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { BurgerContext } from '../../utils/context';
+import { useSelector, useDispatch } from 'react-redux';
+import { addInRecipe } from '../../services/slicers/burger';
 
 export const IngredientsDetails = React.memo(
-    ({ closeDetails, ingredient }) => {
+    ({ ingredient }) => {
         IngredientsDetails.propTypes = detailsProptypes;
-        const [burger, dispatchBurger] = useContext(BurgerContext);
+        const bun = useSelector(store => store.burger.bun);
+        const dispatch = useDispatch();
 
-        const addIngredient = () => {
-            closeDetails();
-            dispatchBurger({ type: "add", food: ingredient })
+        const addIngredient = () => {     
+            dispatch(addInRecipe(ingredient));
+            dispatch({ type: 'ingredient/closeIngredient' });
         }
 
         return (
@@ -38,9 +40,9 @@ export const IngredientsDetails = React.memo(
                     </div>
                 </div>
 
-                {(ingredient.type !== "bun" || JSON.stringify(ingredient) !== JSON.stringify(burger.bun))
+                {(ingredient.type !== "bun" || JSON.stringify(ingredient) !== JSON.stringify(bun))
                     && <Button type="primary" size="medium" onClick={addIngredient}>
-                    {(ingredient.type === "bun" && !!burger.bun)
+                    {(ingredient.type === "bun" && !!bun)
                         ? "Заменить булку в бургере"
                         : "Добавить к бургеру"}
                     </Button>

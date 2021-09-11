@@ -34,8 +34,9 @@ ul{
 .constructor-element{
     flex-grow: 0 !important;
     transition: filter .2s ease;
+    width: 100%;
 }
 
-.constructor-element__action:hover{
+#filling .constructor-element__action:hover{
  filter: invert(50%) sepia(35%) saturate(1844%) hue-rotate(141deg) brightness(106%) contrast(103%);
 }

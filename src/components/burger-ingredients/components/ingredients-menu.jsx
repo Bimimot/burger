@@ -1,22 +1,23 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import iStyles from '../burger-ingredients.module.css';
-import { menuPropTypes } from '../../../utils/proptypes';
+import { setActiveSection } from '../../../services/slicers/foods';
 
 export const IngredientsMenu = React.memo(
-    ({ menu, clickMenuPoint, title }) => {
-        IngredientsMenu.propTypes = menuPropTypes;
+    ({ sections}) => {
+        const dispatch = useDispatch();
 
         return (
             <div className={iStyles.menu}>
-                {!!title && <h1 className={"text text_type_main-large mb-5"}>{title}</h1>}
+                <h1 className={"text text_type_main-large mb-5"}>Соберите бургер</h1>
                 <nav className={iStyles.navigation}>
-                    {menu.map(link => (
+                    {sections.map(link => (
                         <a
                             key={link.id}
                             href={`#${link.id}`}
                             className={(link.active ? iStyles.navLinkActive : iStyles.navLink)
                                 + " pt-4 pb-4 text text_type_main-default"}
-                            onClick={!!clickMenuPoint ? () => clickMenuPoint(link.id) : null}
+                            onClick={() => dispatch(setActiveSection(link.id))}
                         >
                             {link.text}
                         </a>

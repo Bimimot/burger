@@ -1,85 +1,49 @@
-import { useState, useEffect } from 'react';
 import iStyles from './burger-ingredients.module.css';
-import { ingredientsPropTypes } from '../../utils/proptypes';
-import { translations } from '../../utils/data';
+import { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { IngredientsMenu } from './components/ingredients-menu';
 import { IngredientsSections } from './components/ingredients-sections';
-import { Modal } from '../modal/modal';
 import { IngredientsDetails } from '../ingredient-details/ingredients-details';
+import { Modal } from '../modal/modal';
 import { ScrollBox } from '../scrollbox/scrollbox';
+import { setActiveSection } from '../../services/slicers/foods';
 
-export const BurgerIngredients =
-    ({ ingredients }) => {
-        BurgerIngredients.propTypes = ingredientsPropTypes;
+export const BurgerIngredients = () => {
+    const sections = useSelector(store => store.foods.sections);
+    const ingredient = useSelector(store => store.ingredient);
+    const dispatch = useDispatch();
 
-        const [sections, setSections] = useState([]);
-        const [menu, setMenu] = useState([]);
-        const [details, setDetails] = useState({
-            show: false,
-            ingredient: null
-        });
-
-        useEffect(() => {
-            const newSections = [];
-            ingredients.forEach(food => {
-                const foodIndex = newSections.findIndex(s => s.id === food.type);
-                foodIndex > -1 ? newSections[foodIndex].foods.push(food)
-                    : newSections.push({ id: food.type, text: translations[food.type], foods: [food] })
-            });
-            setSections(newSections);
-            setMenu(newSections.map(s => ({ id: s.id, text: s.text, test: "INITIAL" })));
-        }, [ingredients]);
-
-        const showDetails = (ingredient) => {
-            setDetails({ show: true, ingredient: ingredient })
+    const updateMenu = useCallback((id) => {
+        const prevActive = sections.find(s => s.active);
+        if (!prevActive || prevActive.id !== id) {
+            dispatch(setActiveSection(id))
         }
+    }, [sections, dispatch])
 
-        const closeDetails = () => {
-            setDetails({ show: false, details: null })
-        }
-
-        const updateMenu = (id) => {
-            const prevActive = menu.find(m => m.active);
-            if (!prevActive || prevActive.id !== id) {
-                setMenu(menu.map(m => (
-                    { ...m, active: m.id === id, test: "noTest" }))
-                )
+    return (
+        <article className={iStyles.ingredients}>
+            {!!sections.length &&
+                <>
+                <IngredientsMenu sections={sections} />
+                    <ScrollBox
+                        top={40}
+                        bottom={52}
+                        id={"ingredients"}
+                        arrBlocksId={sections.map(m => m.id)}
+                        callbackScroll={updateMenu}
+                    >
+                        <IngredientsSections sections={sections} />
+                    </ScrollBox>
+                </>
             }
-        }
-
-        return (
-            <article className={iStyles.ingredients}>
-                {!!sections.length &&
-                    <>
-                        <IngredientsMenu
-                            menu={menu}
-                            title={"Соберите бургер"}
-                            clickMenuPoint={updateMenu}
-                        />
-                        <ScrollBox
-                            top={40}
-                            bottom={52}
-                            id={"ingredients"}
-                            arrBlocksId={sections.map(m => m.id)}
-                            callbackScroll={updateMenu}
-                        >
-                            <IngredientsSections
-                                sections={sections}
-                                showDetails={showDetails}
-                                updateMenu={updateMenu}
-                            />
-                        </ScrollBox>
-                    </>
-                }
-                <div style={{ position: "fixed", overflow: "hidden" }}>
-                    {details.show &&
-                        <Modal title="Детали ингредиента" onClose={closeDetails}>
-                        <IngredientsDetails
-                            ingredient={details.ingredient}
-                            closeDetails={closeDetails}
-                        />
-                        </Modal>}
-                </div>
-            </article>
-        )
-    }
+            <div style={{ position: "fixed", overflow: "hidden" }}>
+                {ingredient.show &&
+                    <Modal
+                        title="Детали ингредиента"
+                        onClose={() => dispatch({ type: "ingredient/closeIngredient" })}
+                        children={<IngredientsDetails ingredient={ingredient.item} />}
+                    />}
+            </div>
+        </article>
+    )
+}
