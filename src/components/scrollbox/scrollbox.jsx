@@ -13,9 +13,11 @@ export const ScrollBox = React.memo(
         const scrollbarRef = useRef(null);
 
         useEffect(() => {
+            const container = containerRef.current;
             const content = contentRef.current;
             const scrollContainer = scrollContainerRef.current;
             const scrollbar = scrollbarRef.current;
+            container.style.paddingBottom = !!props.bottom ? props.bottom + "px" : 0;
             scrollContainer.style.top = !!props.top ? props.top + "px" : 0;
             scrollContainer.style.bottom = !!props.bottom ? props.bottom + "px" : 0;
             scrollbar.style.height = scrollContainer.clientHeight * content.clientHeight / content.scrollHeight + "px";
