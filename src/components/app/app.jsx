@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
 import { getFoods } from '../../services/slicers/foods';
-import { PageBurgerConstructor } from '../../pages';
+import { PageBurgerConstructor, LoginPage } from '../../pages';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ export const App = () => {
             </Route>
 
             <Route path='/login' exact>
-              <h1> Login</h1>
+              <LoginPage />
             </Route>
 
             <Route path='/register' exact>
