@@ -4,7 +4,11 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
 import { getFoods } from '../../services/slicers/foods';
-import { PageBurgerConstructor, LoginPage } from '../../pages';
+import {
+  PageBurgerConstructor,
+  LoginPage, RegisterPage, ForgotPassPage, ResetPassPage,
+  NoPage
+} from '../../pages';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -28,11 +32,15 @@ export const App = () => {
             </Route>
 
             <Route path='/register' exact>
-              <h1> Register</h1>
+              <RegisterPage />
             </Route>
 
             <Route path='/forgot-password' exact>
-              <h1>Forgot password</h1>
+              <ForgotPassPage />
+            </Route>
+
+            <Route path='/reset-password' exact>
+              <ResetPassPage />
             </Route>
 
             <Route path='/profile' exact>
@@ -44,7 +52,7 @@ export const App = () => {
             </Route>
 
             <Route>
-              <h1>404 page</h1>
+              <NoPage />
             </Route>
           </Switch>
         </BrowserRouter>

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import fStyles from './form.module.css';
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { AuthFormFooter } from "./auth-form-footer";
 
-export const AuthForm = ({ arrInputs, title, confirmCallback }) => {
+export const AuthForm = ({data}) => {
+    const { title, arrInputs, footerLinks, confirm } = data;
     const [state, setState] = useState({
         arrInputs: arrInputs.map(input => ({
             ...input,
@@ -39,9 +41,6 @@ export const AuthForm = ({ arrInputs, title, confirmCallback }) => {
         }
     }
 
-    console.log("INPUT pass", state.arrInputs.find(inp => inp.name === "password"));
-
-
     return (
         <form className={fStyles.form}>
             {!!title && <h2 className="text text_type_main-medium">{title}</h2>}
@@ -56,13 +55,11 @@ export const AuthForm = ({ arrInputs, title, confirmCallback }) => {
                     onChange={handleInputChange}
                     onIconClick={() => handleIconClick(input)}
                 />
-
-
-
             )}
-            <Button>
-                Отправить
+            <Button onClick={confirm.callback}>
+                {!!confirm.text ? confirm.text : "Отправить"}
             </Button>
+            {!!footerLinks && <AuthFormFooter footerLinks={footerLinks}/>}
         </form>
     )
 }
