@@ -1,18 +1,12 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
-import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
-import { BurgerConstructor } from '../burger-constructor/burger-constructor';
-import { ErrorMessage } from '../error-message/error-message';
-import { Loader } from '../loader/loader';
 import { getFoods } from '../../services/slicers/foods';
-
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { PageBurgerConstructor } from '../../pages';
 
 export const App = () => {
-  const { isLoading, isError } = useSelector(store => store.foods);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,18 +17,39 @@ export const App = () => {
     <>
       <AppHeader />
       <main className={styles.main}>
-        {(!isLoading && !isError)
-          &&
-          <DndProvider backend={HTML5Backend}>
-            <div className={styles.content}>
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </div>
-          </DndProvider>
-        }
-        {isLoading && <Loader text={"Обновляем меню"} />}
-        {isError && <ErrorMessage />}
-      </main>
+        <BrowserRouter>
+          <Switch>
+            <Route path='/' exact>
+              <PageBurgerConstructor />
+            </Route>
+
+            <Route path='/login' exact>
+              <h1> Login</h1>
+            </Route>
+
+            <Route path='/register' exact>
+              <h1> Register</h1>
+            </Route>
+
+            <Route path='/forgot-password' exact>
+              <h1>Forgot password</h1>
+            </Route>
+
+            <Route path='/profile' exact>
+              <h1>Profile</h1>
+            </Route>
+
+            <Route path='/ingredients/:id' exact>
+              <h1>Ingredient</h1>
+            </Route>
+
+            <Route>
+              <h1>404 page</h1>
+            </Route>
+          </Switch>
+        </BrowserRouter>
+
+      </main >
     </>
   )
 };

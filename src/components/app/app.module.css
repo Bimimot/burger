@@ -5,8 +5,3 @@
     height: calc(100vh - var(--height-header));
 }
 
-.content{
-    display: flex;
-    position: relative;
-    flex-direction: row;
-}
