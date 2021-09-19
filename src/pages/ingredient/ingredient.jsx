@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
-import { IngredientDescription } from "../components/ingredient-details/ingredient-desc";
-import { ErrorMessage } from '../components/error-message/error-message';
-import { Loader } from '../components/loader/loader';
+import { IngredientDescription } from "../../components/ingredient-details/ingredient-desc";
+import { ErrorMessage } from '../../components/error-message/error-message';
+import { Loader } from '../../components/loader/loader';
 
 export const IngredientPage = () => {
     const { id } = useParams();

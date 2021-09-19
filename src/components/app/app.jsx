@@ -7,7 +7,7 @@ import { getFoods } from '../../services/slicers/foods';
 import {
   PageBurgerConstructor,
   LoginPage, RegisterPage, ForgotPassPage, ResetPassPage,
-  NoPage, IngredientPage
+  NoPage, IngredientPage, ProfilePage
 } from '../../pages';
 
 export const App = () => {
@@ -18,46 +18,45 @@ export const App = () => {
   }, []);
 
   return (
-    <>
+    <BrowserRouter>
       <AppHeader />
       <main className={styles.main}>
-        <BrowserRouter>
-          <Switch>
-            <Route path='/' exact>
-              <PageBurgerConstructor />
-            </Route>
 
-            <Route path='/login' exact>
-              <LoginPage />
-            </Route>
+        <Switch>
+          <Route path='/' exact>
+            <PageBurgerConstructor />
+          </Route>
 
-            <Route path='/register' exact>
-              <RegisterPage />
-            </Route>
+          <Route path='/login' exact>
+            <LoginPage />
+          </Route>
 
-            <Route path='/forgot-password' exact>
-              <ForgotPassPage />
-            </Route>
+          <Route path='/register' exact>
+            <RegisterPage />
+          </Route>
 
-            <Route path='/reset-password' exact>
-              <ResetPassPage />
-            </Route>
+          <Route path='/forgot-password' exact>
+            <ForgotPassPage />
+          </Route>
 
-            <Route path='/profile' exact>
-              <h1>Profile</h1>
-            </Route>
+          <Route path='/reset-password' exact>
+            <ResetPassPage />
+          </Route>
 
-            <Route path='/ingredients/:id' exact>
-              <IngredientPage />
-            </Route>
-{/* 
-            <Route>
-              <NoPage />
-            </Route> */}
-          </Switch>
-        </BrowserRouter>
+          <Route path='/profile' exact>
+            <ProfilePage />
+          </Route>
+
+          <Route path='/ingredients/:id' exact>
+            <IngredientPage />
+          </Route>
+
+          <Route>
+            <NoPage />
+          </Route>
+        </Switch>
       </main >
-    </>
+    </BrowserRouter>
   )
 };
 

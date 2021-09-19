@@ -1,5 +1,5 @@
 import React from "react";
-import { AuthForm } from "../components/auth-form/auth-form";
+import { AuthForm } from "../../components/auth-form/auth-form";
 
 export const ForgotPassPage = () => {
     const arrInputs = [

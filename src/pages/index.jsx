@@ -1,10 +1,11 @@
-import PageBurgerConstructor from "./burger-constructor";
-import { LoginPage } from "./login";
-import { RegisterPage } from "./register";
-import { ForgotPassPage } from "./forgot-password";
-import { ResetPassPage } from "./reset-password";
-import { NoPage } from "./nopage";
-import { IngredientPage } from "./ingredient";
+import PageBurgerConstructor from "./burger/burger-constructor";
+import { LoginPage } from "./auth/login";
+import { RegisterPage } from "./auth/register";
+import { ForgotPassPage } from "./auth/forgot-password";
+import { ResetPassPage } from "./auth/reset-password";
+import { NoPage } from "./nopage/nopage";
+import { IngredientPage } from "./ingredient/ingredient";
+import { ProfilePage } from "./profile/profile";
 
 export {
     PageBurgerConstructor,
@@ -13,5 +14,6 @@ export {
     ForgotPassPage,
     ResetPassPage,
     NoPage,
-    IngredientPage
+    IngredientPage,
+    ProfilePage
 }
