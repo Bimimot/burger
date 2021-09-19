@@ -7,7 +7,7 @@ import { getFoods } from '../../services/slicers/foods';
 import {
   PageBurgerConstructor,
   LoginPage, RegisterPage, ForgotPassPage, ResetPassPage,
-  NoPage
+  NoPage, IngredientPage
 } from '../../pages';
 
 export const App = () => {
@@ -48,15 +48,14 @@ export const App = () => {
             </Route>
 
             <Route path='/ingredients/:id' exact>
-              <h1>Ingredient</h1>
+              <IngredientPage />
             </Route>
-
+{/* 
             <Route>
               <NoPage />
-            </Route>
+            </Route> */}
           </Switch>
         </BrowserRouter>
-
       </main >
     </>
   )

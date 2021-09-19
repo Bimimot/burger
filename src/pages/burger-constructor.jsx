@@ -10,12 +10,11 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const PageBurgerConstructor = () => {
-    const { isLoading, isError } = useSelector(store => store.foods);
+    const { isLoading, isError, isLoaded } = useSelector(store => store.foods);
 
     return (
         <>
-            {(!isLoading && !isError)
-                &&
+            {isLoaded &&
                 <DndProvider backend={HTML5Backend}>
                     <div className={pStyles.content}>
                         <BurgerIngredients />
@@ -24,8 +23,7 @@ const PageBurgerConstructor = () => {
                 </DndProvider>
             }
             {isLoading && <Loader text={"Обновляем меню"} />}
-            {isError && <ErrorMessage />}
-            
+            {isError && <ErrorMessage />}            
         </>
     )
 }

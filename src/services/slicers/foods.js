@@ -4,9 +4,11 @@ import { translations } from '../../utils/data';
 
 const initialFoods = {
     items: [],
+    sections: [],
+    
     isLoading: false,
     isError: false,
-    sections: []
+    isLoaded: false
 };
 
 const foodsSlice = createSlice({
@@ -15,16 +17,19 @@ const foodsSlice = createSlice({
     reducers: {
         foodsLoading: (state) => {
             state.isLoading = true;
-            state.isError = false
+            state.isError = false;
+            state.isLoaded = false
         },
         foodsError: (state) => {
             state.isLoading = false;
-            state.isError = true
+            state.isError = true;
+            state.isLoaded = false
         },
         foodsSuccess: (state, action) => {
             state.items = action.payload.items;
             state.isLoading = false;
             state.isError = false;
+            state.isLoaded = true
             state.sections = getSections(action.payload.items);
         },
         clearCounts: (state) => {
