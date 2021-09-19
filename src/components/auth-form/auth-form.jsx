@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import fStyles from './form.module.css';
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { AuthFormFooter } from "./auth-form-footer";
+import { register } from "../../utils/api";
 
 export const AuthForm = ({data}) => {
     const { title, arrInputs, footerLinks, confirm } = data;
@@ -20,7 +21,7 @@ export const AuthForm = ({data}) => {
         const name = target.name;
         setState({
             ...state,
-            arrInputs: arrInputs.map(input => input.name === name ? { ...input, value } : input)
+            arrInputs: state.arrInputs.map(input => input.name === name ? { ...input, value } : input)
         });
     };
 
@@ -35,10 +36,22 @@ export const AuthForm = ({data}) => {
             };
             setState({
                 ...state,
-                arrInputs: arrInputs.map(inputState =>
+                arrInputs: state.arrInputs.map(inputState =>
                     inputState.name === input.name ? newInputState : inputState)
             })
         }
+    }
+
+    const registerUser = (event) => {
+        event.preventDefault();
+
+        const data = {
+            email: state.arrInputs.find(inp => inp.name === "email").value,
+            password: state.arrInputs.find(inp => inp.name === "password").value,
+            name: state.arrInputs.find(inp => inp.name === "nickname").value,
+        };
+        register(data)
+            .then(res => console.log("Register!", res))
     }
 
     return (
@@ -56,7 +69,7 @@ export const AuthForm = ({data}) => {
                     onIconClick={() => handleIconClick(input)}
                 />
             )}
-            <Button onClick={confirm.callback}>
+            <Button onClick={(event) => registerUser(event)}>
                 {!!confirm.text ? confirm.text : "Отправить"}
             </Button>
             {!!footerLinks && <AuthFormFooter footerLinks={footerLinks}/>}

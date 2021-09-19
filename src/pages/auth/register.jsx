@@ -15,8 +15,8 @@ export const RegisterPage = () => {
     const title = "Регистрация";
     
     const confirm = {
-        text: "Зарегистрироваться",
-        callBack: null
+        type: "register",
+        text: "Зарегистрироваться"
     }
 
     return <AuthForm data={{ title, arrInputs, footerLinks, confirm }} />

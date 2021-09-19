@@ -12,7 +12,7 @@ export const LoginPage = () => {
     ];
 
     const confirm = {
-        callback: null,
+        type: "login",
         text: "Войти"
     };
 
