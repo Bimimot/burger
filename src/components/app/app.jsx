@@ -43,7 +43,7 @@ export const App = () => {
             <ResetPassPage />
           </Route>
 
-          <Route path='/profile' exact>
+          <Route path='/profile'>
             <ProfilePage />
           </Route>
 

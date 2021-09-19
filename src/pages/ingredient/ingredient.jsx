@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { IngredientDescription } from "../../components/ingredient-details/ingredient-desc";
 import { ErrorMessage } from '../../components/error-message/error-message';
 import { Loader } from '../../components/loader/loader';
+import { NoPage } from "..";
 
 export const IngredientPage = () => {
     const { id } = useParams();
@@ -18,7 +19,9 @@ export const IngredientPage = () => {
 
     return (
         <>
-            {isLoaded && <IngredientDescription ingredient={ingredient} />}
+            {isLoaded && <>
+                    {!!ingredient ? <IngredientDescription ingredient={ingredient} /> : <NoPage />}
+                </>}
             {isLoading && <Loader text={"Ищем на кухне"} />}
             {isError && <ErrorMessage />}
         </>
