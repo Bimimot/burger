@@ -1,13 +1,10 @@
 export const baseUrl = 'https://norma.nomoreparties.space/api';
 
+const apiHandler = (res) => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
+
 export const loadFoods = () =>
     fetch(`${baseUrl}/ingredients`)
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка ${res.status}`)
-        });
+        .then(res => apiHandler(res));
 
 export const loadOrderNumber = (arrIngredients) =>
     fetch(`${baseUrl}/orders`,
@@ -16,47 +13,69 @@ export const loadOrderNumber = (arrIngredients) =>
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
             body: JSON.stringify({ ingredients: arrIngredients })
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка ${res.status}`)
-        });
+        .then(res => apiHandler(res));
 
-// POST https://norma.nomoreparties.space/api/auth/login - эндпоинт для авторизации.
-// POST https://norma.nomoreparties.space/api/auth/register - эндпоинт для регистрации пользователя.
-// POST https://norma.nomoreparties.space/api/auth/logout - эндпоинт для выхода из системы.
-// POST https://norma.nomoreparties.space/api/auth/token - эндпоинт обновления токена.
+//-----------------------auth-------------------------------------
 
 export const login = (data) =>
+    //data: {"email": "", "password": ""}
     fetch(`${baseUrl}/auth/login`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
             body: JSON.stringify(data)
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка ${res.status}`)
-        });
+        .then(res => apiHandler(res));
 
 export const register = (data) =>
-
-    //{"email": "", "password": "", "name": ""}
-
+    //data: {"email": "", "password": "", "name": ""}
     fetch(`${baseUrl}/auth/register`,
         {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
+            headers: {'Content-Type': 'application/json;charset=utf-8'},
             body: JSON.stringify(data)
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка ${res.status}`)
-        });
+        .then(res => apiHandler(res));
+
+export const logout = (refreshToken) =>
+    fetch(`${baseUrl}/auth/logout`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json;charset=utf-8' },
+            body: JSON.stringify({ refreshToken: refreshToken })
+        })
+        .then(res => apiHandler(res));
+
+export const updateToken = (refreshToken) =>
+    fetch(`${baseUrl}/auth/logout`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json;charset=utf-8' },
+            body: JSON.stringify({ refreshToken: refreshToken })
+        })
+        .then(res => apiHandler(res));
+
+
+//-----------------------reset-pass-------------------------------------
+
+export const checkEmail = (email) =>
+    fetch(`${baseUrl}/password-reset`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json;charset=utf-8' },
+            body: JSON.stringify({ email: email })
+        })
+        .then(res => apiHandler(res));
+
+export const resetPass = (password) =>
+    fetch(`${baseUrl}/password-reset/reset`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json;charset=utf-8' },
+            body: JSON.stringify({
+                password: password,
+                token: ""
+            })
+        })
+        .then(res => apiHandler(res));
+

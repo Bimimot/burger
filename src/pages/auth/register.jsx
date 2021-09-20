@@ -1,9 +1,10 @@
 import React from "react";
 import { AuthForm } from "../../components/auth-form/auth-form";
+import { registerUser } from "../../services/slicers/profile";
 
 export const RegisterPage = () => {
     const arrInputs = [
-        { name: "nickname", type: "text", placeholder: "Имя", value: "" },
+        { name: "name", type: "text", placeholder: "Имя", value: "" },
         { name: "email", type: "email", placeholder: "E-mail", value: "" },
         { name: "password", type: "password", placeholder: "Пароль", value: "" },
     ];
@@ -15,9 +16,9 @@ export const RegisterPage = () => {
     const title = "Регистрация";
     
     const confirm = {
-        type: "register",
+        callback: registerUser,
         text: "Зарегистрироваться"
-    }
+    };
 
     return <AuthForm data={{ title, arrInputs, footerLinks, confirm }} />
 }

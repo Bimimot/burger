@@ -1,10 +1,16 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import fStyles from './form.module.css';
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { AuthFormFooter } from "./auth-form-footer";
-import { register } from "../../utils/api";
 
-export const AuthForm = ({data}) => {
+
+
+export const AuthForm = ({ data }) => {
+    const dispatch = useDispatch();
+    const history = useHistory();
+
     const { title, arrInputs, footerLinks, confirm } = data;
     const [state, setState] = useState({
         arrInputs: arrInputs.map(input => ({
@@ -42,23 +48,18 @@ export const AuthForm = ({data}) => {
         }
     }
 
-    const registerUser = (event) => {
+    const confirmForm = (event) => {
         event.preventDefault();
-
-        const data = {
-            email: state.arrInputs.find(inp => inp.name === "email").value,
-            password: state.arrInputs.find(inp => inp.name === "password").value,
-            name: state.arrInputs.find(inp => inp.name === "nickname").value,
-        };
-        register(data)
-            .then(res => console.log("Register!", res))
+        const data = {};
+        state.arrInputs.forEach(input => data[input.name] = input.value);
+        dispatch(confirm.callback(data))
     }
 
     return (
         <form className={fStyles.form}>
             {!!title && <h2 className="text text_type_main-medium">{title}</h2>}
             {state.arrInputs.map(input =>
-                <Input 
+                <Input
                     key={input.name}
                     type={input.type}
                     name={input.name}
@@ -69,10 +70,10 @@ export const AuthForm = ({data}) => {
                     onIconClick={() => handleIconClick(input)}
                 />
             )}
-            <Button onClick={(event) => registerUser(event)}>
+            <Button onClick={(event) => confirmForm(event)}>
                 {!!confirm.text ? confirm.text : "Отправить"}
             </Button>
-            {!!footerLinks && <AuthFormFooter footerLinks={footerLinks}/>}
+            {!!footerLinks && <AuthFormFooter footerLinks={footerLinks} />}
         </form>
     )
 }

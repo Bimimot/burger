@@ -1,5 +1,7 @@
 import React from "react";
 import { AuthForm } from "../../components/auth-form/auth-form";
+import { loginUser } from "../../services/slicers/profile";
+import { login } from "../../utils/api";
 
 export const LoginPage = () => {
     const arrInputs = [
@@ -12,7 +14,7 @@ export const LoginPage = () => {
     ];
 
     const confirm = {
-        type: "login",
+        callback: loginUser,
         text: "Войти"
     };
 
