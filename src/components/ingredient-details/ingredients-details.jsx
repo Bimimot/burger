@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { detailsProptypes } from '../../utils/proptypes';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,10 +12,12 @@ export const IngredientsDetails = React.memo(
         IngredientsDetails.propTypes = detailsProptypes;
         const bun = useSelector(store => store.burger.bun);
         const dispatch = useDispatch();
+        const history = useHistory();
 
         const addIngredient = () => {     
             dispatch(addInRecipe(ingredient));
             dispatch({ type: 'ingredient/closeIngredient' });
+            history.push('/');
         }
 
         return (

@@ -10,7 +10,7 @@ import { setActiveSection } from '../../services/slicers/foods';
 
 export const BurgerIngredients = () => {
     const sections = useSelector(store => store.foods.sections);
-    const ingredient = useSelector(store => store.ingredient);
+    // const ingredient = useSelector(store => store.ingredient);
     const dispatch = useDispatch();
 
     const updateMenu = useCallback((id) => {
@@ -36,14 +36,14 @@ export const BurgerIngredients = () => {
                     </ScrollBox>
                 </>
             }
-            <div style={{ position: "fixed", overflow: "hidden" }}>
+            {/* <div style={{ position: "fixed", overflow: "hidden" }}>
                 {ingredient.show &&
                     <Modal
                         title="Детали ингредиента"
                         onClose={() => dispatch({ type: "ingredient/closeIngredient" })}
                         children={<IngredientsDetails ingredient={ingredient.item} />}
                     />}
-            </div>
+            </div> */}
         </article>
     )
 }

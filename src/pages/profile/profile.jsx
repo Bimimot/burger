@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NoPage } from "..";
+import { useSelector } from "react-redux";
 
 export const ProfilePage = () => {
     const { path } = useRouteMatch();
@@ -43,12 +44,13 @@ const ProfileMenu = () => {
 }
 
 const ProfileForm = () => {
+    const form = useSelector(store => store.profile.form);
 
     return (
         <div className={pStyles.form}>
-            <Input type={"text"} value="John" placeholder={"Имя"} icon={"EditIcon"}/>
-            <Input email={"mail"} placeholder={"E-mail"} icon={"EditIcon"}/>
-            <Input password={"password"} placeholder={"Пароль"} icon={"EditIcon"}/>
+            <Input type={"text"} value={form.name} placeholder={"Имя"} icon={"EditIcon"}/>
+            <Input email={"mail"} value={form.email} placeholder={"E-mail"} icon={"EditIcon"}/>
+            <Input password={"password"} value={form.password} placeholder={"Пароль"} icon={"EditIcon"}/>
     </div>
 
     )
@@ -64,7 +66,7 @@ const ProfileOrders = () => {
     return (
         <div style={style}>
         {orders.map(order =>
-            <Link to={`${url}/${order}`}>
+            <Link to={`${url}/${order}`} key={order}>
                 <h2 className="text text_type_main">{`Заказ № ${order}`}</h2>
             </Link>
         )}
