@@ -1,10 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { batch } from 'react-redux';
-import { register, login } from '../../utils/api';
 //test USER is:
 // {
 //     name: John,
-//     email: a @a.ru,
+//     email: aa@aa.ru, либо dd@dd.ru
 //     password: 1234
 // }
 
@@ -53,68 +51,13 @@ const profileSlice = createSlice({
     }
 })
 
-function registerUser(data) {
-    //const { email, password, name } = data;
 
-    return function (dispatch) {
-        dispatch(profileLoading());
-        register(data)
-            .then(res => {
-                const newUser = {
-                    name: res.user.name,
-                    email: res.user.email
-                };
-                const newTokens = {
-                    accessToken: res.user.accessToken,
-                    refreshToken: res.user.refreshToken
-                };
-                batch(() => {
-                    dispatch(setProfile(newUser));
-                    dispatch(profileSuccess());
-                })
-                localStorage.setItem('user', newTokens);
-            })
-            .catch(err => {
-                console.log("Error with register", err);
-                dispatch(profileIsError())
-            })
-    }
-}
-
-function loginUser(data) {
-    //const { email, name } = data;
-
-    return function (dispatch) {
-        dispatch(profileLoading());
-        login(data)
-            .then(res => {
-                const newUser = {
-                    name: res.user.name,
-                    email: res.user.email
-                };
-                const newTokens = {
-                    accessToken: res.user.accessToken,
-                    refreshToken: res.user.refreshToken
-                };
-                batch(() => {
-                    dispatch(setProfile(newUser));
-                    dispatch(profileSuccess());
-                })
-                localStorage.setItem('user', newTokens);
-            })
-            .catch(err => {
-                console.log("Error with login", err);
-                dispatch(profileIsError())
-            })
-    }
-}
 
 const { reducer, actions } = profileSlice;
 const { setProfile, clearProfile,
     profileLoading, profileSuccess, profileIsError } = actions;
 
 export {
-    reducer as profileReducer,
-    registerUser, loginUser
+    reducer as profileReducer
 }
 
