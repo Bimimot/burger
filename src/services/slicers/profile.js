@@ -11,6 +11,11 @@ import { register, login } from '../../utils/api';
 const initialProfile = {
     email: "",
     name: "",
+    form: {
+        name: "",
+        email: "",
+        password: ""
+    },
 
     profileIsLoading: false,
     porfileIsLoaded: false,
@@ -24,25 +29,31 @@ const profileSlice = createSlice({
         profileLoading: (state) => {
             state.profileIsLoading = true;
             state.profileIsError = false;
-            state.profileIsLoaded = false
+            state.profileIsLoaded = false;
         },
         profileIsError: (state) => {
             state.profileIsLoading = false;
             state.profileIsError = true;
-            state.profileIsLoaded = false
+            state.profileIsLoaded = false;
         },
         profileSuccess: (state, action) => {
             state.profileIsLoading = false;
             state.profileIsError = false;
-            state.profileIsLoaded = true
+            state.profileIsLoaded = true;
         },
-        setProfile: (state, action) => action.payload,
+        setProfile: (state, action) => {
+            state.email = action.payload.email;
+            state.name = action.payload.name;
+
+            state.form.email = action.payload.email;
+            state.form.name = action.payload.name;
+        },
         clearProfile: (state) => initialProfile,
 
     }
 })
 
-function registerUser( data ) {
+function registerUser(data) {
     //const { email, password, name } = data;
 
     return function (dispatch) {
@@ -70,7 +81,7 @@ function registerUser( data ) {
     }
 }
 
-function loginUser( data ) {
+function loginUser(data) {
     //const { email, name } = data;
 
     return function (dispatch) {

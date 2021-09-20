@@ -1,9 +1,43 @@
 import React from "react";
+import { useDispatch, useSelector, batch } from "react-redux";
+import { useHistory } from 'react-router-dom';
 import { AuthForm } from "../../components/auth-form/auth-form";
-import { loginUser } from "../../services/slicers/profile";
 import { login } from "../../utils/api";
 
 export const LoginPage = () => {
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const data = useSelector(store => store.auth.data);
+
+    const loginUser = (event) => {
+        event.preventDefault();
+
+        dispatch({ type: "profile/profileLoading" });
+        login(data)
+            .then(res => {
+                const newUser = {
+                    name: res.user.name,
+                    email: res.user.email
+                };
+                const newTokens = {
+                    accessToken: res.user.accessToken,
+                    refreshToken: res.user.refreshToken
+                };
+                batch(() => {
+                    dispatch({type: "profile/setProfile", payload: newUser});
+                    dispatch({ type: "profile/profileSuccess" });
+                    dispatch({ type: "auth/clearForm" });
+                })
+                localStorage.setItem('user', newTokens);
+                return
+            })
+            .then(() => history.push("/"))
+            .catch(err => {
+                console.log("Error with login", err);
+                dispatch({ type: "profile/profileIsError" });
+            })
+    };
+
     const arrInputs = [
         { name: "email", type: "email", placeholder: "E-mail", value: "" },
         { name: "password", type: "password", placeholder: "Пароль", value: "" },
@@ -20,5 +54,6 @@ export const LoginPage = () => {
 
     const title = "Вход";
 
+    
     return <AuthForm data={{ title, arrInputs, footerLinks, confirm }}/>
 }

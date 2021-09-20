@@ -5,6 +5,7 @@ import { ordersReducer } from "./slicers/orders";
 import { ingredientReducer } from "./slicers/ingredient";
 import { headerReducer } from "./slicers/header";
 import { profileReducer } from "./slicers/profile";
+import { authFormReducer } from "./slicers/auth-form";
 
 export const rootReducer = combineReducers({
     foods: foodsReducer,
@@ -12,5 +13,6 @@ export const rootReducer = combineReducers({
     orders: ordersReducer,
     ingredient: ingredientReducer,
     header: headerReducer,
-    profile: profileReducer
+    profile: profileReducer,
+    auth: authFormReducer
 });
