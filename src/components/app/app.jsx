@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import styles from './app.module.css';
 import { AppHeader } from '../app-header/app-header';
@@ -10,12 +10,23 @@ import {
   NoPage, IngredientPage, ProfilePage
 } from '../../pages';
 
+import { getUserProfile } from '../../services/slicers/profile';
+import { getCookie } from '../../utils/helpers';
+
 export const App = () => {
   const dispatch = useDispatch();
+  const user = useSelector(store => store.profile.user);
 
   useEffect(() => {
-    dispatch(getFoods())
+    dispatch(getFoods());
   }, []);
+
+  useEffect(() => {
+    if (!user.name || !user.mail) {
+      console.log("GET USER METHOD =>>>>>>>>>>>>>>>>>>>>>");
+      dispatch(getUserProfile());
+    }
+  },[user])
 
   return (
     <BrowserRouter>

@@ -1,5 +1,6 @@
-export const baseUrl = 'https://norma.nomoreparties.space/api';
+import { getCookie } from "./helpers";
 
+const baseUrl = 'https://norma.nomoreparties.space/api';
 const apiHandler = (res) => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
 
 export const loadFoods = () =>
@@ -55,7 +56,44 @@ export const updateToken = (refreshToken) =>
         })
         .then(res => apiHandler(res));
 
+//-----------------------user-------------------------------------------
+// GET https://norma.nomoreparties.space/api/auth/user - эндпоинт получения данных о пользователе.
+// PATCH https://norma.nomoreparties.space/api/auth/user - эндпоинт обновления данных о пользователе.
 
+export const getUser = () => {
+    const token = getCookie('token');
+    console.log("!!TOKEN", !!token);
+    
+    console.log("TOKEN", token);
+
+    if (!!token) {
+        return fetch(`${baseUrl}/auth/user`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+            .then(res => apiHandler(res));
+    } else {
+        return Promise.reject(`Профиль не может быть получен: нет токена`)
+    }
+}
+
+
+export const updateUser = (data) => {
+    fetch(`${baseUrl}/auth/user`,
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': 'Bearer ' + getCookie('token')
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => apiHandler(res));
+}
 //-----------------------reset-pass-------------------------------------
 
 export const checkEmail = (email) =>

@@ -1,8 +1,9 @@
 import React from "react";
-import { useDispatch, useSelector, batch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import { AuthForm } from "../../components/auth-form/auth-form";
 import { login } from "../../utils/api";
+import { setCookie } from "../../utils/helpers";
 
 export const LoginPage = () => {
     const dispatch = useDispatch();
@@ -15,20 +16,27 @@ export const LoginPage = () => {
         dispatch({ type: "profile/profileLoading" });
         login(data)
             .then(res => {
-                const newUser = {
-                    name: res.user.name,
-                    email: res.user.email
-                };
-                const newTokens = {
-                    accessToken: res.user.accessToken,
-                    refreshToken: res.user.refreshToken
-                };
-                batch(() => {
-                    dispatch({type: "profile/setProfile", payload: newUser});
-                    dispatch({ type: "profile/profileSuccess" });
-                    dispatch({ type: "auth/clearForm" });
-                })
-                localStorage.setItem('user', newTokens);
+                // const newUser = {
+                //     name: res.user.name,
+                //     email: res.user.email
+                // };
+                // const newTokens = {
+                //     accessToken: res.user.accessToken,
+                //     refreshToken: res.user.refreshToken
+                // };
+                // batch(() => {
+                //     // dispatch({type: "profile/setProfile", payload: newUser});
+                //     // dispatch({ type: "profile/profileSuccess" });
+                //     dispatch({ type: "auth/clearForm" });
+                // })
+                // localStorage.setItem('user', newTokens);
+
+                console.log("result of login --------->>>>>>>>", res);
+                
+                dispatch({ type: "auth/clearForm" });
+                localStorage.setItem('refreshToken', res.refreshToken);
+                setCookie("token", res.accessToken.split('Bearer ')[1]);
+
                 return
             })
             .then(() => history.push("/"))
