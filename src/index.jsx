@@ -30,3 +30,5 @@ ReactDOM.render(
 
 
 reportWebVitals();
+
+export {store}

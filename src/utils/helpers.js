@@ -1,3 +1,9 @@
+import { store } from "..";
+
+
+//-----------------------auth---------------------------------
+export const isUserAuth = () => !!store.name && !!store.mail
+
 export const randomInteger = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
 
 //------------------------burger reducer---------------------------------
@@ -53,3 +59,4 @@ export function setCookie(name, value, props) {
     }
     document.cookie = updatedCookie;
 }
+

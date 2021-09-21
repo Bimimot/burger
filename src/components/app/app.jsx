@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import styles from './app.module.css';
+
+import { ProtectedRoute } from '../protected-route/protected-route';
 import { AppHeader } from '../app-header/app-header';
 import { getFoods } from '../../services/slicers/foods';
 import {
@@ -11,22 +13,22 @@ import {
 } from '../../pages';
 
 import { getUserProfile } from '../../services/slicers/profile';
-import { getCookie } from '../../utils/helpers';
+import { isUserAuth } from '../../utils/helpers';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const user = useSelector(store => store.profile.user);
+  const isAuth = isUserAuth();
 
   useEffect(() => {
     dispatch(getFoods());
   }, []);
 
   useEffect(() => {
-    if (!user.name || !user.mail) {
+    if (!isAuth) {
       console.log("GET USER METHOD =>>>>>>>>>>>>>>>>>>>>>");
       dispatch(getUserProfile());
     }
-  },[user])
+  },[isAuth, dispatch])
 
   return (
     <BrowserRouter>
@@ -46,9 +48,9 @@ export const App = () => {
             <RegisterPage />
           </Route>
 
-          <Route path='/forgot-password' exact>
+          <ProtectedRoute path='/forgot-password' exact>
             <ForgotPassPage />
-          </Route>
+          </ProtectedRoute>
 
           <Route path='/reset-password' exact>
             <ResetPassPage />
