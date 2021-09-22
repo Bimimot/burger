@@ -1,4 +1,5 @@
 import { getCookie } from "./helpers";
+const refreshToken = localStorage.getItem('refreshToken');
 
 const baseUrl = 'https://norma.nomoreparties.space/api';
 const apiHandler = (res) => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
@@ -38,21 +39,21 @@ export const register = (data) =>
         })
         .then(res => apiHandler(res));
 
-export const logout = (refreshToken) =>
+export const logout = () =>
     fetch(`${baseUrl}/auth/logout`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({ refreshToken: refreshToken })
+            body: JSON.stringify({token: refreshToken })
         })
         .then(res => apiHandler(res));
 
-export const updateToken = (refreshToken) =>
+export const updateToken = () =>
     fetch(`${baseUrl}/auth/logout`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({ refreshToken: refreshToken })
+            body: JSON.stringify({ token: refreshToken })
         })
         .then(res => apiHandler(res));
 

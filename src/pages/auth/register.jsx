@@ -8,7 +8,7 @@ import { setCookie } from "../../utils/helpers";
 export const RegisterPage = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const data = useSelector(store => store.auth.data);
+    const data = useSelector(store => store.authForm.data);
 
     const registerUser = (event) => {
         event.preventDefault();

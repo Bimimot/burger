@@ -11,7 +11,7 @@ export const AuthForm = ({ data }) => {
     const dispatch = useDispatch();
 
     const { title, arrInputs, footerLinks, confirm } = data;
-    const inputs = useSelector(store => store.auth.arrInputs);
+    const inputs = useSelector(store => store.authForm.arrInputs);
 
     useEffect(() => {
         dispatch({type: "auth/setInputs", payload: arrInputs})

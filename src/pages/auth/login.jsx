@@ -1,14 +1,16 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector, batch } from "react-redux";
+import { useHistory, useLocation, Redirect } from 'react-router-dom';
 import { AuthForm } from "../../components/auth-form/auth-form";
 import { login } from "../../utils/api";
 import { setCookie } from "../../utils/helpers";
 
 export const LoginPage = () => {
     const dispatch = useDispatch();
-    const history = useHistory();
-    const data = useSelector(store => store.auth.data);
+    const location = useLocation();
+
+    const data = useSelector(store => store.authForm.data);
+    const isAuth = useSelector(store => store.profile.user.isAuth);
 
     const loginUser = (event) => {
         event.preventDefault();
@@ -16,30 +18,25 @@ export const LoginPage = () => {
         dispatch({ type: "profile/profileLoading" });
         login(data)
             .then(res => {
-                // const newUser = {
-                //     name: res.user.name,
-                //     email: res.user.email
-                // };
-                // const newTokens = {
-                //     accessToken: res.user.accessToken,
-                //     refreshToken: res.user.refreshToken
-                // };
-                // batch(() => {
-                //     // dispatch({type: "profile/setProfile", payload: newUser});
-                //     // dispatch({ type: "profile/profileSuccess" });
-                //     dispatch({ type: "auth/clearForm" });
-                // })
-                // localStorage.setItem('user', newTokens);
-
+                const newUser = {
+                    name: res.user.name,
+                    email: res.user.email
+                };
+ 
                 console.log("result of login --------->>>>>>>>", res);
                 
-                dispatch({ type: "auth/clearForm" });
+
                 localStorage.setItem('refreshToken', res.refreshToken);
                 setCookie("token", res.accessToken.split('Bearer ')[1]);
+                batch(() => {
+                    dispatch({type: "profile/setProfile", payload: newUser});
+                    dispatch({ type: "profile/profileSuccess" });
+                    dispatch({ type: "auth/clearForm" });
+                })
 
                 return
             })
-            .then(() => history.push("/"))
+            //.then(() => history.push("/"))
             .catch(err => {
                 console.log("Error with login", err);
                 dispatch({ type: "profile/profileIsError" });
@@ -61,7 +58,8 @@ export const LoginPage = () => {
     };
 
     const title = "Вход";
-
-    
-    return <AuthForm data={{ title, arrInputs, footerLinks, confirm }}/>
+    console.log("isAuth from LOGIN>>>>>>>>>", isAuth);
+    return isAuth
+        ? <Redirect to={location.state?.from || '/'} />
+        : <AuthForm data={{ title, arrInputs, footerLinks, confirm }} />
 }

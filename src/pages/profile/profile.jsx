@@ -6,11 +6,13 @@ import {
 } from 'react-router-dom';
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NoPage } from "..";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../../services/slicers/profile";
+import { useDrop } from "react-dnd";
 
 export const ProfilePage = () => {
     const { path } = useRouteMatch();
-
+    
     return (
         <div className={pStyles.profile}>
             <ProfileMenu />
@@ -26,10 +28,7 @@ export const ProfilePage = () => {
 
 const ProfileMenu = () => {
     const { url } = useRouteMatch();
-    const history = useHistory();
-    const logout = () => {
-        history.push('/login')
-    }
+    const dispatch = useDispatch();
 
     const classLink = `text text_type_main-medium ${pStyles.link}`;
     const classActiveLink = `text text_type_main-medium ${pStyles.activeLink}`;
@@ -38,7 +37,7 @@ const ProfileMenu = () => {
         <div className={pStyles.menu}>
             <NavLink exact to={`${url}`} className={classLink} activeClassName={classActiveLink}>Профиль</NavLink>
             <NavLink to={`${url}/orders`} className={classLink} activeClassName={classActiveLink}>История заказов</NavLink>
-            <span className={classLink} onClick={logout}>Выход</span>
+            <span className={classLink} onClick={() => dispatch(logoutUser())}>Выход</span>
         </div>
     )
 }

@@ -14,5 +14,5 @@ export const rootReducer = combineReducers({
     ingredient: ingredientReducer,
     header: headerReducer,
     profile: profileReducer,
-    auth: authFormReducer
+    authForm: authFormReducer
 });

@@ -13,11 +13,11 @@ import {
 } from '../../pages';
 
 import { getUserProfile } from '../../services/slicers/profile';
-import { isUserAuth } from '../../utils/helpers';
+
 
 export const App = () => {
   const dispatch = useDispatch();
-  const isAuth = isUserAuth();
+  const isAuth = useSelector(store => store.profile.user.isAuth);
 
   useEffect(() => {
     dispatch(getFoods());
@@ -48,17 +48,17 @@ export const App = () => {
             <RegisterPage />
           </Route>
 
-          <ProtectedRoute path='/forgot-password' exact>
+          <Route path='/forgot-password' exact>
             <ForgotPassPage />
-          </ProtectedRoute>
+          </Route>
 
           <Route path='/reset-password' exact>
             <ResetPassPage />
           </Route>
 
-          <Route path='/profile'>
+          <ProtectedRoute path='/profile'>
             <ProfilePage />
-          </Route>
+          </ProtectedRoute>
 
           <Route path='/ingredients/:id' exact>
             <IngredientPage />

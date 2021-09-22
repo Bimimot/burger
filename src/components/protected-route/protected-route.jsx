@@ -1,10 +1,22 @@
 import React from 'react';
 import { Route, Redirect } from "react-router-dom";
-import { isUserAuth } from '../../utils/helpers';
+import { useSelector } from 'react-redux';
 
-export const ProtectedRoute = ({ ...props }) => {
-    
+export const ProtectedRoute = ({ children, ...rest }) => {
+    const isAuth = useSelector(store => store.profile.user.isAuth);
     
     return (
-        !!isUserAuth() ? <Route {...props} /> : <Redirect to='./404' />)
+
+        <Route
+            {...rest}
+            render={({ location }) =>
+                isAuth
+                    ? (children)
+                    : (<Redirect to={{
+                        pathname: '/login',
+                        state: { from: location }
+                    }}/>)
+            }
+        />
+    )
 }

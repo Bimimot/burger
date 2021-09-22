@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getUser, updateUser, login, register } from '../../utils/api';
+import { getUser, updateUser, login, register, logout } from '../../utils/api';
+
 //test USER is:
 // {
 //     name: John,
@@ -11,6 +12,7 @@ const initialProfile = {
     user: {
         email: "",
         name: "",
+        isAuth: false
     },
     form: {
         name: "",
@@ -43,7 +45,7 @@ const profileSlice = createSlice({
             state.profileIsLoaded = true;
         },
         setProfile: (state, action) => {
-            state.user = action.payload.email;
+            state.user = {...action.payload, isAuth: true};
 
             state.form.email = action.payload.email;
             state.form.name = action.payload.name;
@@ -64,12 +66,28 @@ const getUserProfile = () => {
     }
 }
 
+const logoutUser = () => {
+    return (dispatch) => {
+        logout()
+            .then(() => {
+                localStorage.removeItem('refreshToken');
+                dispatch(clearProfile());
+                return
+            })
+            .catch((err) => {
+                console.log("Err with logout User", err);                
+            })
+    }
+}
+
+
 const { reducer, actions } = profileSlice;
 const { setProfile, clearProfile,
     profileLoading, profileSuccess, profileIsError } = actions;
 
 export {
     reducer as profileReducer,
-    getUserProfile
+    getUserProfile,
+    logoutUser
 }
 

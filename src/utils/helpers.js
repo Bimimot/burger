@@ -2,7 +2,14 @@ import { store } from "..";
 
 
 //-----------------------auth---------------------------------
-export const isUserAuth = () => !!store.name && !!store.mail
+export const isUserAuth = () => {
+    const user = store.getState().profile.user;
+    console.log("USER>>>>>>", user);
+    console.log("user.name", user.name);
+    console.log("!!user.name", !!user.name);
+
+    return !!user.name && !!user.email
+};
 
 export const randomInteger = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
 
