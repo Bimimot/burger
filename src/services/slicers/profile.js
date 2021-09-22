@@ -70,7 +70,6 @@ const logoutUser = () => {
     return (dispatch) => {
         logout()
             .then(() => {
-                localStorage.removeItem('refreshToken');
                 dispatch(clearProfile());
                 return
             })

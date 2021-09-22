@@ -1,5 +1,5 @@
 import { getCookie } from "./helpers";
-const refreshToken = localStorage.getItem('refreshToken');
+
 
 const baseUrl = 'https://norma.nomoreparties.space/api';
 const apiHandler = (res) => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
@@ -39,33 +39,36 @@ export const register = (data) =>
         })
         .then(res => apiHandler(res));
 
-export const logout = () =>
-    fetch(`${baseUrl}/auth/logout`,
+export const logout = () => {
+    const token = localStorage.getItem('refreshToken');
+    console.log("Refresh token from localStorage", token);
+
+    return fetch(`${baseUrl}/auth/logout`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({token: refreshToken })
+            body: JSON.stringify({ token} )
         })
         .then(res => apiHandler(res));
+}
 
 export const updateToken = () =>
     fetch(`${baseUrl}/auth/logout`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({ token: refreshToken })
+            body: JSON.stringify({ token: localStorage.getItem('refreshToken') })
         })
         .then(res => apiHandler(res));
 
 //-----------------------user-------------------------------------------
-// GET https://norma.nomoreparties.space/api/auth/user - эндпоинт получения данных о пользователе.
+// GET https://norma.nomoreparties.space/api/auth/user - эндпоинт получения данных о пользователе.  
 // PATCH https://norma.nomoreparties.space/api/auth/user - эндпоинт обновления данных о пользователе.
 
 export const getUser = () => {
     const token = getCookie('token');
-    console.log("!!TOKEN", !!token);
-    
-    console.log("TOKEN", token);
+    console.log("ACCESS TOKEN from cookie before api.getUser", token);
+
 
     if (!!token) {
         return fetch(`${baseUrl}/auth/user`,

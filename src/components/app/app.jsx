@@ -24,8 +24,11 @@ export const App = () => {
   }, []);
 
   useEffect(() => {
+    console.log("isAuth >>>>>>>>>>>>>>>>>>>>>", isAuth);
+    console.log("!isAuth >>>>>>>>>>>>>>>>>>>>>", !isAuth);
     if (!isAuth) {
       console.log("GET USER METHOD =>>>>>>>>>>>>>>>>>>>>>");
+      
       dispatch(getUserProfile());
     }
   },[isAuth, dispatch])
