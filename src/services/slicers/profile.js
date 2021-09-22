@@ -93,11 +93,37 @@ const loginUser = () => {
                     dispatch({ type: "profile/profileSuccess" });
                     dispatch({ type: "auth/clearForm" });
                 })
-
                 return
             })
             .catch(err => {
                 console.log("Error with login", err);
+                dispatch({ type: "profile/profileIsError" });
+            })
+    }
+};
+
+const registerUser = () => {
+    return (dispatch, getState) => {
+        const data = getState().authForm.data;
+
+        dispatch({ type: "profile/profileLoading" });
+        register(data)
+            .then(res => {
+                const newUser = {
+                    name: res.user.name,
+                    email: res.user.email
+                };
+                batch(() => {
+                    dispatch({ type: "profile/setProfile", payload: newUser });
+                    dispatch({ type: "profile/profileSuccess" });
+                    dispatch({ type: "auth/clearForm" });
+                })
+                localStorage.setItem('refreshToken', res.refreshToken);
+                setCookie("token", res.accessToken.split('Bearer ')[1]);
+                return
+            })
+            .catch(err => {
+                console.log("Error with register", err);
                 dispatch({ type: "profile/profileIsError" });
             })
     }
@@ -108,6 +134,8 @@ const logoutUser = () => {
         logout()
             .then(() => {
                 dispatch(clearProfile());
+                localStorage.removeItem('refreshToken');
+                setCookie("token", null);
                 return
             })
             .catch((err) => {
@@ -139,6 +167,7 @@ export {
     logoutUser,
     onChangeInput,
     updateUserProfile,
-    loginUser
+    loginUser,
+    registerUser
 }
 
