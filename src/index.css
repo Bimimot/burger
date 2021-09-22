@@ -27,7 +27,7 @@ a{
     color: inherit;
     display: flex;
     align-items: center;
-    cursor: inherit;
+    cursor: inherit ;
 }
 
 ul{
@@ -44,4 +44,8 @@ ul{
 
 #filling .constructor-element__action:hover{
  filter: invert(50%) sepia(35%) saturate(1844%) hue-rotate(141deg) brightness(106%) contrast(103%);
+}
+
+#profileForm .input_size_default {
+    width: 480px !important;
 }

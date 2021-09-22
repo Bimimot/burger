@@ -5,14 +5,15 @@ import {
     useRouteMatch, useParams, useHistory
 } from 'react-router-dom';
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { NoPage } from "..";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../services/slicers/profile";
-import { useDrop } from "react-dnd";
+import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { onChangeInput, updateUserProfile } from "../../services/slicers/profile";
+
 
 export const ProfilePage = () => {
     const { path } = useRouteMatch();
-    
+
     return (
         <div className={pStyles.profile}>
             <ProfileMenu />
@@ -44,13 +45,42 @@ const ProfileMenu = () => {
 
 const ProfileForm = () => {
     const form = useSelector(store => store.profile.form);
+    const dispatch = useDispatch();
+    
+    const changeProfile = (event) => {
+        event.preventDefault();
+        dispatch(updateUserProfile(form.inputs))
+    }
 
     return (
-        <div className={pStyles.form}>
-            <Input type={"text"} value={form.name} placeholder={"Имя"} icon={"EditIcon"}/>
-            <Input email={"mail"} value={form.email} placeholder={"E-mail"} icon={"EditIcon"}/>
-            <Input password={"password"} value={form.password} placeholder={"Пароль"} icon={"EditIcon"}/>
-    </div>
+        <form className={pStyles.form} onSubmit={(event) => changeProfile(event)} id="profileForm">
+            <Input
+                type={"text"}
+                value={form.inputs.name}
+                placeholder={"Имя"}
+                icon={"EditIcon"}
+                onChange={(event) => dispatch(onChangeInput({ key: "name", value: event.target.value }))}
+            />
+            <Input
+                type={"email"}
+                value={form.inputs.email}
+                placeholder={"E-mail"}
+                icon={"EditIcon"}
+                onChange={(event) => dispatch(onChangeInput({ key: "email", value: event.target.value }))}
+            />
+            <Input
+                type={"password"}
+                value={form.inputs.password}
+                placeholder={"Пароль"}
+                icon={"EditIcon"}
+                onChange={(event) => dispatch(onChangeInput({ key: "password", value: event.target.value }))}
+            />
+            <div className={pStyles.formSubmit}>
+                <Button onClick={(event) => changeProfile(event)}>
+                    Сохранить
+                </Button>
+            </div>
+        </form>
 
     )
 }
@@ -64,11 +94,11 @@ const ProfileOrders = () => {
 
     return (
         <div style={style}>
-        {orders.map(order =>
-            <Link to={`${url}/${order}`} key={order}>
-                <h2 className="text text_type_main">{`Заказ № ${order}`}</h2>
-            </Link>
-        )}
+            {orders.map(order =>
+                <Link to={`${url}/${order}`} key={order}>
+                    <h2 className="text text_type_main">{`Заказ № ${order}`}</h2>
+                </Link>
+            )}
         </div>
     )
 }

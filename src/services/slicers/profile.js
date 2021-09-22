@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getUser, updateUser, login, register, logout } from '../../utils/api';
-
+import { updateToken } from '../../utils/api';
 //test USER is:
 // {
 //     name: John,
@@ -15,9 +15,11 @@ const initialProfile = {
         isAuth: false
     },
     form: {
-        name: "",
-        email: "",
-        password: ""
+        inputs: {
+            name: "",
+            email: "",
+            password: ""
+        },
     },
 
     profileIsLoading: false,
@@ -45,12 +47,16 @@ const profileSlice = createSlice({
             state.profileIsLoaded = true;
         },
         setProfile: (state, action) => {
-            state.user = {...action.payload, isAuth: true};
+            state.user = { ...action.payload, isAuth: true };
 
-            state.form.email = action.payload.email;
-            state.form.name = action.payload.name;
+            state.form.inputs.email = action.payload.email;
+            state.form.inputs.name = action.payload.name;
         },
         clearProfile: (state) => initialProfile,
+        onChangeInput: (state, action) => {
+            const { key, value } = action.payload;
+            state.form.inputs = {...state.form.inputs, [key]: value}
+        }
 
     }
 })
@@ -74,7 +80,19 @@ const logoutUser = () => {
                 return
             })
             .catch((err) => {
-                console.log("Err with logout User", err);                
+                console.log("Err with logout User", err);
+            })
+    }
+}
+
+const updateUserProfile = (data) => {
+    return (dispatch) => {
+        updateToken()
+            .then(() => updateUser(data))
+            .then(res => dispatch(setProfile(res.user)))
+            .catch((err) => {
+                console.log("Err with update User", err);
+                dispatch(profileIsError())
             })
     }
 }
@@ -82,11 +100,13 @@ const logoutUser = () => {
 
 const { reducer, actions } = profileSlice;
 const { setProfile, clearProfile,
-    profileLoading, profileSuccess, profileIsError } = actions;
+    profileLoading, profileSuccess, profileIsError, onChangeInput } = actions;
 
 export {
     reducer as profileReducer,
     getUserProfile,
-    logoutUser
+    logoutUser,
+    onChangeInput,
+    updateUserProfile
 }
 

@@ -46,3 +46,14 @@
     max-width: 480px;
     width: 100%;
 }
+
+.form .input_size_default {
+    width: 480px !important;
+    border: 1px solid red;
+}
+
+.formSubmit{
+    display: flex;
+    position: relative;
+    justify-content: flex-end;
+}

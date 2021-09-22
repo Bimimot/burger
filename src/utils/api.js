@@ -34,7 +34,7 @@ export const register = (data) =>
     fetch(`${baseUrl}/auth/register`,
         {
             method: 'POST',
-            headers: {'Content-Type': 'application/json;charset=utf-8'},
+            headers: { 'Content-Type': 'application/json;charset=utf-8' },
             body: JSON.stringify(data)
         })
         .then(res => apiHandler(res));
@@ -47,24 +47,26 @@ export const logout = () => {
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({ token} )
+            body: JSON.stringify({ token })
         })
         .then(res => apiHandler(res));
 }
 
-export const updateToken = () =>
-    fetch(`${baseUrl}/auth/logout`,
+export const updateToken = () => {
+    const token = localStorage.getItem('refreshToken');
+    console.log("Refresh token from localStorage", token);
+
+    return fetch(`${baseUrl}/auth/token`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({ token: localStorage.getItem('refreshToken') })
+            body: JSON.stringify({ token })
         })
         .then(res => apiHandler(res));
+}
+
 
 //-----------------------user-------------------------------------------
-// GET https://norma.nomoreparties.space/api/auth/user - эндпоинт получения данных о пользователе.  
-// PATCH https://norma.nomoreparties.space/api/auth/user - эндпоинт обновления данных о пользователе.
-
 export const getUser = () => {
     const token = getCookie('token');
     console.log("ACCESS TOKEN from cookie before api.getUser", token);
@@ -89,7 +91,7 @@ export const getUser = () => {
 export const updateUser = (data) => {
     fetch(`${baseUrl}/auth/user`,
         {
-            method: 'GET',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
                 'Authorization': 'Bearer ' + getCookie('token')

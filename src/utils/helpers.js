@@ -1,4 +1,5 @@
 import { store } from "..";
+import { updateToken } from "./api";
 
 
 //-----------------------auth---------------------------------
@@ -67,3 +68,26 @@ export function setCookie(name, value, props) {
     document.cookie = updatedCookie;
 }
 
+//---------------------------------auth--------------------------------------------------
+
+export async function isTokenValid() {
+    let isAuth=false;
+    const token = localStorage.getItem('refreshToken');
+    console.log("TOKEN>>>>>>", token);
+    console.log("!!token", !!token);
+
+    if (!!token && token !== 'undefined') {
+        await updateToken()
+            .then(res => {
+                localStorage.setItem('refreshToken', res.refreshToken);
+                setCookie("token", res.accessToken.split('Bearer ')[1]);
+                isAuth = true;
+            })
+            .catch(err => {
+                console.log("Error with toekn update:", err);
+                isAuth = false;
+        })
+    }
+    return isAuth
+    
+}

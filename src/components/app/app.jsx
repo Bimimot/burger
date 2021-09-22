@@ -17,21 +17,13 @@ import { getUserProfile } from '../../services/slicers/profile';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const isAuth = useSelector(store => store.profile.user.isAuth);
+
 
   useEffect(() => {
     dispatch(getFoods());
+    dispatch(getUserProfile());
   }, []);
 
-  useEffect(() => {
-    console.log("isAuth >>>>>>>>>>>>>>>>>>>>>", isAuth);
-    console.log("!isAuth >>>>>>>>>>>>>>>>>>>>>", !isAuth);
-    if (!isAuth) {
-      console.log("GET USER METHOD =>>>>>>>>>>>>>>>>>>>>>");
-      
-      dispatch(getUserProfile());
-    }
-  },[isAuth, dispatch])
 
   return (
     <BrowserRouter>
