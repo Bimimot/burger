@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { AuthForm } from "../../components/auth-form/auth-form";
 import { register } from "../../utils/api";
 import { setCookie } from "../../utils/helpers";
+import { Redirect } from 'react-router-dom';
 
 export const RegisterPage = () => {
     const dispatch = useDispatch();
@@ -52,11 +53,15 @@ export const RegisterPage = () => {
     ];
 
     const title = "Регистрация";
-    
+
     const confirm = {
         callback: registerUser,
         text: "Зарегистрироваться"
     };
 
-    return <AuthForm data={{ title, arrInputs, footerLinks, confirm }} />
+    const isAuth = useSelector(store => store.profile.user.isAuth);
+
+    return isAuth
+        ? <Redirect to={'/'} />
+        : <AuthForm data={{ title, arrInputs, footerLinks, confirm }} />
 }

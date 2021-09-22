@@ -17,8 +17,13 @@ export const AuthForm = ({ data }) => {
         dispatch({type: "auth/setInputs", payload: arrInputs})
     }, []);
 
+    const confirmForm = (event) => {
+        event.preventDefault();
+        confirm.callback();
+    }
+
     return (
-        <form className={fStyles.form} onSubmit={confirm.callback}>
+        <form className={fStyles.form} onSubmit={(event) => confirmForm(event)}>
             {!!title && <h2 className="text text_type_main-medium">{title}</h2>}
             {inputs.map(input =>
                 <Input
@@ -32,7 +37,7 @@ export const AuthForm = ({ data }) => {
                     onIconClick={() => dispatch({type: "auth/handleIcon", payload: input})}
                 />
             )}
-            <Button onClick={confirm.callback}>
+            <Button onClick={(event) => confirmForm(event)}>
                 {!!confirm.text ? confirm.text : "Отправить"}
             </Button>
             {!!footerLinks && <AuthFormFooter footerLinks={footerLinks} />}

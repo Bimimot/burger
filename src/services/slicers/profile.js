@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { batch } from 'react-redux';
 import { getUser, updateUser, login, register, logout } from '../../utils/api';
+import { setCookie } from "../../utils/helpers";
 import { updateToken } from '../../utils/api';
+
 //test USER is:
 // {
 //     name: John,
@@ -55,7 +58,7 @@ const profileSlice = createSlice({
         clearProfile: (state) => initialProfile,
         onChangeInput: (state, action) => {
             const { key, value } = action.payload;
-            state.form.inputs = {...state.form.inputs, [key]: value}
+            state.form.inputs = { ...state.form.inputs, [key]: value }
         }
 
     }
@@ -71,6 +74,34 @@ const getUserProfile = () => {
             })
     }
 }
+
+const loginUser = () => {
+    return (dispatch, getState) => {
+        const data = getState().authForm.data;
+
+        dispatch({ type: "profile/profileLoading" });
+        login(data)
+            .then(res => {
+                const newUser = {
+                    name: res.user.name,
+                    email: res.user.email
+                };
+                localStorage.setItem('refreshToken', res.refreshToken);
+                setCookie("token", res.accessToken.split('Bearer ')[1]);
+                batch(() => {
+                    dispatch({ type: "profile/setProfile", payload: newUser });
+                    dispatch({ type: "profile/profileSuccess" });
+                    dispatch({ type: "auth/clearForm" });
+                })
+
+                return
+            })
+            .catch(err => {
+                console.log("Error with login", err);
+                dispatch({ type: "profile/profileIsError" });
+            })
+    }
+};
 
 const logoutUser = () => {
     return (dispatch) => {
@@ -107,6 +138,7 @@ export {
     getUserProfile,
     logoutUser,
     onChangeInput,
-    updateUserProfile
+    updateUserProfile,
+    loginUser
 }
 

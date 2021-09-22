@@ -1,5 +1,7 @@
 import React from "react";
 import { AuthForm } from "../../components/auth-form/auth-form";
+import { Redirect } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 export const ResetPassPage = () => {
     const arrInputs = [
@@ -18,5 +20,10 @@ export const ResetPassPage = () => {
         callBack: null
     }
 
-    return <AuthForm data={{ title, arrInputs, footerLinks, confirm }} />
+
+    const isAuth = useSelector(store => store.profile.user.isAuth);
+
+    return isAuth
+        ? <Redirect to={'/'} />
+        : <AuthForm data={{ title, arrInputs, footerLinks, confirm }} />
 }
