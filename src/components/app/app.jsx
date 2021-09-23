@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import styles from './app.module.css';
 
 import { ProtectedRoute } from '../protected-route/protected-route';
@@ -9,27 +9,30 @@ import { getFoods } from '../../services/slicers/foods';
 import {
   PageBurgerConstructor,
   LoginPage, RegisterPage, ForgotPassPage, ResetPassPage,
-  NoPage, IngredientPage, ProfilePage
+  NoPage, IngredientPage, IngredientPageModal, ProfilePage
 } from '../../pages';
 
 import { getUserProfile } from '../../services/slicers/profile';
 
-
 export const App = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  let location = useLocation();
 
   useEffect(() => {
     dispatch(getFoods());
     dispatch(getUserProfile());
   }, []);
 
+  let background = (location.state && history.action.toLowerCase() === "push")
+    && location.state.background;
 
   return (
-    <BrowserRouter>
+    <>
       <AppHeader />
       <main className={styles.main}>
 
-        <Switch>
+        <Switch location={background || location}>
           <Route path='/' exact>
             <PageBurgerConstructor />
           </Route>
@@ -62,8 +65,14 @@ export const App = () => {
             <NoPage />
           </Route>
         </Switch>
+
+        {background &&
+          <Route path='/ingredients/:id' exact>
+            <IngredientPageModal />
+          </Route>
+        }
       </main >
-    </BrowserRouter>
+    </>
   )
 };
 

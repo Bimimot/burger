@@ -9,18 +9,18 @@ import { Loader } from '../../components/loader/loader';
 import { NoPage } from "..";
 
 
-export const IngredientPage = () => {
-    const showModal = useSelector(store => store.ingredient.show);
+// export const IngredientPage = () => {
+//     //const showModal = useSelector(store => store.ingredient.show);
 
-    return (
-        showModal
-            ? <IngredientModal />
-            : <IngredientWithoutModal />
-    )
-}
+//     return (<
+//         // showModal
+//         //     ? <IngredientModal />
+//         //     : <IngredientWithoutModal />
+//     )
+// }
 
 
-const IngredientModal = () => {
+export const IngredientPageModal = () => {
     const ingredient = useSelector(store => store.ingredient);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -41,7 +41,7 @@ const IngredientModal = () => {
     )
 }
 
-const IngredientWithoutModal = () => {
+export const IngredientPage = () => {
     const { id } = useParams();
     const { isLoading, isError, isLoaded, items } = useSelector(store => store.foods);
     const [ingredient, setIngredient] = useState({});
@@ -49,8 +49,9 @@ const IngredientWithoutModal = () => {
     useEffect(() => {
         if (!!items.length) {
             setIngredient(items.find(item => item._id === id))
+            
         }
-    }, [isLoaded, items, id])
+    }, [isLoaded, items, id]);
 
     return (
         <>
