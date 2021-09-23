@@ -41,7 +41,10 @@ const foodsSlice = createSlice({
         setCounts: (state, action) => {
             state.sections.forEach(section =>
                 section.foods.forEach(f =>
-                    f.count = action.payload.reduce((total, recipeItem) => recipeItem._id === f._id ? total + 1 : total, 0))
+                    f.count = action.payload.reduce((total, recipeItem) =>
+                        recipeItem._id === f._id
+                            ? total + (recipeItem.type !== 'bun' ? 1 : 2)
+                            : total, 0))
             )
         },
         setActiveSection: (state, action) => {

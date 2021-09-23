@@ -20,7 +20,7 @@ const burgerSlice = createSlice({
         del: (state, action) => {
             const recipeAfterDel = state.filling.filter(f => f.unicId !== action.payload);
             if (!!state.bun) {
-                recipeAfterDel.concat(state.bun)
+               recipeAfterDel.push(state.bun)
             };
             return getBurgerByRecipe(recipeAfterDel);
         },

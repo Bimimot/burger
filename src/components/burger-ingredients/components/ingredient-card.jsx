@@ -18,10 +18,6 @@ export const IngredientCard = React.memo(
             item: food
         });
 
-        // const clickCard = () => {
-        //     dispatch({ type: "ingredient/openIngredient", payload: food });
-        //     history.push(`/ingredients/${food._id}`)
-        // }
 
         return (
             <Link to={{
@@ -29,9 +25,7 @@ export const IngredientCard = React.memo(
                 state: { background: location }
             }}>
                 <li className={iStyles.card}
-                //onClick={clickCard}
-                    onClick={() => dispatch({ type: "ingredient/openIngredient", payload: food })}
-                >
+                    onClick={() => dispatch({ type: "ingredient/openIngredient", payload: food })}>
                     <img className={iStyles.cardImage} src={food.image} alt={food.name} ref={dragRef} />
                     <div className={iStyles.cardText}>
                         <div className={iStyles.cardPrice}>
