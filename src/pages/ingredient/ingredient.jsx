@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import pStyles from '../pages.module.css';
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from 'react-router-dom';
 import { IngredientDescription } from "../../components/ingredient-details/ingredient-desc";
@@ -7,18 +8,6 @@ import { Modal } from '../../components/modal/modal';
 import { ErrorMessage } from '../../components/error-message/error-message';
 import { Loader } from '../../components/loader/loader';
 import { NoPage } from "..";
-
-
-// export const IngredientPage = () => {
-//     //const showModal = useSelector(store => store.ingredient.show);
-
-//     return (<
-//         // showModal
-//         //     ? <IngredientModal />
-//         //     : <IngredientWithoutModal />
-//     )
-// }
-
 
 export const IngredientPageModal = () => {
     const ingredient = useSelector(store => store.ingredient);
@@ -54,7 +43,7 @@ export const IngredientPage = () => {
     }, [isLoaded, items, id]);
 
     return (
-        <>
+        <div className={pStyles.ingredientPage}>
             {isLoaded &&
                 <>
                     {!!ingredient
@@ -65,6 +54,6 @@ export const IngredientPage = () => {
             {isLoading && <Loader text={"Ищем на кухне"} />}
             {isError && <ErrorMessage />}
 
-        </>
+        </div>
     )
 }
