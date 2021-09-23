@@ -76,7 +76,7 @@ const ProfileForm = () => {
                 onChange={(event) => dispatch(onChangeInput({ key: "password", value: event.target.value }))}
             />
             <div className={pStyles.formSubmit}>
-                <Button onClick={(event) => changeProfile(event)}>
+                <Button>
                     Сохранить
                 </Button>
             </div>

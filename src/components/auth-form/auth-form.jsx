@@ -34,7 +34,7 @@ export const AuthForm = ({ data }) => {
                     onIconClick={() => dispatch({type: "auth/handleIcon", payload: input})}
                 />
             )}
-            <Button onClick={(event) => confirmForm(event)}>
+            <Button>
                 {!!confirm.text ? confirm.text : "Отправить"}
             </Button>
             {!!footerLinks && <AuthFormFooter footerLinks={footerLinks} />}
