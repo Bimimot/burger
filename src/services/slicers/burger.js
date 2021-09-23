@@ -18,16 +18,22 @@ const burgerSlice = createSlice({
             return getBurgerByRecipe(createRandomRecipe(action.items))
         },
         del: (state, action) => {
-            return getBurgerByRecipe(state.filling.filter(f => f.unicId !== action.payload).concat(state.bun));
+            const recipeAfterDel = state.filling.filter(f => f.unicId !== action.payload);
+            if (!!state.bun) {
+                recipeAfterDel.concat(state.bun)
+            };
+            return getBurgerByRecipe(recipeAfterDel);
         },
         add: (state, action) => {
+            const newFood = { ...action.food };
             let addRecipe = [...state.recipe];
-            if (action.food.type === "bun" && !!state.bun) {
+            if (newFood.type === "bun" && !!state.bun) {
                 addRecipe.splice(
-                    addRecipe.findIndex(f => f.type === "bun"), 1, action.food)
+                    addRecipe.findIndex(f => f.type === "bun"), 1, newFood)
             } else {
-                addRecipe.push(action.food)
+                addRecipe.push(newFood)
             }
+
             return getBurgerByRecipe(addRecipe)
         },
         sort: (state, action) => {
