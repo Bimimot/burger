@@ -104,3 +104,36 @@ export const detailsProptypes = {
 export const errMessageProptypes = {
     textArr: PropTypes.arrayOf(PropTypes.string)
 }
+
+//------moved-element------
+export const movedElementProptypes = {
+    id: PropTypes.string.isRequired,
+    children: PropTypes.node.isRequired || PropTypes.arrayOf(PropTypes.node).isRequired,
+    index: PropTypes.number.isRequired,
+    moveElement: PropTypes.func.isRequired,
+}
+
+//-----auth-form----------
+export const authFormFooterLinks = PropTypes.arrayOf(PropTypes.shape({
+    desc: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired
+})).isRequired;
+
+export const authFormProptypes = {
+    data: PropTypes.shape({
+        title: PropTypes.string,
+        arrInputs: PropTypes.arrayOf(PropTypes.object),
+        footerLinks: authFormFooterLinks,
+        confirm: PropTypes.shape({
+            text: PropTypes.string,
+            callback: PropTypes.func
+        })
+    })
+};
+
+//---------------routes-------
+export const protecRouteProptypes = {
+    children: PropTypes.node.isRequired || PropTypes.arrayOf(PropTypes.node).isRequired
+}
+

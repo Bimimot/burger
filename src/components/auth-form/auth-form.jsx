@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
+import { authFormProptypes } from "../../utils/proptypes";
 import { useDispatch, useSelector } from "react-redux";
 import fStyles from './form.module.css';
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { AuthFormFooter } from "./auth-form-footer";
 
 export const AuthForm = ({ data }) => {
+    AuthForm.propTypes = authFormProptypes;
+
     const dispatch = useDispatch();
 
     const { title, arrInputs, footerLinks, confirm } = data;
