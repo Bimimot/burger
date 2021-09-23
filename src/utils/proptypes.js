@@ -25,10 +25,12 @@ const foodSections = PropTypes.arrayOf(PropTypes.shape({
 
 //---------header---------
 export const headerButtonProptypes = {
-    callback: PropTypes.func,
-    icon: PropTypes.oneOf(['burger', 'list', 'profile']).isRequired,
-    type: PropTypes.oneOf(['primary', 'secondary']).isRequired,
-    text: PropTypes.string.isRequired
+    data: PropTypes.shape({
+        link: PropTypes.string.isRequired,
+        icon: PropTypes.oneOf(['burger', 'list', 'profile']).isRequired,
+        type: PropTypes.oneOf(['primary', 'secondary']).isRequired,
+        text: PropTypes.string.isRequired,
+    })
 };
 //--------------------------
 
@@ -36,7 +38,7 @@ export const headerButtonProptypes = {
 export const menuPropTypes = {
     sections: foodSections,
 };
-export const sectionsPropTypes = {    
+export const sectionsPropTypes = {
     sections: foodSections
 };
 export const inrgredientCardPropTypes = {

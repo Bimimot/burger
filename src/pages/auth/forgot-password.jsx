@@ -1,7 +1,8 @@
 import React from "react";
 import { AuthForm } from "../../components/auth-form/auth-form";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from 'react-router-dom';
+import { resetPass } from "../../services/slicers/profile";
 
 export const ForgotPassPage = () => {
     const arrInputs = [
@@ -13,12 +14,14 @@ export const ForgotPassPage = () => {
 
     const title = "Восстановление пароля";
 
-    const confirm = {
-        text: "Восстановить",
-        callBack: null
-    }
-
     const isAuth = useSelector(store => store.profile.user.isAuth);
+
+    const dispatch = useDispatch();
+
+    const confirm = {
+        callback: () => dispatch(resetPass()),
+        text: "Восстановить"
+    };
 
     return isAuth
         ? <Redirect to={'/'} />

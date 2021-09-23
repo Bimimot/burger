@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { batch } from 'react-redux';
-import { getUser, updateUser, login, register, logout } from '../../utils/api';
+import { getUser, updateUser, login, register, logout, checkEmail, setNewPass } from '../../utils/api';
 import { setCookie } from "../../utils/helpers";
 import { updateToken } from '../../utils/api';
 
@@ -24,6 +24,8 @@ const initialProfile = {
             password: ""
         },
     },
+    isAuth: false,
+    canRestorePass: false,
 
     profileIsLoading: false,
     porfileIsLoaded: false,
@@ -59,8 +61,10 @@ const profileSlice = createSlice({
         onChangeInput: (state, action) => {
             const { key, value } = action.payload;
             state.form.inputs = { ...state.form.inputs, [key]: value }
+        },
+        toggleRestorePass: (state) => {
+            state.canRestorePass = !state.canRestorePass
         }
-
     }
 })
 
@@ -156,18 +160,39 @@ const updateUserProfile = (data) => {
     }
 }
 
+const resetPass = () => {
+    return (dispatch, getState) => {
+        const data = getState().authForm.data;
+        checkEmail(data)
+            .then(res => dispatch(toggleRestorePass))
+            .catch(err => console.log("Error with reset pass", err))
+    }
+};
+
+
+const restorePass = () => {
+    return (dispatch, getState) => {
+        const data = getState().authForm.data;
+        setNewPass(data)
+            .then(res => dispatch(toggleRestorePass))
+            .catch(err => console.log("Error with set new pass", err))
+    }
+};
 
 const { reducer, actions } = profileSlice;
 const { setProfile, clearProfile,
-    profileLoading, profileSuccess, profileIsError, onChangeInput } = actions;
+    profileLoading, profileSuccess, profileIsError,
+    onChangeInput, toggleRestorePass } = actions;
 
 export {
     reducer as profileReducer,
     getUserProfile,
+    loginUser,
+    registerUser,
     logoutUser,
     onChangeInput,
     updateUserProfile,
-    loginUser,
-    registerUser
+    resetPass,
+    restorePass
 }
 

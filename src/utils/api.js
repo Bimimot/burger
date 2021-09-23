@@ -41,7 +41,6 @@ export const register = (data) =>
 
 export const logout = () => {
     const token = localStorage.getItem('refreshToken');
-    console.log("Refresh token from localStorage", token);
 
     return fetch(`${baseUrl}/auth/logout`,
         {
@@ -54,7 +53,6 @@ export const logout = () => {
 
 export const updateToken = () => {
     const token = localStorage.getItem('refreshToken');
-    console.log("Refresh token from localStorage", token);
 
     return fetch(`${baseUrl}/auth/token`,
         {
@@ -69,8 +67,6 @@ export const updateToken = () => {
 //-----------------------user-------------------------------------------
 export const getUser = () => {
     const token = getCookie('token');
-    console.log("ACCESS TOKEN from cookie before api.getUser", token);
-
 
     if (!!token) {
         return fetch(`${baseUrl}/auth/user`,
@@ -102,24 +98,21 @@ export const updateUser = (data) => {
 }
 //-----------------------reset-pass-------------------------------------
 
-export const checkEmail = (email) =>
+export const checkEmail = (data) =>
     fetch(`${baseUrl}/password-reset`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({ email: email })
+            body: JSON.stringify(data)
         })
         .then(res => apiHandler(res));
 
-export const resetPass = (password) =>
+export const setNewPass = (data) =>
     fetch(`${baseUrl}/password-reset/reset`,
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({
-                password: password,
-                token: ""
-            })
+            body: JSON.stringify({data})
         })
         .then(res => apiHandler(res));
 

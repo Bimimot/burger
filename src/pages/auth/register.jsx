@@ -5,8 +5,6 @@ import { registerUser } from "../../services/slicers/profile";
 import { Redirect } from 'react-router-dom';
 
 export const RegisterPage = () => {
-    const dispatch = useDispatch();
-    
     const arrInputs = [
         { name: "name", type: "text", placeholder: "Имя", value: "" },
         { name: "email", type: "email", placeholder: "E-mail", value: "" },
@@ -18,7 +16,8 @@ export const RegisterPage = () => {
     ];
 
     const title = "Регистрация";
-
+    
+    const dispatch = useDispatch();
     const confirm = {
         callback: () => dispatch(registerUser()),
         text: "Зарегистрироваться"

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styles from './app.module.css';
 
 import { ProtectedRoute } from '../protected-route/protected-route';
@@ -17,7 +17,6 @@ import { getUserProfile } from '../../services/slicers/profile';
 
 export const App = () => {
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     dispatch(getFoods());

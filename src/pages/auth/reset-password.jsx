@@ -1,12 +1,13 @@
 import React from "react";
 import { AuthForm } from "../../components/auth-form/auth-form";
-import { Redirect } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { Redirect, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { restorePass } from "../../services/slicers/profile";
 
 export const ResetPassPage = () => {
     const arrInputs = [
         { name: "password", type: "password", placeholder: "Введите новый пароль", value: "" },
-        { name: "code", type: "text", placeholder: "Введите код из письма", value: "" },
+        { name: "token", type: "text", placeholder: "Введите код из письма", value: "" },
     ];
 
     const footerLinks = [
@@ -15,15 +16,15 @@ export const ResetPassPage = () => {
 
     const title = "Восстановление пароля";
 
+
+    const dispatch = useDispatch();
     const confirm = {
-        text: "Восстановить",
-        callBack: null
-    }
+        callback: () => dispatch(restorePass()),
+        text: "Восстановить"
+    };
 
+    const { isAuth, canRestorePass } = useSelector(store => store.profile.user)
 
-    const isAuth = useSelector(store => store.profile.user.isAuth);
-
-    return isAuth
-        ? <Redirect to={'/'} />
-        : <AuthForm data={{ title, arrInputs, footerLinks, confirm }} />
+    return (isAuth || !canRestorePass)
+        ? <Redirect to={'/'} /> : <AuthForm data={{ title, arrInputs, footerLinks, confirm }} />
 }

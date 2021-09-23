@@ -1,16 +1,4 @@
-import { store } from "..";
 import { updateToken } from "./api";
-
-
-//-----------------------auth---------------------------------
-export const isUserAuth = () => {
-    const user = store.getState().profile.user;
-    console.log("USER>>>>>>", user);
-    console.log("user.name", user.name);
-    console.log("!!user.name", !!user.name);
-
-    return !!user.name && !!user.email
-};
 
 export const randomInteger = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
 
@@ -73,8 +61,6 @@ export function setCookie(name, value, props) {
 export async function isTokenValid() {
     let isAuth=false;
     const token = localStorage.getItem('refreshToken');
-    console.log("TOKEN>>>>>>", token);
-    console.log("!!token", !!token);
 
     if (!!token && token !== 'undefined') {
         await updateToken()

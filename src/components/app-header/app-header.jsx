@@ -27,12 +27,8 @@ export const AppHeader = React.memo(
                     activeKey = "";
                 }
             };
-            console.log("KEY!", activeKey)
             dispatch({ type: "header/onChangeLink", payload: activeKey })
         }, [pathname]);
-
-        //если линк есть в pathname - запомнить длину линка
-        //для всех совпадающих линков выбрать тот, который самый длинный
 
         return (
             <header className={headerStyles.header}>
