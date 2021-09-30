@@ -1,0 +1,59 @@
+.profile {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    max-width: var(--width-max-content);
+    width: 100%;
+    margin-top: 120px;
+}
+
+.menu{
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    min-width: 320px;
+    margin-right: 60px;
+}
+
+.link{
+    color: var(--text-secondary-color);
+    width: fit-content;
+    box-sizing: border-box;
+    margin: 20px 0;
+    border-bottom: 1px solid transparent;
+}
+
+.link:hover {
+    cursor: pointer;
+    border-bottom: 1px dashed;
+    
+}
+
+.activeLink{
+    composes: link;
+    color: var(--text-primary-color);
+}
+
+.activeLink:hover{
+    cursor: default;
+    border-bottom: 1px solid transparent;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 480px;
+    width: 100%;
+}
+
+.form .input_size_default {
+    width: 480px !important;
+    border: 1px solid red;
+}
+
+.formSubmit{
+    display: flex;
+    position: relative;
+    justify-content: flex-end;
+}

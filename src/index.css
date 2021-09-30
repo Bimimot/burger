@@ -12,6 +12,7 @@
 
 --width-max: 1920px;
 --width-column-main: 600px;
+--width-max-content: 1240px;
 --border-radius: 40px;
 --height-header: 88px;
 --height-menu: 156px;
@@ -23,6 +24,10 @@ color: var(--text-primary-color);
 
 a{
     text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    cursor: inherit ;
 }
 
 ul{
@@ -39,4 +44,8 @@ ul{
 
 #filling .constructor-element__action:hover{
  filter: invert(50%) sepia(35%) saturate(1844%) hue-rotate(141deg) brightness(106%) contrast(103%);
+}
+
+#profileForm .input_size_default {
+    width: 480px !important;
 }

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { App } from './components/app/app';
 import ErrorBoundary from './components/error-boundary/error-boundary';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 
@@ -21,7 +22,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ErrorBoundary>
       <Provider store={store}>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </Provider>
     </ErrorBoundary>
   </React.StrictMode>,
@@ -30,3 +33,5 @@ ReactDOM.render(
 
 
 reportWebVitals();
+
+export { store }

@@ -1,7 +1,11 @@
 import React, { useRef } from 'react';
 import { useDrop, useDrag } from "react-dnd";
+import { movedElementProptypes } from '../../utils/proptypes';
 
 export const MovedElement = ({ id, children, index, moveElement }) => {
+    MovedElement.propTypes = movedElementProptypes;
+
+
     const ref = useRef(null);
     const [{ handlerId }, drop] = useDrop({
         accept: 'card',

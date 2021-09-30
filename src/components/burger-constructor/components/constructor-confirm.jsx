@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import cStyles from '../burger-constructor.module.css';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getOrderNumber } from '../../../services/slicers/orders';
@@ -15,14 +16,18 @@ const resizeCurrencyIcon = () => {
 
 export const ConfirmOrder = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const burger = useSelector(store => store.burger);
+    const isAuth = useSelector(store => store.profile.user.isAuth);
 
     useEffect(() => {
         resizeCurrencyIcon()
     }, []);
     
     const confirmOrder = useCallback(() => {
-        dispatch(getOrderNumber(burger.recipe.map(ing => ing._id)));        
+        isAuth
+            ? dispatch(getOrderNumber(burger.recipe.map(ing => ing._id)))
+            : history.push("/login")
     }, [dispatch, burger.recipe])
 
     return (

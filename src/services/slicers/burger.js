@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { randomInteger } from "../../utils/helpers";
 import { updateCounts } from './foods';
+import { createRandomRecipe, getBurgerByRecipe } from '../../utils/helpers';
 
 const initialBurger = {
     recipe: [],
@@ -18,16 +18,22 @@ const burgerSlice = createSlice({
             return getBurgerByRecipe(createRandomRecipe(action.items))
         },
         del: (state, action) => {
-            return getBurgerByRecipe(state.filling.filter(f => f.unicId !== action.payload).concat(state.bun));
+            const recipeAfterDel = state.filling.filter(f => f.unicId !== action.payload);
+            if (!!state.bun) {
+               recipeAfterDel.push(state.bun)
+            };
+            return getBurgerByRecipe(recipeAfterDel);
         },
         add: (state, action) => {
+            const newFood = { ...action.food };
             let addRecipe = [...state.recipe];
-            if (action.food.type === "bun" && !!state.bun) {
+            if (newFood.type === "bun" && !!state.bun) {
                 addRecipe.splice(
-                    addRecipe.findIndex(f => f.type === "bun"), 1, action.food)
+                    addRecipe.findIndex(f => f.type === "bun"), 1, newFood)
             } else {
-                addRecipe.push(action.food)
+                addRecipe.push(newFood)
             }
+
             return getBurgerByRecipe(addRecipe)
         },
         sort: (state, action) => {
@@ -63,28 +69,6 @@ const randomRecipe = () => {
         await dispatch({ type: 'burger/random', items: foods });
         updateCounts(dispatch, getState);
     }
-}
-
-const createRandomRecipe = (foodsArr) => {
-    const recipe = [];
-    const count = randomInteger(6, 10);
-
-    for (let i = 0; i < count; i++) {
-        recipe[i] = foodsArr[randomInteger(0, foodsArr.length - 1)];
-    }
-    if (!!!recipe.find(f => f.type === "bun")) {
-        recipe.push(foodsArr.find(f => f.type === "bun"))
-    }
-    return recipe
-}
-
-function getBurgerByRecipe(recipe) {
-    const bun = recipe.find(food => food.type === "bun");
-    const filling = recipe.filter(food => food.type !== "bun").map((f, i) => ({ ...f, unicId: i + f._id }));
-    const totalPrice = filling.reduce((total, current) => total + current.price, 0)
-        + (!!bun ? bun.price * 2 : 0);
-    recipe = filling.concat(!!bun ? bun : []);
-    return { recipe, bun, filling, totalPrice }
 }
 
 const { actions, reducer } = burgerSlice;

@@ -1,5 +1,6 @@
 import React from 'react';
 import eStyles from './error-message.module.css';
+import { errMessageProptypes } from '../../utils/proptypes';
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 
@@ -21,4 +22,6 @@ export const ErrorMessage = React.memo(
             </div>
         )
     }
-)
+);
+
+ErrorMessage.propTypes = errMessageProptypes;
