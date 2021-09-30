@@ -27,7 +27,11 @@ export const Filling = React.memo(() => {
 
         return (
             <div className={cStyles.filling} id="filling">
-                <ScrollBox>
+                <ScrollBox
+                    top={40}
+                    bottom={16}
+                    id={"burgers"}
+                >
                     <div className={cStyles.recipe}>
                         {filling.map((item, i) =>
                             <MovedElement key={item.unicId} index={i} id={item.unicId} moveElement={moveElement}>

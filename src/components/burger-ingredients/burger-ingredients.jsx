@@ -24,7 +24,7 @@ export const BurgerIngredients = () => {
                 <IngredientsMenu sections={sections} />
                     <ScrollBox
                         top={40}
-                        bottom={52}
+                        bottom={16}
                         id={"ingredients"}
                         arrBlocksId={sections.map(m => m.id)}
                         callbackScroll={updateMenu}

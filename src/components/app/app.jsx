@@ -7,9 +7,9 @@ import { ProtectedRoute } from '../protected-route/protected-route';
 import { AppHeader } from '../app-header/app-header';
 import { getFoods } from '../../services/slicers/foods';
 import {
-  PageBurgerConstructor,
+  BurgerConstructorPage,
   LoginPage, RegisterPage, ForgotPassPage, ResetPassPage,
-  NoPage, IngredientPage, IngredientPageModal, ProfilePage
+  NoPage, IngredientPage, IngredientPageModal, ProfilePage, FeedPage
 } from '../../pages';
 
 import { getUserProfile } from '../../services/slicers/profile';
@@ -33,8 +33,13 @@ export const App = () => {
       <main className={styles.main}>
 
         <Switch location={background || location}>
+          
+          <ProtectedRoute path='/profile'>
+            <ProfilePage />
+          </ProtectedRoute>
+
           <Route path='/' exact>
-            <PageBurgerConstructor />
+            <BurgerConstructorPage />
           </Route>
 
           <Route path='/login' exact>
@@ -53,10 +58,14 @@ export const App = () => {
             <ResetPassPage />
           </Route>
 
-          <ProtectedRoute path='/profile'>
-            <ProfilePage />
-          </ProtectedRoute>
+          <Route path='/feed' exact>
+            <FeedPage />
+          </Route>
 
+          <Route path='/feed/:id' exact>
+            <h1>ORDER № xxx</h1>
+          </Route>
+          
           <Route path='/ingredients/:id' exact>
             <IngredientPage />
           </Route>

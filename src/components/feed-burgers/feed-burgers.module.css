@@ -1,0 +1,12 @@
+.burgers {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    width: var(--width-column-main);
+    box-sizing: border-box;
+}
+
+.cards{
+    display: flex;
+    flex-direction: column;
+}

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialHeader = {
     burger: { type: "secondary", icon: "burger", text: "Конструктор", link: "/" },
-    orders: { type: "secondary", icon: "list", text: "Лента заказов", link: "/profile/orders" },
+    orders: { type: "secondary", icon: "list", text: "Лента заказов", link: "/feed" },
     profile: { type: "secondary", icon: "profile", text: "Личный кабинет", link: "/profile" }
 }
 

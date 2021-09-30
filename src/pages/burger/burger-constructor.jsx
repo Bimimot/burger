@@ -9,7 +9,7 @@ import { Loader } from '../../components/loader/loader';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-const PageBurgerConstructor = () => {
+const BurgerConstructorPage = () => {
     const { isLoading, isError, isLoaded } = useSelector(store => store.foods);
 
     return (
@@ -28,4 +28,4 @@ const PageBurgerConstructor = () => {
     )
 }
 
-export default PageBurgerConstructor;
+export default BurgerConstructorPage;
