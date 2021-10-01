@@ -10,6 +10,7 @@ const initialFeed =
                 "60d3b41abdacab0026a733cf",
                 "60d3b41abdacab0026a733d0",
                 "60d3b41abdacab0026a733ca",
+                "60d3b41abdacab0026a733c8",
                 "60d3b41abdacab0026a733ca",
                 "60d3b41abdacab0026a733d2"
 
@@ -47,6 +48,10 @@ const initialFeed =
             "ingredients": [
                 "60d3b41abdacab0026a733c6",
                 "60d3b41abdacab0026a733d2",
+                "60d3b41abdacab0026a733d2",
+                "60d3b41abdacab0026a733c9",
+                "60d3b41abdacab0026a733cf",
+                "60d3b41abdacab0026a733c8",
                 "60d3b41abdacab0026a733c9"
 
             ],
@@ -62,6 +67,7 @@ const initialFeed =
             "ingredients": [
                 "60d3b41abdacab0026a733c6",
                 "60d3b41abdacab0026a733d2",
+                "60d3b41abdacab0026a733c8",
                 "60d3b41abdacab0026a733c9"
 
             ],
@@ -90,7 +96,11 @@ const initialFeed =
         },
     ],
     "total": 195739,
-    "totalToday": 201
+    "totalToday": 201,
+
+    isLoaded: true,
+    isLoading: false,
+    isError: false
 };
 
 

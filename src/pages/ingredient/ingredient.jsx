@@ -37,13 +37,12 @@ export const IngredientPage = () => {
 
     useEffect(() => {
         if (!!items.length) {
-            setIngredient(items.find(item => item._id === id))
-            
+            setIngredient(items.find(item => item._id === id))            
         }
     }, [isLoaded, items, id]);
 
     return (
-        <div className={pStyles.ingredientPage}>
+        <div className={pStyles.modalPage}>
             {isLoaded &&
                 <>
                     {!!ingredient

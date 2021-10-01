@@ -15,7 +15,7 @@ export const FeedBurgers = () => {
                 id={"feed"}
             >
                 <div>
-                {burgers.map(burger => <BurgerCard key={burger._id} burger={burger} />)}
+                    {burgers.map(burger => <BurgerCard key={burger._id} burger={burger} />)}
                 </div>
             </ScrollBox>
         </article>

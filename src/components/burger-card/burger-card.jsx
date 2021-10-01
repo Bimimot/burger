@@ -1,32 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import bStyles from './burger-card.module.css';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const BurgerCard = React.memo(
     ({ burger }) => {
         const isLoaded = useSelector(store => store.foods.isLoaded);
+        const location = useLocation();
+        const dispatch = useDispatch();
 
         return (
-            <div className={bStyles.card}>
-                <CardHeader
-                    id={burger.number}
-                    time={burger.createdAt}
-                />
-                <p className="text text_type_main-medium">{burger.name}</p>
+            <Link to={{
+                pathname: `/feed/${burger._id}`,
+                state: { background: location }
+            }}>
+                <div className={bStyles.card} onClick={() => dispatch({ type: "burgerOrder/openOrder", payload: burger })}>
+                    <div className={bStyles.cardHeader}>
+                        <BurgerNumber number={burger.number} />
+                        <BurgerTime time={burger.createdAt} />
+                    </div>
+                    <p className="text text_type_main-medium">{burger.name}</p>
 
-                {isLoaded &&
-                    <CardFooter
-                        ingredients={burger.ingredients}
-                        total={burger.total}
-                    />}
-            </div>
+                    {isLoaded &&
+                        <div className={bStyles.cardFooter}>
+                            <CardFoods ingredients={burger.ingredients} />
+                            <BurgerPrice total={burger.total} />
+                        </div>
+                    }
+                </div>
+            </Link>
         )
 
     }
 )
 
-const CardHeader = ({ id, time }) => {
+
+const CardFoods = ({ ingredients }) => {
+    const bigBurger = ingredients.length > 6;
+    const items = [...ingredients].reverse(); //reverse & reverse-row for right negative margin
+
+    return (
+        <div className={bStyles.cardImages}>
+            {items.map((ingredient, i) =>
+                i < 6 && <BurgerIngredientImage
+                    ingredientId={ingredient}
+                    text={(i === 0 && bigBurger) ? "+" + (items.length - 5) : ""}
+                    type={"row"}
+                />)
+            }
+        </div>
+    )
+}
+
+
+//--design components--//
+
+export const BurgerTime = ({ time }) => {
     const curTime = () => {
         const burgerDate = new Date(time);
         const burgerDay = burgerDate.getDate();
@@ -51,68 +81,37 @@ const CardHeader = ({ id, time }) => {
     };
 
     return (
-        <div className={bStyles.cardHeader}>
-            <p className="text text_type_digits-default">#{id}</p>
-            <p className="text text_type_main-default" style={{ color: "var(--text-secondary-color)" }}>{curTime()}</p>
-        </div>
+        <p className="text text_type_main-default" style={{ color: "var(--text-secondary-color)" }}>{curTime()}</p>
     )
 }
 
-const CardFooter = ({ ingredients, total }) => {
-    return (
-        <div className={bStyles.cardFooter}>
-            <div>
-                <CardFoods ingredients={ingredients} />
-            </div>
-            <div className={bStyles.cardTotal}>
-                <span className="text text_type_digits-default mr-2">{total}</span>
-                <CurrencyIcon />
-            </div>
-        </div>
-    )
-}
-
-const CardFoods = ({ ingredients }) => {
+export const BurgerIngredientImage = ({ ingredientId, text, type }) => {
     const foods = useSelector(store => store.foods.items);
-
-    const foodsImages = [];
-    ingredients.forEach(ingredient =>
-        foodsImages.push(foods.find(f => f._id === ingredient).image)
-
-    );
-
-    const bigBurger = foodsImages.length > 6;
+    const [image] = useState(foods.find(f => f._id === ingredientId).image);
 
     return (
-        <div className={bStyles.cardImages}>
-            {foodsImages.map((image, i) =>
-                i<6 && <React.Fragment key={i}>
-                    <div className={(i === 5 && bigBurger) ? bStyles.cardImageBlur : bStyles.cardImage}
-                        style={{
-                            left: 50 * i + 2 + "px",
-                            zIndex: 20 - i * 2,
-                            backgroundImage: "url(" + image + ")",
-                        }}
-                    >
-                        {(i === 5 && bigBurger)
-                            && <span className="text text_type_digits-default">
-                            {"+"}{foodsImages.length - 5}
-                        </span>
-                        }
-                    </div>
-
-                    <div className={bStyles.cardImageBorder} style={{ left: 50 * i + "px", zIndex: 20 - i * 2 - 1}}></div>
-                </React.Fragment>)
-            }
-        </div>)
+        <div className={bStyles.imageContainer} style={type === "row" ? { marginRight: "-20px" } : {}}>
+            <div
+                className={!!text ? bStyles.cardImageBlur : bStyles.cardImage}
+                style={{ backgroundImage: "url(" + image + ")" }}
+            >
+                {!!text &&
+                    <span className="text text_type_digits-default" style={{ zIndex: "100" }}>
+                        {text}
+                    </span>
+                }
+            </div>
+        </div>
+    )
 }
 
-{/* <img
-                        className={bStyles.cardImage}
-                        src={image}
-                        alt="inredient"
-                        style={{
-                            left: 50 * i + 2 + "px",
-                            zIndex: 20 - i * 2,
-                        }}
-                    /> */}
+export const BurgerPrice = ({ total }) =>
+    <div className={bStyles.cardTotal}>
+        <span className="text text_type_digits-default mr-2">{total}</span>
+        <CurrencyIcon />
+    </div>;
+
+export const BurgerNumber = ({ number }) =>
+    <p className="text text_type_digits-default">
+        #{number}
+    </p>;

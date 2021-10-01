@@ -7,6 +7,8 @@ import { NoPage } from "./nopage/nopage";
 import { IngredientPage, IngredientPageModal } from "./ingredient/ingredient";
 import { ProfilePage } from "./profile/profile";
 import { FeedPage } from "./feed/feed";
+import { BurgerOrderPage, BurgerOrderModal } from "./burger-order/burger-order";
+
 
 export {
     BurgerConstructorPage,
@@ -18,5 +20,7 @@ export {
     IngredientPage,
     IngredientPageModal,
     ProfilePage,
-    FeedPage
+    FeedPage,
+    BurgerOrderPage,
+    BurgerOrderModal
 }

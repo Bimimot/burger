@@ -9,7 +9,8 @@ import { getFoods } from '../../services/slicers/foods';
 import {
   BurgerConstructorPage,
   LoginPage, RegisterPage, ForgotPassPage, ResetPassPage,
-  NoPage, IngredientPage, IngredientPageModal, ProfilePage, FeedPage
+  NoPage, IngredientPage, IngredientPageModal, ProfilePage,
+  FeedPage, BurgerOrderPage, BurgerOrderModal
 } from '../../pages';
 
 import { getUserProfile } from '../../services/slicers/profile';
@@ -63,7 +64,7 @@ export const App = () => {
           </Route>
 
           <Route path='/feed/:id' exact>
-            <h1>ORDER № xxx</h1>
+            <BurgerOrderPage />
           </Route>
           
           <Route path='/ingredients/:id' exact>
@@ -76,9 +77,15 @@ export const App = () => {
         </Switch>
 
         {background &&
+          <>
           <Route path='/ingredients/:id' exact>
             <IngredientPageModal />
           </Route>
+          
+          <Route path='/feed/:id' exact>
+            <BurgerOrderModal />
+          </Route>
+          </>
         }
       </main >
     </>
