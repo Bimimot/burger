@@ -5,7 +5,7 @@ import { detailsProptypes } from '../../utils/proptypes';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { IngredientDescription } from './ingredient-desc';
-import { addInRecipe } from '../../services/slicers/burger';
+import { addInRecipe } from '../../services/slicers/burger-constructor';
 
 export const IngredientsDetails = React.memo(
     ({ ingredient }) => {

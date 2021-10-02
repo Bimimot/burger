@@ -1,18 +1,18 @@
 
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import oStyles from './burger-order.module.css';
 import { BurgerNumber, BurgerPrice, BurgerTime, BurgerIngredientImage } from "../burger-card/burger-card";
 import { ScrollBox } from '../scrollbox/scrollbox';
+import { orderBurgerPropTypes } from '../../utils/proptypes';
 
 export const BurgerOrder = ({ order }) => {
-    console.log("ORDER", order);
-    const { name, _id, status, ingredients, createdAt, total } = order;
+    BurgerOrder.propTypes = orderBurgerPropTypes;
+    const { name, number, _id, status, ingredients, createdAt, total } = order;
 
     return (
         <div className={oStyles.order}>
             <div className={oStyles.header}>
-                <BurgerNumber number={_id} />
+                <BurgerNumber number={number} />
             </div>
 
             <h1 className="text text_type_main-medium">{name}</h1>
@@ -37,8 +37,8 @@ const BurgerOrderRecipe = ({ ingredients }) => {
             <h3 className="text text_type_main-medium mb-6 mt-5">Состав</h3>
             <ScrollBox id={"recipe"}>
                 <div className={oStyles.ingredients}>
-                    {ingredients.map((ingredient,i) =>
-                        <OrderIngredient key={ingredient+i} ingredientId={ingredient} />
+                    {ingredients.map((ingredient, i) =>
+                        <OrderIngredient key={ingredient + i} ingredient={ingredient} />
                     )}
                 </div>
             </ScrollBox>
@@ -46,14 +46,11 @@ const BurgerOrderRecipe = ({ ingredients }) => {
     )
 }
 
-const OrderIngredient = ({ ingredientId }) => {
-    const foods = useSelector(store => store.foods.items);
-    const [ingredient] = useState(foods.find(f => f._id === ingredientId));
-
+const OrderIngredient = ({ ingredient }) => {
     return (
         <div className={oStyles.ingredient}>
             <div className={oStyles.about}>
-                <BurgerIngredientImage ingredientId={ingredientId} />
+                <BurgerIngredientImage image={ingredient.image} />
                 <p className="text text_type_main-default ml-4">{ingredient.name}</p>
             </div>
             <BurgerPrice total={`${ingredient.type === "bun" ? "2" : "1"} x ${ingredient.price}`} />

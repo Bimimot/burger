@@ -1,30 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import pStyles from './profile.module.css';
 import {
     Switch, NavLink, Link, Route, Redirect,
-    useRouteMatch, useParams, useHistory, useLocation
+    useRouteMatch
 } from 'react-router-dom';
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../services/slicers/profile";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FeedBurgers } from "../../components/feed-burgers/feed-burgers";
-import { BurgerOrderPage, BurgerOrderModal } from "..";
+import { BurgerOrderPage } from "..";
 import { onChangeInput, updateUserProfile } from "../../services/slicers/profile";
+import { Loader } from "../../components/loader/loader";
+import { ErrorMessage } from "../../components/error-message/error-message";
+import { NoOrdersPage } from "..";
 
 
 export const ProfilePage = () => {
     const { path } = useRouteMatch();
-    
+
     return (
         <div className={pStyles.profile}>
             <ProfileMenu />
             <Switch>
                 <Route path={`${path}`} exact><ProfileForm /></Route>
                 <Route path={`${path}/orders`} exact><ProfileOrders /></Route>
-                
+
                 <Route path={`${path}/orders/:id`} exact>
-                    <BurgerOrderPage type={"profile"}/>
+                    <BurgerOrderPage type={"profile"} />
                 </Route>
                 <Route><Redirect to={`${path}`} /></Route>
             </Switch>
@@ -51,7 +54,7 @@ const ProfileMenu = () => {
 const ProfileForm = () => {
     const form = useSelector(store => store.profile.form);
     const dispatch = useDispatch();
-    
+
     const changeProfile = (event) => {
         event.preventDefault();
         dispatch(updateUserProfile(form.inputs))
@@ -91,8 +94,28 @@ const ProfileForm = () => {
 }
 
 const ProfileOrders = () => {
-    const burgers = useSelector(store => store.feed.orders);
+    const { orders, success, isError } = useSelector(store => store.wsOrders);
+    const isLoadedFoods = useSelector(store => store.foods.isLoaded);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (isLoadedFoods && !success) {
+            dispatch({ type: "wsOrders/wsInit" });
+        }
+    }, [isLoadedFoods, success, dispatch]);
+
+    useEffect(() => {
+        return () => {
+            dispatch({ type: "wsOrders/wsClosed" });
+        }
+    }, []);
+
     return (
-        <FeedBurgers burgers={burgers} />
+        <>
+            {(!!orders && success)
+                ? (!!orders.length ? <FeedBurgers burgers={orders} /> : <NoOrdersPage />)
+                : <Loader text={"Уточняем на кухне"} />}
+            {isError && <ErrorMessage />}
+        </>
     )
 }

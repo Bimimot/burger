@@ -1,9 +1,10 @@
 import fStyles from './feed-burgers.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { feedBurgersPropTypes } from '../../utils/proptypes';
 import { ScrollBox } from '../scrollbox/scrollbox';
 import { BurgerCard } from '../burger-card/burger-card';
 
-export const FeedBurgers = ({title, burgers}) => {
+export const FeedBurgers = ({ title, burgers }) => {
+    FeedBurgers.propTypes = feedBurgersPropTypes;
     return (
         <article className={fStyles.burgers}>
             {!!title && <h1 className={"text text_type_main-large mb-3 mt-10"}>{title}</h1>}

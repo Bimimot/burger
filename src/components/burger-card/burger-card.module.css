@@ -8,6 +8,7 @@
     background-color: var(--background-light-color);
     border-radius: 40px;
     transition: all ease .2s;
+    width: 100%;
 }
 
 

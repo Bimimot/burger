@@ -58,7 +58,7 @@ const foodsSlice = createSlice({
 const { actions, reducer } = foodsSlice;
 const { foodsLoading, foodsError, foodsSuccess, setActiveSection } = actions;
 
-function getFoods() {
+ function getFoods() {
     return function (dispatch) {
         dispatch(foodsLoading());
         loadFoods()

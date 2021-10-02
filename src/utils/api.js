@@ -1,4 +1,4 @@
-import { getCookie } from "./helpers";
+import { getCookie, setCookie } from "./helpers";
 
 
 const baseUrl = 'https://norma.nomoreparties.space/api';
@@ -12,7 +12,10 @@ export const loadOrderNumber = (arrIngredients) =>
     fetch(`${baseUrl}/orders`,
         {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json;charset=utf-8' },
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': 'Bearer ' + getCookie('accessToken')
+            },
             body: JSON.stringify({ ingredients: arrIngredients })
         })
         .then(res => apiHandler(res));
@@ -40,41 +43,52 @@ export const register = (data) =>
         .then(res => apiHandler(res));
 
 export const logout = () => {
-    const token = localStorage.getItem('refreshToken');
+    const refreshToken = localStorage.getItem('refreshToken');
 
     return fetch(`${baseUrl}/auth/logout`,
         {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({ token })
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': refreshToken
+            },
+            body: JSON.stringify({ token: refreshToken })
         })
         .then(res => apiHandler(res));
 }
 
 export const updateToken = () => {
-    const token = localStorage.getItem('refreshToken');
+    const refreshToken = localStorage.getItem('refreshToken');
 
     return fetch(`${baseUrl}/auth/token`,
         {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({ token })
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': refreshToken
+            },
+            body: JSON.stringify({ token: refreshToken })
         })
-        .then(res => apiHandler(res));
+        .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+        .then(res => {
+            localStorage.setItem('refreshToken', res.refreshToken);
+            setCookie("accessToken", res.accessToken.split('Bearer ')[1]);
+            return res
+        })
 }
 
 
 //-----------------------user-------------------------------------------
 export const getUser = () => {
-    const token = getCookie('token');
+    const accessToken = getCookie('accessToken');
 
-    if (!!token) {
+    if (!!accessToken) {
         return fetch(`${baseUrl}/auth/user`,
             {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + accessToken
                 }
             })
             .then(res => apiHandler(res));
@@ -90,7 +104,7 @@ export const updateUser = (data) => {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
-                'Authorization': 'Bearer ' + getCookie('token')
+                'Authorization': 'Bearer ' + getCookie('accessToken')
             },
             body: JSON.stringify(data)
         })
@@ -112,7 +126,7 @@ export const setNewPass = (data) =>
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({data})
+            body: JSON.stringify({ data })
         })
         .then(res => apiHandler(res));
 

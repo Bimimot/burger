@@ -5,7 +5,7 @@ import { MovedElement } from '../../moved-element/moved-element';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ScrollBox } from '../../scrollbox/scrollbox';
 import update from 'immutability-helper';
-import { delFromRecipe } from '../../../services/slicers/burger';
+import { delFromRecipe } from '../../../services/slicers/burger-constructor';
 
 
 export const Filling = React.memo(() => {

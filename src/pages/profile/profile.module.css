@@ -7,6 +7,10 @@
     margin-top: 120px;
 }
 
+.profile > div{
+    margin-top: 0 !important;
+}
+
 .menu{
     display: flex;
     flex-direction: column;
