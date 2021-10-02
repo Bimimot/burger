@@ -91,7 +91,7 @@ const ProfileForm = () => {
 }
 
 const ProfileOrders = () => {
-    const burgers = useSelector(store => store.feed.orders);
+    const burgers = useSelector(store => store.wsFeed.orders);
     return (
         <FeedBurgers burgers={burgers} />
     )

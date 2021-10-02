@@ -72,6 +72,7 @@ const getUserProfile = () => {
     return (dispatch) => {
         getUser()
             .then(res => dispatch(setProfile(res.user)))
+            .then(() => dispatch({ type: "wsOrders/wsInit" }))
             .catch((err) => {
                 console.log("Err with get User", err);
                 dispatch(profileIsError())

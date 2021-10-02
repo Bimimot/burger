@@ -34,7 +34,7 @@ export const App = () => {
       <main className={styles.main}>
 
         <Switch location={background || location}>
-          
+
           <ProtectedRoute path='/profile'>
             <ProfilePage />
           </ProtectedRoute>
@@ -64,9 +64,9 @@ export const App = () => {
           </Route>
 
           <Route path='/feed/:id' exact>
-            <BurgerOrderPage type={"feed"}/>
+            <BurgerOrderPage type={"feed"} />
           </Route>
-          
+
           <Route path='/ingredients/:id' exact>
             <IngredientPage />
           </Route>
@@ -78,17 +78,17 @@ export const App = () => {
 
         {background &&
           <>
-          <Route path='/ingredients/:id' exact>
-            <IngredientPageModal />
-          </Route>
-          
-          <Route path='/feed/:id' exact>
-            <BurgerOrderModal />
-          </Route>
+            <Route path='/ingredients/:id' exact>
+              <IngredientPageModal />
+            </Route>
 
-          <Route path='/profile/orders/:id' exact>
-            <BurgerOrderModal />
-          </Route>
+            <Route path='/feed/:id' exact>
+              <BurgerOrderModal />
+            </Route>
+
+            <ProtectedRoute path='/profile/orders/:id' exact>
+              <BurgerOrderModal />
+            </ProtectedRoute>
           </>
         }
       </main >

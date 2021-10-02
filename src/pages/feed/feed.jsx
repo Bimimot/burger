@@ -10,7 +10,7 @@ import { FeedStatus } from '../../components/feed-status/feed-status';
 
 
 export const FeedPage = () => {
-    const burgers = useSelector(store => store.feed.orders);
+    const burgers = useSelector(store => store.wsFeed.orders);
     return (
         <div className={pStyles.content}>
             <FeedBurgers burgers={burgers} title={"Лента заказов"} />

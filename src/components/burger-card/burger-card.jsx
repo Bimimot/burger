@@ -6,28 +6,27 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export const BurgerCard = React.memo(
     ({ burger }) => {
-        const isLoaded = useSelector(store => store.foods.isLoaded);
         const location = useLocation();
         const dispatch = useDispatch();
+        const { _id, number, name, ingredients, total, createdAt } = burger;
 
         return (
             <Link to={{
-                pathname: `${location.pathname}/${burger._id}`,
+                pathname: `${location.pathname}/${_id}`,
                 state: { background: location }
             }}>
                 <div className={bStyles.card} onClick={() => dispatch({ type: "burgerOrder/openOrder", payload: burger })}>
                     <div className={bStyles.cardHeader}>
-                        <BurgerNumber number={burger.number} />
-                        <BurgerTime time={burger.createdAt} />
+                        <BurgerNumber number={number} />
+                        <BurgerTime time={createdAt} />
                     </div>
-                    <p className="text text_type_main-medium">{burger.name}</p>
+                    <p className="text text_type_main-medium">{name}</p>
 
-                    {isLoaded &&
-                        <div className={bStyles.cardFooter}>
-                            <CardFoods ingredients={burger.ingredients} />
-                            <BurgerPrice total={burger.total} />
-                        </div>
-                    }
+                    <div className={bStyles.cardFooter}>
+                        <CardFoods images={ingredients.map(ing => ing.image)} />
+                        <BurgerPrice total={total} />
+                    </div>
+
                 </div>
             </Link>
         )
@@ -35,16 +34,16 @@ export const BurgerCard = React.memo(
     }
 )
 
-
-const CardFoods = ({ ingredients }) => {
-    const bigBurger = ingredients.length > 6;
-    const items = [...ingredients].reverse(); //reverse & reverse-row for right negative margin
+const CardFoods = ({ images }) => {
+    const bigBurger = images.length > 6;
+    const items = [...images].reverse(); //reverse & reverse-row for right negative margin
 
     return (
         <div className={bStyles.cardImages}>
-            {items.map((ingredient, i) =>
+            {items.map((item, i) =>
                 i < 6 && <BurgerIngredientImage
-                    ingredientId={ingredient}
+                    key={i}
+                    image={item}
                     text={(i === 0 && bigBurger) ? "+" + (items.length - 5) : ""}
                     type={"row"}
                 />)
@@ -65,11 +64,12 @@ export const BurgerTime = ({ time }) => {
         const curDay = new Date().getDate();
         const prevMonthDays = new Date(burgerYear, burgerMonth + 1, 0).getDate();
 
-        let diffDays = curDay > burgerDay ? curDay - burgerDay : prevMonthDays + curDay - burgerDay;
+        let diffDays = curDay >= burgerDay ? curDay - burgerDay : prevMonthDays + curDay - burgerDay;
         const timeLabel = diffDays === 0 ? "Сегодня " :
             diffDays === 1 ? "Вчера " :
                 diffDays % 10 === 2 || diffDays % 10 === 3 || diffDays % 10 === 4 ? diffDays + " дня назад "
-                    : diffDays + " дней назад ";
+                    : diffDays % 10 === 1 ? + " день назад"
+                        : diffDays + " дней назад ";
         const zoneLabel = " i-GMT" + burgerDate.toTimeString().substring(12, 18).replaceAll(0, "");
 
         let timeString =
@@ -85,12 +85,9 @@ export const BurgerTime = ({ time }) => {
     )
 }
 
-export const BurgerIngredientImage = ({ ingredientId, text, type }) => {
-    const foods = useSelector(store => store.foods.items);
-    const [image] = useState(foods.find(f => f._id === ingredientId).image);
-
+export const BurgerIngredientImage = ({ image, text, type }) => {
     return (
-        <div className={bStyles.imageContainer} style={type === "row" ? { marginRight: "-20px" } : {}}>
+        <div className={bStyles.imageContainer} style={type === "row" ? { marginRight: "-16px" } : {}}>
             <div
                 className={!!text ? bStyles.cardImageBlur : bStyles.cardImage}
                 style={{ backgroundImage: "url(" + image + ")" }}

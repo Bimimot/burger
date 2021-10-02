@@ -8,6 +8,8 @@ import { profileReducer } from "./slicers/profile";
 import { authFormReducer } from "./slicers/auth-form";
 import { feedReducer } from "./slicers/feed";
 import { burgerOrderReducer } from "./slicers/burger-order";
+import { wsFeedReducer } from "./slicers/ws-feed";
+import { wsOrdersReducer } from "./slicers/ws-orders";
 
 export const rootReducer = combineReducers({
     foods: foodsReducer,
@@ -18,5 +20,7 @@ export const rootReducer = combineReducers({
     profile: profileReducer,
     authForm: authFormReducer,
     feed: feedReducer,
-    burgerOrder: burgerOrderReducer
+    burgerOrder: burgerOrderReducer,
+    wsFeed: wsFeedReducer,
+    wsOrders: wsOrdersReducer
 });
