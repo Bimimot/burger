@@ -2,25 +2,30 @@ import React from "react";
 import pStyles from './profile.module.css';
 import {
     Switch, NavLink, Link, Route, Redirect,
-    useRouteMatch, useParams, useHistory
+    useRouteMatch, useParams, useHistory, useLocation
 } from 'react-router-dom';
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../services/slicers/profile";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { FeedBurgers } from "../../components/feed-burgers/feed-burgers";
+import { BurgerOrderPage, BurgerOrderModal } from "..";
 import { onChangeInput, updateUserProfile } from "../../services/slicers/profile";
 
 
 export const ProfilePage = () => {
     const { path } = useRouteMatch();
-
+    
     return (
         <div className={pStyles.profile}>
             <ProfileMenu />
             <Switch>
                 <Route path={`${path}`} exact><ProfileForm /></Route>
                 <Route path={`${path}/orders`} exact><ProfileOrders /></Route>
-                <Route path={`${path}/orders/:id`} exact><ProfileOrder /></Route>
+                
+                <Route path={`${path}/orders/:id`} exact>
+                    <BurgerOrderPage type={"profile"}/>
+                </Route>
                 <Route><Redirect to={`${path}`} /></Route>
             </Switch>
         </div>
@@ -86,27 +91,8 @@ const ProfileForm = () => {
 }
 
 const ProfileOrders = () => {
-    const orders = [10, 23, 32, 48];
-    const { url } = useRouteMatch();
-
-
-    const style = { flexDirection: "column", gap: "16px", cursor: "pointer", margin: "50px" };
-
+    const burgers = useSelector(store => store.feed.orders);
     return (
-        <div style={style}>
-            {orders.map(order =>
-                <Link to={`${url}/${order}`} key={order}>
-                    <h2 className="text text_type_main">{`Заказ № ${order}`}</h2>
-                </Link>
-            )}
-        </div>
+        <FeedBurgers burgers={burgers} />
     )
-}
-
-const ProfileOrder = () => {
-    const { id } = useParams();
-    return (<>
-        <h1 className="text text_type_main text_size_large">{`Страница заказа № ${id}`}</h1>
-    </>)
-
 }

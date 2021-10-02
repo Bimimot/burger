@@ -12,7 +12,7 @@ export const BurgerCard = React.memo(
 
         return (
             <Link to={{
-                pathname: `/feed/${burger._id}`,
+                pathname: `${location.pathname}/${burger._id}`,
                 state: { background: location }
             }}>
                 <div className={bStyles.card} onClick={() => dispatch({ type: "burgerOrder/openOrder", payload: burger })}>

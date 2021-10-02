@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import pStyles from '../pages.module.css';
 import { BurgerIngredients } from '../../components/burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../../components/burger-constructor/burger-constructor';
@@ -9,16 +9,13 @@ import { FeedBurgers } from '../../components/feed-burgers/feed-burgers';
 import { FeedStatus } from '../../components/feed-status/feed-status';
 
 
-
 export const FeedPage = () => {
-    const { isLoading, isError, isLoaded } = useSelector(store => store.foods);
-
+    const burgers = useSelector(store => store.feed.orders);
     return (
-        
-            <div className={pStyles.content}>
-                <FeedBurgers />
-                <FeedStatus />
-            </div>
+        <div className={pStyles.content}>
+            <FeedBurgers burgers={burgers} title={"Лента заказов"} />
+            <FeedStatus />
+        </div>
 
     )
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import pStyles from '../pages.module.css';
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { BurgerOrder } from "../../components/burger-order/burger-order";
 import { Modal } from '../../components/modal/modal';
 import { ErrorMessage } from '../../components/error-message/error-message';
@@ -15,7 +15,7 @@ export const BurgerOrderModal = () => {
 
     const closeModal = () => {
         dispatch({ type: "burgerOrder/closeOrder" });
-        history.push('/feed');
+        history.goBack(-1);
     }
 
     return (
@@ -29,18 +29,23 @@ export const BurgerOrderModal = () => {
     )
 }
 
-export const BurgerOrderPage = () => {
+export const BurgerOrderPage = ({ type }) => {
+    //type:  feed || profile
     const { id } = useParams();
-    const { orders } = useSelector(store => store.feed);
+    const feedOrders  = useSelector(store => store.feed.orders);
+    const profileOrders = useSelector(store => store.feed.orders); //hardcode
     const { isLoading, isError, isLoaded } = useSelector(store => store.foods);
 
     const [order, setOrder] = useState(null);
 
     useEffect(() => {
-        if (!!orders.length) {
-            setOrder(orders.find(order => order._id === id))            
+        if (!!feedOrders.length && type==="feed") {
+            setOrder(feedOrders.find(order => order._id === id))            
         }
-    }, [isLoaded, orders, id]);
+        if (!!profileOrders.length && type === "profile") {
+            setOrder(profileOrders.find(order => order._id === id))
+        }
+    }, [isLoaded, feedOrders, profileOrders, id, type]);
 
     return (
         <div className={pStyles.modalPage}>

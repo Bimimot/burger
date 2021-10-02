@@ -7,7 +7,7 @@ import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer
 export const HeaderButton = React.memo(
     ({ data }) => {
         HeaderButton.propTypes = headerButtonProptypes;
-        
+
         const { icon, text, link, type } = data;
         const icons = {
             burger: BurgerIcon,
@@ -15,15 +15,15 @@ export const HeaderButton = React.memo(
             profile: ProfileIcon
         };
         const ButtonIcon = icons[icon];
-        
+
 
         return (
-            <button className={headerStyles["button-" + type]}>
-                <Link to={link}>
+            <Link to={link}>
+                <button className={headerStyles["button-" + type]}>
                     <ButtonIcon type={type} />
                     <p className="text text_type_main-small pl-1">{text}</p>
-                </Link>
-            </button>
+                </button>
+            </Link>
         )
     }
 )

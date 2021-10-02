@@ -37,8 +37,8 @@ const BurgerOrderRecipe = ({ ingredients }) => {
             <h3 className="text text_type_main-medium mb-6 mt-5">Состав</h3>
             <ScrollBox id={"recipe"}>
                 <div className={oStyles.ingredients}>
-                    {ingredients.map(ingredient =>
-                        <OrderIngredient ingredientId={ingredient} />
+                    {ingredients.map((ingredient,i) =>
+                        <OrderIngredient key={ingredient+i} ingredientId={ingredient} />
                     )}
                 </div>
             </ScrollBox>

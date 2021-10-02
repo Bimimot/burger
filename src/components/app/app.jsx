@@ -64,7 +64,7 @@ export const App = () => {
           </Route>
 
           <Route path='/feed/:id' exact>
-            <BurgerOrderPage />
+            <BurgerOrderPage type={"feed"}/>
           </Route>
           
           <Route path='/ingredients/:id' exact>
@@ -83,6 +83,10 @@ export const App = () => {
           </Route>
           
           <Route path='/feed/:id' exact>
+            <BurgerOrderModal />
+          </Route>
+
+          <Route path='/profile/orders/:id' exact>
             <BurgerOrderModal />
           </Route>
           </>
