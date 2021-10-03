@@ -1,4 +1,4 @@
-import { BurgerConstructorPage } from "./burger-constructor/burger-constructor";
+import { BurgerConstructorPage } from "./burger/burger-constructor";
 import { LoginPage } from "./auth/login";
 import { RegisterPage } from "./auth/register";
 import { ForgotPassPage } from "./auth/forgot-password";

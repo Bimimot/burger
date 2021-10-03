@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import pStyles from '../pages.module.css';
 import { ErrorMessage } from '../../components/error-message/error-message';
 import { Loader } from '../../components/loader/loader';
@@ -9,15 +9,30 @@ import { FeedStatus } from '../../components/feed-status/feed-status';
 
 export const FeedPage = () => {
     const { orders, success, isError } = useSelector(store => store.wsFeed);
+    const isLoadedFoods = useSelector(store => store.foods.isLoaded)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (isLoadedFoods && !success) {
+            dispatch({ type: "wsFeed/wsInit" });
+        }
+    }, [isLoadedFoods, success, dispatch]);
+    
+    useEffect(() => {
+        return () => {
+            dispatch({ type: "wsFeed/wsClosed" });
+        }
+    }, []);
+
     return (
         <>
-            {!!orders &&
-                <div className={pStyles.content}>
+            {(!!orders && success)
+                ? <div className={pStyles.content}>
                     <FeedBurgers burgers={orders} title={"Лента заказов"} />
                     <FeedStatus />
-                </div >
+                  </div >
+                : <Loader text={"Уточняем на кухне"} />
             }
-            {!success && <Loader text={"Уточняем на кухне"} />}
             {isError && <ErrorMessage />}
         </>
     )
