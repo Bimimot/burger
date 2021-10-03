@@ -4,7 +4,7 @@ import { batch } from 'react-redux';
 const initialOrdersWs = {
     success: false,
     isError: false,
-    orders: []
+    orders: null
 };;
 
 const profileSlice = createSlice({

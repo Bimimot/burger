@@ -13,6 +13,7 @@ import { BurgerOrderPage } from "..";
 import { onChangeInput, updateUserProfile } from "../../services/slicers/profile";
 import { Loader } from "../../components/loader/loader";
 import { ErrorMessage } from "../../components/error-message/error-message";
+import { NoOrdersPage } from "..";
 
 
 export const ProfilePage = () => {
@@ -97,7 +98,11 @@ const ProfileOrders = () => {
 
     return (
         <>
-            {orders.length > 0 && <FeedBurgers burgers={orders} />}
+            {!!orders &&
+                !!orders.length
+                ? <FeedBurgers burgers={orders} />
+                : <NoOrdersPage />}
+
             {!success && <Loader text={"Уточняем на кухне"} />}
             {isError && <ErrorMessage />}
         </>

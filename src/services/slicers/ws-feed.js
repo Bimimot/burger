@@ -4,7 +4,7 @@ import { batch } from 'react-redux';
 const initialFeedWs = {
     success: false,
     isError: false,
-    orders: [],
+    orders: null,
     total: 0,
     totalDay: 0
 };;

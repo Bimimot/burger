@@ -11,7 +11,7 @@ export const FeedPage = () => {
     const { orders, success, isError } = useSelector(store => store.wsFeed);
     return (
         <>
-            {orders.length > 0 &&
+            {!!orders &&
                 <div className={pStyles.content}>
                     <FeedBurgers burgers={orders} title={"Лента заказов"} />
                     <FeedStatus />
