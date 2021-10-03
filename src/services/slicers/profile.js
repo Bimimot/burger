@@ -70,7 +70,12 @@ const profileSlice = createSlice({
 
 const getUserProfile = () => {
     return (dispatch) => {
-        getUser()
+        updateToken()
+            .then(res => {
+                localStorage.setItem('refreshToken', res.refreshToken);
+                setCookie("accessToken", res.accessToken.split('Bearer ')[1]);
+                return getUser()
+            })        
             .then(res => dispatch(setProfile(res.user)))
             .then(() => dispatch({ type: "wsOrders/wsInit" }))
             .catch((err) => {

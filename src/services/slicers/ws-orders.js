@@ -22,7 +22,7 @@ const profileSlice = createSlice({
             state.success = false
         },
 
-        wsGetFeed: (state, action) => action.payload
+        wsGetOrders: (state, action) => action.payload
     }
 })
 
