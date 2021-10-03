@@ -12,7 +12,10 @@ export const loadOrderNumber = (arrIngredients) =>
     fetch(`${baseUrl}/orders`,
         {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json;charset=utf-8' },
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': 'Bearer ' + getCookie('token')
+            },
             body: JSON.stringify({ ingredients: arrIngredients })
         })
         .then(res => apiHandler(res));
@@ -72,15 +75,15 @@ export const updateToken = () => {
 
 //-----------------------user-------------------------------------------
 export const getUser = () => {
-    const token = getCookie('token');
+    const accessToken = getCookie('token');
 
-    if (!!token) {
+    if (!!accessToken) {
         return fetch(`${baseUrl}/auth/user`,
             {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + accessToken
                 }
             })
             .then(res => apiHandler(res));
