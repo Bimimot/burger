@@ -14,7 +14,7 @@ export const loadOrderNumber = (arrIngredients) =>
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
-                'Authorization': 'Bearer ' + getCookie('token')
+                'Authorization': 'Bearer ' + getCookie('accessToken')
             },
             body: JSON.stringify({ ingredients: arrIngredients })
         })
@@ -75,7 +75,7 @@ export const updateToken = () => {
 
 //-----------------------user-------------------------------------------
 export const getUser = () => {
-    const accessToken = getCookie('token');
+    const accessToken = getCookie('accessToken');
 
     if (!!accessToken) {
         return fetch(`${baseUrl}/auth/user`,
@@ -99,7 +99,7 @@ export const updateUser = (data) => {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
-                'Authorization': 'Bearer ' + getCookie('token')
+                'Authorization': 'Bearer ' + getCookie('accessToken')
             },
             body: JSON.stringify(data)
         })

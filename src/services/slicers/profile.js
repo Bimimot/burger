@@ -92,7 +92,10 @@ const loginUser = () => {
                     email: res.user.email
                 };
                 localStorage.setItem('refreshToken', res.refreshToken);
-                setCookie("token", res.accessToken.split('Bearer ')[1]);
+                setCookie("accessToken", res.accessToken.split('Bearer ')[1]);
+                
+                console.log("accessToken >>>>>>>>>>>>>>>>>>>>>", res.accessToken);
+
                 batch(() => {
                     dispatch({ type: "profile/setProfile", payload: newUser });
                     dispatch({ type: "profile/profileSuccess" });
@@ -153,6 +156,11 @@ const logoutUser = () => {
 const updateUserProfile = (data) => {
     return (dispatch) => {
         updateToken()
+            .then(res => {
+                localStorage.setItem('refreshToken', res.refreshToken);
+                setCookie("accessToken", res.accessToken.split('Bearer ')[1]);
+                return
+            })
             .then(() => updateUser(data))
             .then(res => dispatch(setProfile(res.user)))
             .catch((err) => {
