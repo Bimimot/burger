@@ -40,25 +40,31 @@ export const register = (data) =>
         .then(res => apiHandler(res));
 
 export const logout = () => {
-    const token = localStorage.getItem('refreshToken');
+    const refreshToken = localStorage.getItem('refreshToken');
 
     return fetch(`${baseUrl}/auth/logout`,
         {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({ token })
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': refreshToken
+            },
+            body: JSON.stringify({ token: refreshToken })
         })
         .then(res => apiHandler(res));
 }
 
 export const updateToken = () => {
-    const token = localStorage.getItem('refreshToken');
+    const refreshToken = localStorage.getItem('refreshToken');
 
     return fetch(`${baseUrl}/auth/token`,
         {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({ token })
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': refreshToken
+            },
+            body: JSON.stringify({ token: refreshToken })
         })
         .then(res => apiHandler(res));
 }
@@ -112,7 +118,7 @@ export const setNewPass = (data) =>
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({data})
+            body: JSON.stringify({ data })
         })
         .then(res => apiHandler(res));
 
