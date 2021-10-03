@@ -3,8 +3,10 @@ import React from 'react';
 import oStyles from './burger-order.module.css';
 import { BurgerNumber, BurgerPrice, BurgerTime, BurgerIngredientImage } from "../burger-card/burger-card";
 import { ScrollBox } from '../scrollbox/scrollbox';
+import { orderBurgerPropTypes } from '../../utils/proptypes';
 
 export const BurgerOrder = ({ order }) => {
+    BurgerOrder.propTypes = orderBurgerPropTypes;
     const { name, number, _id, status, ingredients, createdAt, total } = order;
 
     return (

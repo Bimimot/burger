@@ -3,6 +3,7 @@ import { batch } from 'react-redux';
 
 const initialOrdersWs = {
     success: false,
+    isError: false,
     orders: []
 };;
 
@@ -11,7 +12,8 @@ const profileSlice = createSlice({
     initialState: initialOrdersWs,
     reducers: {
         wsError: (state) => {
-            state.success = false
+            state.success = false;
+            state.isError = true
         },
         wsSuccess: (state, action) => {
             state.success = true
@@ -19,8 +21,8 @@ const profileSlice = createSlice({
         wsClosed: (state, action) => {
             state.success = false
         },
-    
-        wsGetFeed: (state, action) => action.payload                
+
+        wsGetFeed: (state, action) => action.payload
     }
 })
 

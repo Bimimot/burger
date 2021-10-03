@@ -8,7 +8,7 @@ import { ConfirmOrder } from './components/constructor-confirm';
 import { ConstructorMenu } from './components/constructor-menu';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
-import { addInRecipe, clearRecipe } from '../../services/slicers/burger';
+import { addInRecipe, clearRecipe } from '../../services/slicers/burger-constructor';
 
 
 import { useDrop } from "react-dnd";

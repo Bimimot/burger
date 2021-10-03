@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import pStyles from '../pages.module.css';
+import { burgerOrderPagePropTypes } from '../../utils/proptypes';
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { BurgerOrder } from "../../components/burger-order/burger-order";
@@ -7,6 +8,7 @@ import { Modal } from '../../components/modal/modal';
 import { ErrorMessage } from '../../components/error-message/error-message';
 import { Loader } from '../../components/loader/loader';
 import { NoPage } from "..";
+
 
 export const BurgerOrderModal = () => {
     const order = useSelector(store => store.burgerOrder);
@@ -30,7 +32,8 @@ export const BurgerOrderModal = () => {
 }
 
 export const BurgerOrderPage = ({ type }) => {
-    //type:  feed || profile
+    BurgerOrderPage.propTypes = burgerOrderPagePropTypes;
+    
     const { id } = useParams();
     const feedOrders  = useSelector(store => store.feed.orders);
     const profileOrders = useSelector(store => store.feed.orders); //hardcode

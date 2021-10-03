@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import bStyles from './burger-card.module.css';
-import { useHistory, useLocation, Link } from 'react-router-dom';
+import { burgerCardPropTypes } from '../../utils/proptypes';
+import { useLocation, Link } from 'react-router-dom';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 export const BurgerCard = React.memo(
     ({ burger }) => {
         const location = useLocation();
+        BurgerCard.propTypes = burgerCardPropTypes;
         const dispatch = useDispatch();
         const { _id, number, name, ingredients, total, createdAt } = burger;
 

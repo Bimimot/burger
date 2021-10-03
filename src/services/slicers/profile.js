@@ -100,6 +100,7 @@ const loginUser = () => {
                 })
                 return
             })
+            .then(() => dispatch({ type: "wsOrders/wsInit" }))
             .catch(err => {
                 console.log("Error with login", err);
                 dispatch({ type: "profile/profileIsError" });

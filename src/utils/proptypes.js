@@ -137,3 +137,30 @@ export const protecRouteProptypes = {
     children: PropTypes.node.isRequired || PropTypes.arrayOf(PropTypes.node).isRequired
 }
 
+//------------burger-card------
+const burgerOrderPropTypes = PropTypes.shape({
+    createdAt: PropTypes.string.isRequired,
+    ingredients: foodsPropTypes,
+    name: PropTypes.string.isRequired,
+    number: PropTypes.number.isRequired,
+    status: PropTypes.oneOf(['done', 'notReady']),
+    total: PropTypes.number.isRequired,
+    _id: PropTypes.string.isRequired
+});
+
+export const burgerCardPropTypes = {
+    burger: burgerOrderPropTypes
+};
+
+export const orderBurgerPropTypes = {
+    order: burgerOrderPropTypes
+};
+
+export const burgerOrderPagePropTypes = PropTypes.shape({
+    type: PropTypes.oneOf(['profile', 'feed']),
+});
+
+export const feedBurgersPropTypes = PropTypes.shape({
+    title: PropTypes.string,
+    burgers: PropTypes.arrayOf(burgerOrderPropTypes)
+});
