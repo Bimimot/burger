@@ -71,11 +71,13 @@ const profileSlice = createSlice({
 const getUserProfile = () => {
     return (dispatch) => {
         updateToken()
-            .then(res => {
-                localStorage.setItem('refreshToken', res.refreshToken);
-                setCookie("accessToken", res.accessToken.split('Bearer ')[1]);
-                return getUser()
-            })        
+            .then(() => getUser() 
+            //{
+                // localStorage.setItem('refreshToken', res.refreshToken);
+                // setCookie("accessToken", res.accessToken.split('Bearer ')[1]);
+                //return getUser()
+    //}
+            )
             .then(res => dispatch(setProfile(res.user)))
             .then(() => dispatch({ type: "wsOrders/wsInit" }))
             .catch((err) => {
@@ -98,8 +100,6 @@ const loginUser = () => {
                 };
                 localStorage.setItem('refreshToken', res.refreshToken);
                 setCookie("accessToken", res.accessToken.split('Bearer ')[1]);
-                
-                console.log("accessToken >>>>>>>>>>>>>>>>>>>>>", res.accessToken);
 
                 batch(() => {
                     dispatch({ type: "profile/setProfile", payload: newUser });
@@ -108,7 +108,6 @@ const loginUser = () => {
                 })
                 return
             })
-            .then(() => dispatch({ type: "wsOrders/wsInit" }))
             .catch(err => {
                 console.log("Error with login", err);
                 dispatch({ type: "profile/profileIsError" });
@@ -133,7 +132,7 @@ const registerUser = () => {
                     dispatch({ type: "auth/clearForm" });
                 })
                 localStorage.setItem('refreshToken', res.refreshToken);
-                setCookie("token", res.accessToken.split('Bearer ')[1]);
+                setCookie("accessToken", res.accessToken.split('Bearer ')[1]);
                 return
             })
             .catch(err => {
@@ -149,7 +148,7 @@ const logoutUser = () => {
             .then(() => {
                 dispatch(clearProfile());
                 localStorage.removeItem('refreshToken');
-                setCookie("token", null);
+                setCookie("accessToken", null);
                 return
             })
             .catch((err) => {
@@ -161,11 +160,11 @@ const logoutUser = () => {
 const updateUserProfile = (data) => {
     return (dispatch) => {
         updateToken()
-            .then(res => {
-                localStorage.setItem('refreshToken', res.refreshToken);
-                setCookie("accessToken", res.accessToken.split('Bearer ')[1]);
-                return
-            })
+            // .then(res => {
+            //     localStorage.setItem('refreshToken', res.refreshToken);
+            //     setCookie("accessToken", res.accessToken.split('Bearer ')[1]);
+            //     return
+            // })
             .then(() => updateUser(data))
             .then(res => dispatch(setProfile(res.user)))
             .catch((err) => {

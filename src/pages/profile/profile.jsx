@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import pStyles from './profile.module.css';
 import {
     Switch, NavLink, Link, Route, Redirect,
@@ -95,15 +95,26 @@ const ProfileForm = () => {
 
 const ProfileOrders = () => {
     const { orders, success, isError } = useSelector(store => store.wsOrders);
+    const isLoadedFoods = useSelector(store => store.foods.isLoaded);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (isLoadedFoods && !success) {
+            dispatch({ type: "wsOrders/wsInit" });
+        }
+    }, [isLoadedFoods, success, dispatch]);
+
+    useEffect(() => {
+        return () => {
+            dispatch({ type: "wsOrders/wsClosed" });
+        }
+    }, []);
 
     return (
         <>
-            {!!orders &&
-                !!orders.length
-                ? <FeedBurgers burgers={orders} />
-                : <NoOrdersPage />}
-
-            {!success && <Loader text={"Уточняем на кухне"} />}
+            {(!!orders && success)
+                ? (!!orders.length ? <FeedBurgers burgers={orders} /> : <NoOrdersPage />)
+                : <Loader text={"Уточняем на кухне"} />}
             {isError && <ErrorMessage />}
         </>
     )

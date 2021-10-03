@@ -1,4 +1,4 @@
-import { getCookie } from "./helpers";
+import { getCookie, setCookie } from "./helpers";
 
 
 const baseUrl = 'https://norma.nomoreparties.space/api';
@@ -69,7 +69,12 @@ export const updateToken = () => {
             },
             body: JSON.stringify({ token: refreshToken })
         })
-        .then(res => apiHandler(res));
+        .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+        .then(res => {
+            localStorage.setItem('refreshToken', res.refreshToken);
+            setCookie("accessToken", res.accessToken.split('Bearer ')[1]);
+            return res
+        })
 }
 
 

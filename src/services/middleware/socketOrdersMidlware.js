@@ -1,7 +1,6 @@
 import { getCookie } from "../../utils/helpers";
 
 export const socketOrdersMiddleware = () => {
-    //const token = getCookie('accessToken');
     const wsUrl = "wss://norma.nomoreparties.space/orders?token=";
 
     return store => {

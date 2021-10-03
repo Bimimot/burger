@@ -63,7 +63,6 @@ const { foodsLoading, foodsError, foodsSuccess, setActiveSection } = actions;
         dispatch(foodsLoading());
         loadFoods()
             .then(result => dispatch(foodsSuccess({ items: result.data })))
-            // .then(() => dispatch({ type: "wsFeed/wsInit" }))
             .catch(e => {
                 console.log("Error with ingredients:", e);
                 dispatch(foodsError())

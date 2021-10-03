@@ -64,11 +64,7 @@ export async function isTokenValid() {
 
     if (!!token && token !== 'undefined') {
         await updateToken()
-            .then(res => {
-                localStorage.setItem('refreshToken', res.refreshToken);
-                setCookie("token", res.accessToken.split('Bearer ')[1]);
-                isAuth = true;
-            })
+            .then(() => isAuth = true)
             .catch(err => {
                 console.log("Error with toekn update:", err);
                 isAuth = false;
