@@ -29,7 +29,9 @@ export const socketFeedMiddleware = () => {
                         ...order,
                         ingredients: order.ingredients.map(ingredient =>
                             foods.find(food => ingredient === food._id))
+                            .filter(ingredient => !!ingredient)
                     }));
+
                     dispatch({
                         type: "wsFeed/wsGetFeed",
                         payload: {
@@ -38,7 +40,7 @@ export const socketFeedMiddleware = () => {
                             orders: fullOrders.map(order => (
                                 {
                                     ...order,
-                                    total: order.ingredients.reduce((total, current) => total + current.price * (current.type === "bun" ? 2 :1), 0)
+                                    total: order.ingredients.reduce((total, current) => total + current.price * (current.type === "bun" ? 2 : 1), 0)
                                 }))
                         }
                     });
