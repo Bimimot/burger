@@ -1,8 +1,7 @@
 import { getCookie, setCookie } from "./helpers";
-
-
-const baseUrl = 'https://norma.nomoreparties.space/api';
+export const baseUrl = 'https://norma.nomoreparties.space/api';
 const apiHandler = (res) => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
+
 
 export const loadFoods = () =>
     fetch(`${baseUrl}/ingredients`)

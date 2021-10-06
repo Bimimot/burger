@@ -5,7 +5,7 @@ import styles from './app.module.css';
 
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { AppHeader } from '../app-header/app-header';
-import { getFoods } from '../../services/slicers/foods';
+import { getFoods } from '../../services/slicers/foods/foods';
 import {
   BurgerConstructorPage,
   LoginPage, RegisterPage, ForgotPassPage, ResetPassPage,
@@ -13,7 +13,7 @@ import {
   FeedPage, BurgerOrderPage, BurgerOrderModal
 } from '../../pages';
 
-import { getUserProfile } from '../../services/slicers/profile';
+import { getUserProfile } from '../../services/slicers/profile/profile';
 
 export const App = () => {
   const dispatch = useDispatch();

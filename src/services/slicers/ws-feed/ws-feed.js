@@ -34,6 +34,7 @@ const { wsError, wsSuccess, wsClosed, wsGetFeed } = actions;
 
 export {
     reducer as wsFeedReducer,
-    wsError, wsSuccess, wsClosed, wsGetFeed
+    wsError, wsSuccess, wsClosed, wsGetFeed,
+    initialFeedWs
 }
 

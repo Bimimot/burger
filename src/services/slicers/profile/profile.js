@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { batch } from 'react-redux';
-import { getUser, updateUser, login, register, logout, checkEmail, setNewPass } from '../../utils/api';
-import { setCookie } from "../../utils/helpers";
-import { updateToken } from '../../utils/api';
+import { getUser, updateUser, login, register, logout, checkEmail, setNewPass } from '../../../utils/api';
+import { setCookie } from "../../../utils/helpers";
+import { updateToken } from '../../../utils/api';
 
 //test USER is:
 // {
@@ -71,13 +71,7 @@ const profileSlice = createSlice({
 const getUserProfile = () => {
     return (dispatch) => {
         updateToken()
-            .then(() => getUser() 
-            //{
-                // localStorage.setItem('refreshToken', res.refreshToken);
-                // setCookie("accessToken", res.accessToken.split('Bearer ')[1]);
-                //return getUser()
-    //}
-            )
+            .then(() => getUser())
             .then(res => dispatch(setProfile(res.user)))
             .then(() => dispatch({ type: "wsOrders/wsInit" }))
             .catch((err) => {
@@ -160,11 +154,6 @@ const logoutUser = () => {
 const updateUserProfile = (data) => {
     return (dispatch) => {
         updateToken()
-            // .then(res => {
-            //     localStorage.setItem('refreshToken', res.refreshToken);
-            //     setCookie("accessToken", res.accessToken.split('Bearer ')[1]);
-            //     return
-            // })
             .then(() => updateUser(data))
             .then(res => dispatch(setProfile(res.user)))
             .catch((err) => {
@@ -200,13 +189,16 @@ const { setProfile, clearProfile,
 
 export {
     reducer as profileReducer,
+    setProfile, clearProfile,
+    profileLoading, profileSuccess, profileIsError,
+    onChangeInput, toggleRestorePass,
     getUserProfile,
     loginUser,
     registerUser,
     logoutUser,
-    onChangeInput,
     updateUserProfile,
     resetPass,
-    restorePass
+    restorePass,
+    initialProfile
 }
 

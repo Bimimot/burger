@@ -24,4 +24,4 @@ const headerSlice = createSlice({
 const { actions, reducer } = headerSlice;
 const { onChangeLink } = actions;
 
-export { reducer as headerReducer, onChangeLink };
+export { reducer as headerReducer, onChangeLink, initialHeader };

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loadFoods } from '../../utils/api';
-import { translations } from '../../utils/data';
+import { loadFoods } from '../../../utils/api';
+import { translations } from '../../../utils/data';
 
 const initialFoods = {
     items: [],
@@ -26,11 +26,11 @@ const foodsSlice = createSlice({
             state.isLoaded = false
         },
         foodsSuccess: (state, action) => {
-            state.items = action.payload.items;
+            state.items = action.payload;
             state.isLoading = false;
             state.isError = false;
             state.isLoaded = true
-            state.sections = getSections(action.payload.items);
+            state.sections = getSections(action.payload);
         },
         clearCounts: (state) => {
             state.sections.forEach(section => {
@@ -54,18 +54,20 @@ const foodsSlice = createSlice({
 });
 
 
-
 const { actions, reducer } = foodsSlice;
-const { foodsLoading, foodsError, foodsSuccess, setActiveSection } = actions;
+const {
+    foodsLoading, foodsError, foodsSuccess,
+    clearCounts, setCounts, setActiveSection
+} = actions;
 
  function getFoods() {
     return function (dispatch) {
         dispatch(foodsLoading());
-        loadFoods()
-            .then(result => dispatch(foodsSuccess({ items: result.data })))
+        return loadFoods()
+            .then(result => dispatch(foodsSuccess(result.data)))
             .catch(e => {
                 console.log("Error with ingredients:", e);
-                dispatch(foodsError())
+                return dispatch(foodsError())
             })
     }
 };
@@ -91,4 +93,10 @@ function getSections(items) {
     return sections
 };
 
-export { reducer as foodsReducer, getFoods, setActiveSection, updateCounts };
+export {
+    reducer as foodsReducer,
+    foodsLoading, foodsError, foodsSuccess,
+    clearCounts, setCounts, setActiveSection,
+    initialFoods,
+    getFoods, updateCounts, getSections
+};

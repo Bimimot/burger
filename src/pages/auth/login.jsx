@@ -2,7 +2,7 @@ import React from "react";
 import {  useDispatch, useSelector } from "react-redux";
 import { useLocation, Redirect } from 'react-router-dom';
 import { AuthForm } from "../../components/auth-form/auth-form";
-import { loginUser } from "../../services/slicers/profile";
+import { loginUser } from "../../services/slicers/profile/profile";
 
 export const LoginPage = () => {
     const location = useLocation();

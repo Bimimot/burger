@@ -3,7 +3,7 @@ import cStyles from '../burger-constructor.module.css';
 
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
-import { clearRecipe, randomRecipe } from '../../../services/slicers/burger-constructor';
+import { clearRecipe, randomRecipe } from '../../../services/slicers/burger-constructor/burger-constructor';
 
 export const ConstructorMenu = () => {
     const dispatch = useDispatch();

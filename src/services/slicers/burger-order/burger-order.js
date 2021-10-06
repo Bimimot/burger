@@ -23,4 +23,8 @@ const burgerOrderSlice = createSlice({
 const { actions, reducer } = burgerOrderSlice;
 const { openOrder, closeOrder } = actions;
 
-export { reducer as burgerOrderReducer }
+export {
+    reducer as burgerOrderReducer,
+    openOrder, closeOrder,
+    initialBurgerOrder
+}

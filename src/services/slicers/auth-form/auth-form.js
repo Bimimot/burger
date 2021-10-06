@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialAuth = {
+export const initialAuth = {
     arrInputs: [],
     data: {} //all values of form       
 };
@@ -45,4 +45,8 @@ const authSlice = createSlice({
 
 
 const { reducer, actions } = authSlice;
-export { reducer as authFormReducer };
+const { setInputs, clearForm, handleInput, handleIcon  } = actions;
+export {
+    reducer as authFormReducer,
+    setInputs, clearForm, handleInput, handleIcon
+};
