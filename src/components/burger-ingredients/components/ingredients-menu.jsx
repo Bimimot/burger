@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import iStyles from '../burger-ingredients.module.css';
-import { setActiveSection } from '../../../services/slicers/foods';
+import { setActiveSection } from '../../../services/slicers/foods/foods';
 
 export const IngredientsMenu = React.memo(
     ({ sections}) => {

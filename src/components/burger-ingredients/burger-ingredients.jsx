@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { IngredientsMenu } from './components/ingredients-menu';
 import { IngredientsSections } from './components/ingredients-sections';
 import { ScrollBox } from '../scrollbox/scrollbox';
-import { setActiveSection } from '../../services/slicers/foods';
+import { setActiveSection } from '../../services/slicers/foods/foods';
 
 export const BurgerIngredients = () => {
     const sections = useSelector(store => store.foods.sections);

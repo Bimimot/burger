@@ -23,4 +23,8 @@ const ingredietnSlice = createSlice({
 const { actions, reducer } = ingredietnSlice;
 const { openIngredient, closeIngredient } = actions;
 
-export {reducer as ingredientReducer }
+export {
+    reducer as ingredientReducer,
+    openIngredient, closeIngredient,
+    initialIngredient
+}

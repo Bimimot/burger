@@ -32,6 +32,7 @@ const { wsError, wsSuccess, wsClosed, wsGetOrders } = actions;
 
 export {
     reducer as wsOrdersReducer,
-    wsError, wsSuccess, wsClosed, wsGetOrders
+    wsError, wsSuccess, wsClosed, wsGetOrders,
+    initialOrdersWs
 }
 

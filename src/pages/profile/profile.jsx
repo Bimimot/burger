@@ -6,11 +6,11 @@ import {
 } from 'react-router-dom';
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../../services/slicers/profile";
+import { logoutUser } from "../../services/slicers/profile/profile";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FeedBurgers } from "../../components/feed-burgers/feed-burgers";
 import { BurgerOrderPage } from "..";
-import { onChangeInput, updateUserProfile } from "../../services/slicers/profile";
+import { onChangeInput, updateUserProfile } from "../../services/slicers/profile/profile";
 import { Loader } from "../../components/loader/loader";
 import { ErrorMessage } from "../../components/error-message/error-message";
 import { NoOrdersPage } from "..";

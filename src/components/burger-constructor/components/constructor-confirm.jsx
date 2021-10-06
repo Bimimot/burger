@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import cStyles from '../burger-constructor.module.css';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { getOrderNumber } from '../../../services/slicers/orders';
+import { getOrderNumber } from '../../../services/slicers/orders/orders';
 
 const resizeCurrencyIcon = () => {
     const price = document.querySelector('#orderPrice');

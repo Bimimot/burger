@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { updateCounts } from './foods';
-import { createRandomRecipe, getBurgerByRecipe } from '../../utils/helpers';
+import { updateCounts } from '../foods/foods';
+import { createRandomRecipe, getBurgerByRecipe } from '../../../utils/helpers';
 
 const initialBurger = {
     recipe: [],
@@ -20,12 +20,12 @@ const burgerSlice = createSlice({
         del: (state, action) => {
             const recipeAfterDel = state.filling.filter(f => f.unicId !== action.payload);
             if (!!state.bun) {
-               recipeAfterDel.push(state.bun)
+                recipeAfterDel.push(state.bun)
             };
             return getBurgerByRecipe(recipeAfterDel);
         },
         add: (state, action) => {
-            const newFood = { ...action.food };
+            const newFood = { ...action.payload };
             let addRecipe = [...state.recipe];
             if (newFood.type === "bun" && !!state.bun) {
                 addRecipe.splice(
@@ -44,7 +44,7 @@ const burgerSlice = createSlice({
 
 const addInRecipe = (food) => {
     return async function (dispatch, getState) {
-        await dispatch({ type: 'burger/add', food });
+        await dispatch({ type: 'burger/add', payload: food });
         updateCounts(dispatch, getState);
     }
 }
@@ -75,6 +75,8 @@ const { actions, reducer } = burgerSlice;
 const { clear, random, del, add } = actions;
 
 export {
-    reducer as burgerReducer, actions,
-    addInRecipe, delFromRecipe, clearRecipe, randomRecipe
+    reducer as burgerReducer,
+    clear, random, del, add,
+    addInRecipe, delFromRecipe, clearRecipe, randomRecipe,
+    initialBurger
 };

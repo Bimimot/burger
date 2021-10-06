@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loadOrderNumber } from '../../utils/api';
+import { loadOrderNumber } from '../../../utils/api';
 
 const initialOrders = {
     items: [],
@@ -23,7 +23,7 @@ const ordersSlice = createSlice({
             state.isError = false
         },
         orderError: (state) => {
-            state.isLoading = true;
+            state.isLoading = false;
             state.isError = true
         },
         orderSuccess: (state, action) => {
@@ -37,7 +37,7 @@ const ordersSlice = createSlice({
 
 
 const { actions, reducer } = ordersSlice;
-const { orderLoading, orderError, orderSuccess } = actions;
+const { orderLoading, orderError, orderSuccess, closeDetails } = actions;
 
 
 function getOrderNumber(arrId) {
@@ -61,4 +61,8 @@ function getOrderNumber(arrId) {
 };
 
 
-export { reducer as ordersReducer, getOrderNumber };
+export {
+    reducer as ordersReducer, getOrderNumber,
+    orderLoading, orderError, orderSuccess, closeDetails,
+    initialOrders
+};

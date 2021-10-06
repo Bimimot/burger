@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthForm } from "../../components/auth-form/auth-form";
-import { registerUser } from "../../services/slicers/profile";
+import { registerUser } from "../../services/slicers/profile/profile";
 import { Redirect } from 'react-router-dom';
 
 export const RegisterPage = () => {

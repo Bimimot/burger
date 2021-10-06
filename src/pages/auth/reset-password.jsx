@@ -2,7 +2,7 @@ import React from "react";
 import { AuthForm } from "../../components/auth-form/auth-form";
 import { Redirect, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { restorePass } from "../../services/slicers/profile";
+import { restorePass } from "../../services/slicers/profile/profile";
 
 export const ResetPassPage = () => {
     const arrInputs = [
