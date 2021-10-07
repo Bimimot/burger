@@ -39,7 +39,7 @@ export const BurgerConstructor = () => {
     return (
         <article className={cStyles.constructor} >
             <ConstructorMenu />
-            <div className={cStyles.dropContainer}
+            <div className={cStyles.dropContainer} id="dropContainer"
                 ref={dropTarget}
                 drop={String(isOver && canDrop)}
                 drag={String(!isOver && canDrop )}
