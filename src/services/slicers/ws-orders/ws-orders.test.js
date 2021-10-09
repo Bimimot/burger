@@ -2,7 +2,8 @@ import {
     wsOrdersReducer,
     wsError, wsSuccess, wsClosed, wsGetOrders,
     initialOrdersWs
-} from './ws-orders';
+} from './ws-orders-old';
+
 
 
 test('WsOrder reducer return the initial state', () => {

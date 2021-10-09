@@ -45,7 +45,7 @@ test('WsFeed reducer getFeed', () => {
         isError: false,
         orders: ["a", "b", "c"],
         total: 10,
-        totalDay: 2
+        totalToday: 2
     };
     expect(wsFeedReducer(previousState, wsGetFeed(payload))).toEqual(payload)
 });

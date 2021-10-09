@@ -13,7 +13,7 @@ import { rootReducer } from './services/index';
 
 import { socketFeedMiddleware, socketOrdersMiddleware} from './services/middleware/';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -36,5 +36,3 @@ ReactDOM.render(
 
 
 reportWebVitals();
-
-export { store }
