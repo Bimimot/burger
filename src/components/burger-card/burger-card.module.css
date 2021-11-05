@@ -1,0 +1,99 @@
+.card {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    padding: 24px;
+    margin: 8px 0;
+    gap: 24px;
+    background-color: var(--background-light-color);
+    border-radius: 40px;
+    transition: all ease .2s;
+    width: 100%;
+}
+
+
+.cardHeader {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cardFooter {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cardTotal {
+    display: flex;
+    align-items: center;
+}
+.cardImages {
+    display: flex;
+    flex-direction: row-reverse;
+    position: relative;
+    height: 64px;
+}
+
+.imageContainer {
+    position: relative;
+    z-index: 100;
+}
+
+.cardImage {
+    position: relative;
+    display: flex;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--background-color);
+    background-position: center;
+    background-size: cover;
+}
+
+.cardImageBlur {
+    composes: cardImage;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardImageBlur::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    filter: grayscale(0.6);
+    content: "";
+    background-color: var(--background-color);
+    opacity: .6;
+    border-radius: 50%;
+}
+
+.cardImage::after {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    bottom: -2px;
+    right: -2px;
+    background: linear-gradient(to right, #801ab2, #4c4cff);
+    border-radius: 50%;
+    z-index: -1;
+    content: "";
+}
+
+
+/* ------Hover effect------- */
+.card:hover{
+    cursor: pointer;
+}
+
+.card:hover p{
+    filter: invert(50%) sepia(35%) saturate(1844%) hue-rotate(141deg) brightness(106%) contrast(103%);
+}
+
+/* .cardImage, .cardText {
+    transition: filter .2s ease;
+} */

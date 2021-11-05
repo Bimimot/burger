@@ -1,0 +1,39 @@
+.order{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    max-width: 640px;
+}
+
+.header{
+    display: flex;
+    margin-bottom: 40px;
+    justify-content: center;
+}
+
+.footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.ingredients{
+    display: flex;
+    flex-direction: column;
+    max-height: 321px;
+    gap: 24px;
+    padding: 2px 26px 2px 2px;
+}
+
+.ingredient{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.about{
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+}

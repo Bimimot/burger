@@ -13,6 +13,12 @@
             0px 14px 48px rgba(51, 51, 255, 0.5);
 }
 
-.ingredientPage{
-    margin-top: 10%;
+.noOrderPage{
+    composes: noPage;
+    margin: 5% auto;
+    text-align: center;
+}
+
+.modalPage{
+    margin-top: 5%;
 }

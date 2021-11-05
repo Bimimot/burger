@@ -11,10 +11,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import logger from 'redux-logger'
 import { rootReducer } from './services/index';
 
+import { socketFeedMiddleware, socketOrdersMiddleware} from './services/middleware/';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware()
+      .concat(logger, socketFeedMiddleware(), socketOrdersMiddleware()),
   devTools: process.env.NODE_ENV !== 'production'
 });
 
@@ -33,5 +36,3 @@ ReactDOM.render(
 
 
 reportWebVitals();
-
-export { store }
