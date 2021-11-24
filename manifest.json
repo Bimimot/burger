@@ -1,0 +1,8 @@
+{
+  "short_name": "Space Burger",
+  "name": "Space Burger Best Ever ",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
