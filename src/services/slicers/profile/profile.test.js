@@ -27,9 +27,9 @@ test('Profile reducer loading', () => {
     expect(profileReducer(previousState, profileLoading())).toEqual(
         {
             ...previousState,
-             profileIsLoading : true,
-             profileIsError : false,
-             profileIsLoaded : false,
+             profileIsLoading: true,
+             profileIsError: false,
+            porfileIsLoaded: false
         })
 });
 
@@ -40,7 +40,7 @@ test('Profile reducer error', () => {
             ...previousState,
             profileIsLoading: false,
             profileIsError: true,
-            profileIsLoaded: false,
+            porfileIsLoaded: false
         })
 });
 
@@ -51,7 +51,7 @@ test('Profile reducer success', () => {
             ...previousState,
             profileIsLoading: false,
             profileIsError: false,
-            profileIsLoaded: true,
+            porfileIsLoaded: true
         })
 });
 
@@ -102,11 +102,17 @@ test('Profile reducer changeInput', () => {
 test('Profile reducer toggleRestore', () => {
     const previousState = {
         ...initialProfile,
-        canRestorePass: false
+        user: {
+            ...initialProfile.user,
+            canRestorePass: false
+        }        
     };
     expect(profileReducer(previousState, toggleRestorePass())).toEqual(
         {
             ...previousState,
-            canRestorePass: true
+            user: {
+                ...previousState.user,
+                canRestorePass: true
+            }
         })
 });

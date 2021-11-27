@@ -23,3 +23,4 @@ test('Burger Order reducer close', () => {
     expect(ingredientReducer(previousState, closeIngredient())).toEqual(initialIngredient)
 });
 
+

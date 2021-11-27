@@ -37,4 +37,3 @@ export {
     wsError, wsSuccess, wsClosed, wsGetFeed,
     initialFeedWs
 }
-

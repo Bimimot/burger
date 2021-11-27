@@ -7,11 +7,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 
-import { configureStore } from '@reduxjs/toolkit'
-import logger from 'redux-logger'
+import { configureStore } from '@reduxjs/toolkit';
+import logger from 'redux-logger';
 import { rootReducer } from './services/index';
 
-import { socketFeedMiddleware, socketOrdersMiddleware} from './services/middleware/';
+import { socketFeedMiddleware, socketOrdersMiddleware} from './services/middleware';
 
 export const store = configureStore({
   reducer: rootReducer,

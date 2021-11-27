@@ -29,7 +29,6 @@ const initialProfile: TprofileState = {
         },
     },
 
-
     profileIsLoading: false,
     porfileIsLoaded: false,
     profileIsError: false
