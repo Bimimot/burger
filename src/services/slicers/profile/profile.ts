@@ -170,7 +170,10 @@ const resetPass = () => {
     return (dispatch: AppDispatch, getState: GetState) => {
         const data = getState().authForm.data;
         checkEmail(data)
-            .then(() => dispatch(toggleRestorePass))
+            .then((res) => {
+                console.log("RESULT of resetPass", res);
+                dispatch(toggleRestorePass());
+            })
             .catch(err => console.log("Error with reset pass", err))
     }
 };
@@ -178,9 +181,15 @@ const resetPass = () => {
 
 const restorePass = () => {
     return (dispatch: AppDispatch, getState: GetState) => {
-        const data = getState().authForm.data;
+        const dataInputs = getState().authForm.data;
+
+        //data without email field
+        const data = {
+            password: dataInputs.password,
+            token: dataInputs.token,
+        };
         setNewPass(data)
-            .then(() => dispatch(toggleRestorePass))
+            .then(() => dispatch(toggleRestorePass()))
             .catch(err => console.log("Error with set new pass", err))
     }
 };

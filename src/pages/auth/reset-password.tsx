@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 import { TConfirmForm, Tinputs, TfooterLink } from "../../utils/proptypes";
 import { useDispatch, useSelector } from "../../services/types/hooks-types";
 import { AuthForm } from "../../components/auth-form/auth-form";
@@ -26,6 +26,7 @@ export const ResetPassPage: FC = () => {
 
     const { isAuth, canRestorePass } = useSelector(store => store.profile.user)
 
-    return (isAuth || !canRestorePass)
-        ? <Redirect to={'/'} /> : <AuthForm data={{ title, arrInputs, footerLinks, confirm }} />
+    return isAuth ? <Redirect to={'/'} />
+        : !canRestorePass ? <Redirect to={'/login'} />
+            : <AuthForm data={{ title, arrInputs, footerLinks, confirm }} />
 }
