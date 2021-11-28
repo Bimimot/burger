@@ -12,7 +12,6 @@ import logger from 'redux-logger';
 import { rootReducer } from './services/index';
 
 import { socketMiddleware } from './services/middleware/socketMidlware';
-import { getCookie } from './utils/helpers';
 
 const wsUrlFeed = 'wss://norma.nomoreparties.space/orders/all';
 
@@ -24,7 +23,7 @@ const wsActionsFeed = {
   onMessage: "wsFeed/wsGetFeed"
 };
 
-const wsUrlOrders = "wss://norma.nomoreparties.space/orders?token=" + getCookie('accessToken');
+const wsUrlOrders = "wss://norma.nomoreparties.space/orders";
 
 const wsActionsOrders = {
   wsInit: "wsOrders/wsInit",
@@ -40,8 +39,8 @@ export const store = configureStore({
     getDefaultMiddleware()
       .concat(
         logger,
-        socketMiddleware(wsUrlFeed, wsActionsFeed),
-        socketMiddleware(wsUrlOrders, wsActionsOrders)
+        socketMiddleware(wsUrlFeed, wsActionsFeed, false),
+        socketMiddleware(wsUrlOrders, wsActionsOrders, true)
       ),
   devTools: process.env.NODE_ENV !== 'production'
 });

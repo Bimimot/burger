@@ -153,9 +153,10 @@ const logoutUser: AppThunk = () => {
             })
     }
 }
-
-const updateUserProfile = (data: TinputsForm) => {
-    return (dispatch: AppDispatch) => {
+//
+const updateUserProfile: (data: TinputsForm) => (dispatch: AppDispatch) => void
+= (data) => {
+    return (dispatch) => {
         updateToken()
             .then(() => updateUser(data))
             .then((res:any) => dispatch(setProfile(res.user)))
@@ -166,8 +167,9 @@ const updateUserProfile = (data: TinputsForm) => {
     }
 }
 
-const resetPass = () => {
-    return (dispatch: AppDispatch, getState: GetState) => {
+const resetPass: () => (dispatch: AppDispatch, getState: GetState) => void
+    = () => {
+    return (dispatch, getState) => {
         const data = getState().authForm.data;
         checkEmail(data)
             .then((res) => {
@@ -179,8 +181,9 @@ const resetPass = () => {
 };
 
 
-const restorePass = () => {
-    return (dispatch: AppDispatch, getState: GetState) => {
+const restorePass: () => (dispatch: AppDispatch, getState: GetState) => void
+    = () => {
+    return (dispatch, getState) => {
         const dataInputs = getState().authForm.data;
 
         //data without email field

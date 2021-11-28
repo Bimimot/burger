@@ -75,7 +75,8 @@ const getFoods: AppThunk = () => {
     }
 };
 
-const updateCounts = (dispatch: AppDispatch, getState: GetState) => {
+const updateCounts: (dispatch: AppDispatch, getState: GetState) => void
+  = (dispatch, getState) => {
     const curRecipe = getState().burger.recipe;
     dispatch({ type: "foods/setCounts", payload: curRecipe })
 };

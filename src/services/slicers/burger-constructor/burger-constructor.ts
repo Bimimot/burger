@@ -47,15 +47,17 @@ const burgerSlice = createSlice({
     },
 });
 
-const addInRecipe = (food: Tfood) => {
-    return async function (dispatch: AppDispatch, getState: GetState) {
+const addInRecipe: (food: Tfood) => (dispatch: AppDispatch, getState: GetState) => Promise<void>
+    = (food: Tfood) => {
+    return async function (dispatch, getState) {
         await dispatch({ type: 'burger/add', payload: food });
         updateCounts(dispatch, getState);
     }
 }
 
-const delFromRecipe = (food: Tfood) => {
-    return function (dispatch: AppDispatch, getState: GetState) {
+const delFromRecipe: (food: Tfood) => (dispatch: AppDispatch, getState: GetState) => void
+    = (food: Tfood) => {
+    return function (dispatch, getState) {
         dispatch({ type: 'burger/del', payload: food.unicId });
         updateCounts(dispatch, getState);
     }
@@ -68,7 +70,8 @@ const clearRecipe: AppThunk = () => {
     }
 }
 
-const randomRecipe = () => {
+const randomRecipe: () => (dispatch: AppDispatch, getState: GetState) => Promise<void>
+    = () => {
     return async function (dispatch: AppDispatch, getState: GetState) {
         const foods = getState().foods.items;
         await dispatch({ type: 'burger/random', payload: foods });

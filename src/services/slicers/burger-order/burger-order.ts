@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { TBurgerOrderState } from './burger-order-types';
 
-const initialBurgerOrder = {
+const initialBurgerOrder: TBurgerOrderState = {
     show: false,
     item: null
 };

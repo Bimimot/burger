@@ -1,8 +1,9 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
 import type { TActions, AppDispatch, RootState } from '../types/store-types';
-import type { Torder, Tburger } from '../../utils/proptypes';
+import type { Torder, Tburger, TwsActions } from '../../utils/proptypes';
+import { getCookie } from '../../utils/helpers';
 
-export const socketMiddleware = (wsUrl: string, wsActions: any): Middleware => {
+export const socketMiddleware = (wsUrl: string, wsActions: TwsActions, isToken: Boolean): Middleware => {
     // const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
 
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
@@ -16,7 +17,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: any): Middleware => {
             const foods = getState().foods.items;
 
             if (type === wsInit) {
-                socket = new WebSocket(wsUrl);
+                socket = new WebSocket(isToken ? wsUrl + '?token=' + getCookie('accessToken') : wsUrl);
             }
             if (socket) {
                 socket.onopen = event => {

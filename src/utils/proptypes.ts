@@ -1,4 +1,5 @@
 import { ReactChild } from "react";
+import { Tracing } from "trace_events";
 
 // //---------scrollbox-------
 export type Tscrollbox = {
@@ -33,6 +34,13 @@ export type Tfood = {
 
 export type Tfoods = Array<Tfood>;
 
+export type TwsActions = {
+    wsInit: string,
+    onOpen: string,
+    onClose: string,
+    onError: string,
+    onMessage: string
+}
 
 //------------burger-card------
 export type Tburger = {
@@ -251,4 +259,5 @@ export type TmovedElementProps = {
     index: number,
     moveElement: Function,
 }
+
 

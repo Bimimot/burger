@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loadOrderNumber } from '../../../utils/api';
 import { Torders } from '../../../utils/proptypes';
-import { AppThunk, AppDispatch, GetState } from '../../types/store-types';
+import { AppDispatch, GetState } from '../../types/store-types';
 
 const initialOrders: Torders = {
     items: [],
