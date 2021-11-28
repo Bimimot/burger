@@ -45,6 +45,16 @@ export type Tburger = {
     _id: string
 };
 
+export type Torder = {
+    readonly createdAt: string,
+    ingredients: Array<string>,
+    readonly name: string,
+    readonly number: number,
+    readonly status: 'done' | 'notReady',
+    total: number,
+    _id: string
+};
+
 export type TburgerCard = {
     burger: Tburger
 }

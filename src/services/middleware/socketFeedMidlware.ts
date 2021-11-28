@@ -1,11 +1,14 @@
+import type { Middleware, MiddlewareAPI } from 'redux';
+import type { TActions, AppDispatch, RootState } from '../types/store-types';
+import type { Torder, Tburger } from '../../utils/proptypes';
 
-export const socketFeedMiddleware = () => {
+export const socketFeedMiddleware = (): Middleware => {
     const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
 
-    return store => {
-        let socket = null;
+    return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
+        let socket: WebSocket | null  = null;
 
-        return next => action => {
+        return next => (action: TActions) => {
             const { dispatch, getState } = store;
             const { type } = action;
             const foods = getState().foods.items;
@@ -25,7 +28,7 @@ export const socketFeedMiddleware = () => {
                 socket.onmessage = event => {
                     const { data } = event;
                     const parsedData = JSON.parse(data);
-                    const fullOrders = parsedData.orders.map(order => ({
+                    const fullOrders = parsedData.orders.map((order: Torder) => ({
                         ...order,
                         ingredients: order.ingredients.map(ingredient =>
                             foods.find(food => ingredient === food._id))
@@ -37,10 +40,11 @@ export const socketFeedMiddleware = () => {
                         payload: {
                             ...parsedData,
                             success: true,
-                            orders: fullOrders.map(order => (
+                            orders: fullOrders.map((order: Tburger) => (
                                 {
                                     ...order,
-                                    total: order.ingredients.reduce((total, current) => total + current.price * (current.type === "bun" ? 2 : 1), 0)
+                                    total: order.ingredients.reduce((total, current) =>
+                                        total + current.price * (current.type === "bun" ? 2 : 1), 0)
                                 }))
                         }
                     });
@@ -53,5 +57,6 @@ export const socketFeedMiddleware = () => {
 
             next(action);
         };
-    };
+    }) as Middleware;
 };
+
