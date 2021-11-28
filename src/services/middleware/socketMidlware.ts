@@ -2,27 +2,29 @@ import type { Middleware, MiddlewareAPI } from 'redux';
 import type { TActions, AppDispatch, RootState } from '../types/store-types';
 import type { Torder, Tburger } from '../../utils/proptypes';
 
-export const socketFeedMiddleware = (): Middleware => {
-    const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
+export const socketMiddleware = (wsUrl: string, wsActions: any): Middleware => {
+    // const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
 
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
-        let socket: WebSocket | null  = null;
+        let socket: WebSocket | null = null;
 
         return next => (action: TActions) => {
             const { dispatch, getState } = store;
             const { type } = action;
+            const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
+
             const foods = getState().foods.items;
 
-            if (type === "wsFeed/wsInit") {
+            if (type === wsInit) {
                 socket = new WebSocket(wsUrl);
             }
             if (socket) {
                 socket.onopen = event => {
-                    dispatch({ type: "wsFeed/wsSuccess" });
+                    dispatch({ type: onOpen });
                 };
 
                 socket.onerror = event => {
-                    dispatch({ type: "wsFeed/wsError" });
+                    dispatch({ type: onError });
                 };
 
                 socket.onmessage = event => {
@@ -36,7 +38,7 @@ export const socketFeedMiddleware = (): Middleware => {
                     }));
 
                     dispatch({
-                        type: "wsFeed/wsGetFeed",
+                        type: onMessage,
                         payload: {
                             ...parsedData,
                             success: true,
@@ -48,10 +50,10 @@ export const socketFeedMiddleware = (): Middleware => {
                                 }))
                         }
                     });
-                };
+                }
 
                 socket.onclose = event => {
-                    dispatch({ type: "wsFeed/wsClosed" });
+                    dispatch({ type: onClose });
                 };
             }
 

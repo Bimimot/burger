@@ -11,13 +11,38 @@ import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import { rootReducer } from './services/index';
 
-import { socketFeedMiddleware, socketOrdersMiddleware} from './services/middleware';
+import { socketMiddleware } from './services/middleware/socketMidlware';
+import { getCookie } from './utils/helpers';
+
+const wsUrlFeed = 'wss://norma.nomoreparties.space/orders/all';
+
+const wsActionsFeed = {
+  wsInit: "wsFeed/wsInit",
+  onOpen: "wsFeed/wsSuccess",
+  onClose: "wsFeed/wsClosed",
+  onError: "wsFeed/wsError",
+  onMessage: "wsFeed/wsGetFeed"
+};
+
+const wsUrlOrders = "wss://norma.nomoreparties.space/orders?token=" + getCookie('accessToken');
+
+const wsActionsOrders = {
+  wsInit: "wsOrders/wsInit",
+  onOpen: "wsOrders/wsSuccess",
+  onClose: "wsOrders/wsClosed",
+  onError: "wsOrders/wsError",
+  onMessage: "wsOrders/wsGetOrders"
+};
 
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-      .concat(logger, socketFeedMiddleware(), socketOrdersMiddleware()),
+      .concat(
+        logger,
+        socketMiddleware(wsUrlFeed, wsActionsFeed),
+        socketMiddleware(wsUrlOrders, wsActionsOrders)
+      ),
   devTools: process.env.NODE_ENV !== 'production'
 });
 
