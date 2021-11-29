@@ -38,13 +38,34 @@ test('WsOrder reducer close', () => {
         })
 });
 
+
 test('WsOrder reducer getOrders', () => {
     const previousState = { ...initialOrdersWs, success: true };
     const payload = {
-        ...initialOrdersWs,
-        success: true,
-        isError: false,
-        orders: ["a", "b", "c"],
+        parsedData: {
+            success: true,
+            orders: [
+                { id: "a", ingredients: ["01", "02"] },
+            ]
+        },
+        foods: [
+            { _id: "01", content: "aaaa" },
+            { _id: "02", content: "abab" }
+        ]
     };
-    expect(wsOrdersReducer(previousState, wsGetOrders(payload))).toEqual(payload)
+    const readyOrders = [
+        {
+            id: "a",
+            ingredients: [
+                { _id: "01", content: "aaaa" },
+                { _id: "02", content: "abab" }
+            ]
+        }
+    ];
+    expect(wsOrdersReducer(previousState, wsGetOrders(payload)))
+        .toEqual({
+            ...previousState,
+            success: true,
+            orders: readyOrders,
+        })
 });
