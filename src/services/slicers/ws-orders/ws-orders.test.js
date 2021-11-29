@@ -2,7 +2,7 @@ import {
     wsOrdersReducer,
     wsError, wsSuccess, wsClosed, wsGetOrders,
     initialOrdersWs
-} from './ws-orders-old';
+} from './ws-orders';
 
 
 
