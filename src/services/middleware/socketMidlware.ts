@@ -30,24 +30,25 @@ export const socketMiddleware = (wsUrl: string, wsActions: TwsActions, isToken: 
                 socket.onmessage = event => {
                     const { data } = event;
                     const parsedData = JSON.parse(data);
-                    const fullOrders = parsedData.orders.map((order: Torder) => ({
-                        ...order,
-                        ingredients: order.ingredients.map(ingredient =>
-                            foods.find(food => ingredient === food._id))
-                            .filter(ingredient => !!ingredient)
-                    }));
+                    // const fullOrders = parsedData.orders.map((order: Torder) => ({
+                    //     ...order,
+                    //     ingredients: order.ingredients.map(ingredient =>
+                    //         foods.find(food => ingredient === food._id))
+                    //         .filter(ingredient => !!ingredient)
+                    // }));
 
                     dispatch({
                         type: onMessage,
                         payload: {
-                            ...parsedData,
-                            success: true,
-                            orders: fullOrders.map((order: Tburger) => (
-                                {
-                                    ...order,
-                                    total: order.ingredients.reduce((total, current) =>
-                                        total + current.price * (current.type === "bun" ? 2 : 1), 0)
-                                }))
+                            parsedData: parsedData,
+                            foods: foods
+                            // success: true,
+                            // orders: fullOrders.map((order: Tburger) => (
+                            //     {
+                            //         ...order,
+                            //         total: order.ingredients.reduce((total, current) =>
+                            //             total + current.price * (current.type === "bun" ? 2 : 1), 0)
+                            //     }))
                         }
                     });
                 }

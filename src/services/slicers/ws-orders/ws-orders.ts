@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TOrdersWsState } from './ws-orders-types';
+import { TOrdersWsState, TOrdersWsPayload } from './ws-orders-types';
+import { getFullOrders } from '../../../utils/helpers';
 
-const initialOrdersWs:TOrdersWsState = {
+const initialOrdersWs: TOrdersWsState = {
     success: false,
     isError: false,
     orders: null
@@ -22,10 +23,13 @@ const profileSlice = createSlice({
             state.success = false
         },
 
-        wsGetOrders: (state, action: PayloadAction<TOrdersWsState>) => action.payload
+        wsGetOrders: (state, action: PayloadAction<TOrdersWsPayload>) => {
+            const { parsedData, foods } = action.payload;
+            state.success = true;
+            state.orders = getFullOrders(parsedData.orders!, foods);
+        }
     }
 })
-
 
 const { reducer, actions } = profileSlice;
 const { wsError, wsSuccess, wsClosed, wsGetOrders } = actions;
@@ -35,5 +39,3 @@ export {
     wsError, wsSuccess, wsClosed, wsGetOrders,
     initialOrdersWs
 }
-
-
