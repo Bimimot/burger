@@ -4,7 +4,6 @@ import type { Torder, Tburger, TwsActions } from '../../utils/proptypes';
 import { getCookie } from '../../utils/helpers';
 
 export const socketMiddleware = (wsUrl: string, wsActions: TwsActions, isToken: Boolean): Middleware => {
-    // const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
 
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
