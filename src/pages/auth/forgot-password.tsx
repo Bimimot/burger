@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 import { TConfirmForm, Tinputs, TfooterLink } from "../../utils/proptypes";
 import { AuthForm } from "../../components/auth-form/auth-form";
 import { useDispatch, useSelector } from "../../services/types/hooks-types";
@@ -15,7 +15,7 @@ export const ForgotPassPage: FC = () => {
 
     const title: string = "Восстановление пароля";
 
-    const isAuth = useSelector(store => store.profile.user.isAuth);
+
 
     const dispatch = useDispatch();
 
@@ -23,8 +23,10 @@ export const ForgotPassPage: FC = () => {
         callback: () => dispatch(resetPass()),
         text: "Восстановить"
     };
-
-    return isAuth
-        ? <Redirect to={'/'} />
-        : <AuthForm data={{ title, arrInputs, footerLinks, confirm }} />
+    const { isAuth, canRestorePass } = useSelector(store => store.profile.user)
+    console.log("canRestorePass=", canRestorePass);
+        
+    return isAuth ? <Redirect to={'/'} />
+        : canRestorePass ? <Redirect to={'/reset-password'} />
+            : <AuthForm data={{ title, arrInputs, footerLinks, confirm }} />
 }

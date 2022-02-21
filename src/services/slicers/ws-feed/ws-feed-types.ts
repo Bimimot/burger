@@ -1,3 +1,5 @@
+import { Tfoods } from "../../../utils/proptypes";
+
 export type TFeedWsState = {
     success: boolean,
     isError: boolean,
@@ -5,3 +7,8 @@ export type TFeedWsState = {
     total: number,
     totalToday: number
 };
+
+export type TFeedWsPayload = {
+    foods: Tfoods,
+    parsedData: TFeedWsState
+}

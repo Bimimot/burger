@@ -1,5 +1,5 @@
 import { updateToken } from "./api";
-import { Tfood } from "./proptypes";
+import { Tfood, Torder, Tburger, Tfoods } from "./proptypes";
 
 export const randomInteger = (min: number, max: number): number => Math.floor(min + Math.random() * (max + 1 - min));
 
@@ -84,4 +84,16 @@ export async function isTokenValid(): Promise<boolean> {
             })
     }
     return isAuth
+}
+
+//--------------------------orders-with-full-ingredients----------------------------------
+export function getFullOrders(orders: Torder[], foods: Tfoods) {
+    const fullOrders = orders.map((order: Torder) => ({
+        ...order,
+        ingredients: order.ingredients.map(ingredient =>
+            foods.find(food => ingredient === food._id))
+            .filter(ingredient => !!ingredient)
+    }));
+
+    return fullOrders
 }

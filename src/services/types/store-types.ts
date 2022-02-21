@@ -9,7 +9,7 @@ type SliceActions<T> = {
     [K in keyof T]: T[K] extends (...args: any[]) => infer A ? A : never;
 }[keyof T]
 
-type TActions = SliceActions<typeof allActions>
+export type TActions = SliceActions<typeof allActions>
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;

@@ -125,7 +125,7 @@ export const setNewPass = (data: Idata) =>
         {
             method: 'POST',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
-            body: JSON.stringify({ data })
+            body: JSON.stringify(data)
         })
         .then(res => apiHandler(res));
 

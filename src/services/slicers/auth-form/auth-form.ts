@@ -44,7 +44,6 @@ export const authSlice = createSlice({
     }
 });
 
-
 const { reducer, actions } = authSlice;
 const { setInputs, clearForm, handleInput, handleIcon  } = actions;
 export {

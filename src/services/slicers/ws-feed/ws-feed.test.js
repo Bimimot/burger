@@ -40,12 +40,34 @@ test('WsFeed reducer close', () => {
 test('WsFeed reducer getFeed', () => {
     const previousState = { ...initialFeedWs, success: true };
     const payload = {
-        ...initialFeedWs,
-        success: true,
-        isError: false,
-        orders: ["a", "b", "c"],
-        total: 10,
-        totalToday: 2
+        parsedData: {
+            success: true,
+            orders: [
+                { id: "a", ingredients: ["01", "02"] },
+            ],
+            total: 10,
+            totalToday: 2
+        },
+        foods: [
+            { _id: "01", content: "aaaa" },
+            { _id: "02", content: "abab" }
+        ]
     };
-    expect(wsFeedReducer(previousState, wsGetFeed(payload))).toEqual(payload)
+    const readyOrders = [
+        {
+            id: "a",
+            ingredients: [
+                { _id: "01", content: "aaaa" },
+                { _id: "02", content: "abab" }
+            ]
+        }
+    ];
+    expect(wsFeedReducer(previousState, wsGetFeed(payload)))
+        .toEqual({
+            ...previousState,
+            success: true,
+            orders: readyOrders,
+            total: payload.parsedData.total,
+            totalToday: payload.parsedData.totalToday
+        })
 });

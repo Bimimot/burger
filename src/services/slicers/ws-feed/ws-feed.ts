@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { batch } from 'react-redux';
-import { TFeedWsState } from './ws-feed-types';
+import { TFeedWsState, TFeedWsPayload } from './ws-feed-types';
+import {getFullOrders} from '../../../utils/helpers';
 
 const initialFeedWs: TFeedWsState = {
     success: false,
@@ -24,7 +24,13 @@ const profileSlice = createSlice({
         wsClosed: (state, action) => {
             state.success = false
         },
-        wsGetFeed: (state, action: PayloadAction<TFeedWsState>) => action.payload
+        wsGetFeed: (state, action: PayloadAction<TFeedWsPayload>) => {
+            const { parsedData, foods } = action.payload;
+            state.success = true;
+            state.orders = getFullOrders(parsedData.orders!, foods);
+            state.total = parsedData.total;
+            state.totalToday = parsedData.totalToday;            
+        }
     }
 })
 
@@ -37,4 +43,3 @@ export {
     wsError, wsSuccess, wsClosed, wsGetFeed,
     initialFeedWs
 }
-
