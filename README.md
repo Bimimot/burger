@@ -1,49 +1,49 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Space Burger
+A menu for ordering a custom burger
 
 ## Public URL
-Poject is available by URL: [https://bimimot.github.io/burger/]
+Poject is available by URL: https://bimimot.github.io/burger/
+
+## Based on
+Languages: TypeScript, JavaScript, HTML, CSS. \
+Tools: React, React Hooks, react-dnd, Redux, CSS modules, WebSocket, Ject, Cypress, ESLint.
+
+## Project's tasks:
+- responsive design,
+- navigation with the custom scrollbar
+- routing with protected routes,
+- page 404,
+- authorization - (login, register, reset  & restore methods),
+- getting items and sending the order via API,
+- personal account with the order’s history,
+- DnD functionality for making an order,
+- the state saves with Redux,
+- a middleware for WebSocket,
+- Jest tests for the buisness logic,
+- Cypress tests for general actions,
+- ErrorBoundary component for cathcing errs
 
 ## Available Scripts
-
-In the project directory, you can run:
-
 ### `npm start`
-
-Runs the app in the development mode.\
+Runs the app in the development mode with hot reload. \
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
 ### `npm run build`
-
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `npm test`
+Launches the test runner in the interactive watch mode.\
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `npm run cypress:open`
+Launches the cypress test
+
+### `npm run predeploy`
+Call build script and make bundle for deploying
+
+### `npm run deploy`
+Deploy project at gh-pages
 
 ### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time.\
+This command will remove the single build dependency from your project.
